@@ -19,3 +19,5 @@ Sign into the `AWS Management Console` and open the [IAM console](https://us-eas
    
 - Choose `AWS CLI Access` and click on create Access key  
 - Download the CSV with the credentials   
+-Setup Multi Factor Authentication (MFA) for your new user, this is best practice.  
+- Sign out of root user and sign in as the new IAM user  
