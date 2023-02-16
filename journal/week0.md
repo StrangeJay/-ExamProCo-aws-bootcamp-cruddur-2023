@@ -45,7 +45,7 @@ Sign into the `AWS Management Console` and open the [IAM console](https://us-eas
 `gp env AWS_SECRET_ACCESS_KEY=""`   
 `gp env AWS_DEFAULT_REGION=us-east-1`   
 
-- Add a script to your gitpod.yaml file to make sure that everytime we start up our workspace it loads these settings and we don't have to do it all over again.  
+- Add a script to your gitpod.yml file to make sure that everytime we start up our workspace it loads these settings and we don't have to do it all over again.  
 ![updated YAML file](https://user-images.githubusercontent.com/105195327/219480714-6b68e57d-8188-4f2b-81ea-2dc43890f833.png)   
 ---
 
