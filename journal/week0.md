@@ -76,7 +76,19 @@ Signed into the `AWS Management Console` and opened the [IAM console](https://us
 - Created an SNS Topic by typing the following command  
 `aws sns create-topic --name billing-alarm`  
 *it outputed the ARN assigned to the created topic*  
-
-
-
+- I copied and pasted this code and substituted the necessary credentials.  
+> aws sns subscribe \
+      --topic-arn="<TopicARN>" \
+      --protocol=email \
+      --notification-endpoint=<your@email.com>  
+      
+- Kept getting an error message `aws: error: the following arguments are required: --protocol`  when i tried copying all at once, so i did it one at a time.  
+![subscription](https://user-images.githubusercontent.com/105195327/219496133-2b91477d-1418-4e9e-b016-18901d0eb249.png)  
+- I got a mail asking me to confirm the subscription and i clicked confirm and received a "subscription confirmed" message.  
+- I went to the management console to confirm the creation of my SNS topic 
+![created billing ish](https://user-images.githubusercontent.com/105195327/219497007-0ab0b37c-e5c2-4e31-b7d7-5a01044b9027.png)   
+---
+## Create an alarm
+- I went to this [tutorial](https://aws.amazon.com/premiumsupport/knowledge-center/cloudwatch-estimatedcharges-alarm/) to find how to create my alarm  
+- I need to update the configuration json script with the TopicARN i generated earlier
 
