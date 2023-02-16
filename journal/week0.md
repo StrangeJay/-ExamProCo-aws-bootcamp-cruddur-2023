@@ -88,4 +88,7 @@ Signed into the `AWS Management Console` and opened the [IAM console](https://us
 - I went to the management console to confirm the creation of my SNS topic 
 ![created billing ish](https://user-images.githubusercontent.com/105195327/219497007-0ab0b37c-e5c2-4e31-b7d7-5a01044b9027.png)   
 ---
+## Create an alarm
+- I went to this [tutorial](https://aws.amazon.com/premiumsupport/knowledge-center/cloudwatch-estimatedcharges-alarm/) to find how to create my alarm  
+- I need to update the configuration json script with the TopicARN i generated earlier
 
