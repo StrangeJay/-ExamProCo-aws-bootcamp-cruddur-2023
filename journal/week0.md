@@ -21,3 +21,35 @@ Sign into the `AWS Management Console` and open the [IAM console](https://us-eas
 - Download the CSV with the credentials   
 -Setup Multi Factor Authentication (MFA) for your new user, this is best practice.  
 - Sign out of root user and sign in as the new IAM user  
+---
+## Install and verify the AWS CLI 
+- Follow the instructions on the [AWS Command Line Interface Documentation](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)  
+- Copy and paste the command needed to install the CLI on your respective device. I am using Linux so i followed the instructions for Linux systems. 
+- Run the following commands, one at a time to avoid any problems. Copying it all at once might work too, but sometimes it's better to do it line by line to get the expected results.  
+`curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"`  
+`unzip awscliv2.zip`   
+`sudo ./aws/install`   
+
+### Setting up ENV Variable 
+- I could've used **aws configure** to set up the CLI, but i set up my environment variable with gitpod instead. 
+- Create a file and copy and type these commands into the file  
+`export AWS_ACCESS_KEY_ID="<your access id"`   
+`export AWS_SECRET_ACCESS_KEY="<your access key>`   
+`export AWS_DEFAULT_REGION="<region>`   
+
+- Copy and paste the commands into your gitpod terminal one at a time.   
+- Confirm if you set it right by typing `env | grep AWS_` this should show you the copied details.   
+- Type `aws sts get-caller-identity` and it should show your User Id, Acoount and Arn.   
+- Tell gitpod to remember these credentials next time you open your workspace. by typing the following commands.  
+`gp env AWS_ACCESS_KEY_ID=""`   
+`gp env AWS_SECRET_ACCESS_KEY=""`   
+`gp env AWS_DEFAULT_REGION=us-east-1`   
+
+- Add a script to your gitpod.yaml file to make sure that everytime we start up our workspace it loads these settings and we don't have to do it all over again.  
+![updated YAML file](https://user-images.githubusercontent.com/105195327/219480714-6b68e57d-8188-4f2b-81ea-2dc43890f833.png)   
+---
+
+
+
+
+
