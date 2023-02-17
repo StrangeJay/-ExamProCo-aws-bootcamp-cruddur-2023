@@ -93,4 +93,23 @@ I went to this [tutorial](https://aws.amazon.com/premiumsupport/knowledge-center
 - create an alarm configuration as a json file 
 - Call the PutMetricAlarm API:  `aws cloudwatch put-metric-alarm --cli-input-json file://alarm_config.json`  
 - I went to my management console to confirm the creation of my alarm  
+---
+## Creating a budget using the AWS CLI
+- I went to the AWS CLI page and clicked on the **command reference** documentation and found instructions for [creating a budget](https://docs.aws.amazon.com/cli/latest/reference/budgets/create-budget.html)  
+ - Following the instructions on the page, i created 2 json named "budget.json" and "notifications-with-subscribers.json" 
+ - I copied and pasted the necessary json code
+ - I read through it and made the necessary changes to set my budget limit and threshold.  
+ - I copied the command below to make the necessary changes to folder and account ID: 
+ > aws budgets create-budget \
+       --account-id 111122223333 \
+       --budget file://budget.json \
+       --notifications-with-subscribers file://notifications-with-subscribers.json   
 
+- i got my account ID by typing `aws sts get-caller-identity --query Account`  then i inputed my account ID at the appropriate place.  
+- i saved my Account id as an environment variable to make it easier to get later, by running the following code `export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)`. Now when i type `env | grep AWS_ACCOUNT_` it outputs my account ID to the terminal. 
+- I saved the account ID permanently so i can see it next time I i login without having to re-run all these command. `gp env AWS_ACCOUNT_ID="<Account ID>"
+- I pasted the above code in my terminal and ran it.  
+- There was no output(which is usually a good indicator that it worked) 
+- I went to my management console and checked the budget page and my created budget was there.  
+![budget](vscode-local:/c%3A/Users/Jay/Pictures/budget%20completion.png)   
+---
