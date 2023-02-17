@@ -19,7 +19,7 @@ Signed into the `AWS Management Console` and opened the [IAM console](https://us
    
 - I chose `AWS CLI Access` and clicked on create Access key  
 - Downloaded the CSV with the credentials   
--Setup Multi Factor Authentication (MFA) for my new user, this is best practice.  
+- Setup Multi Factor Authentication (MFA) for my new user, this is best practice.  
 - Signed out of root user and signed in as the new IAM user  
 ---
 ## Install and verify the AWS CLI 
@@ -111,5 +111,6 @@ I went to this [tutorial](https://aws.amazon.com/premiumsupport/knowledge-center
 - I pasted the above code in my terminal and ran it.  
 - There was no output(which is usually a good indicator that it worked) 
 - I went to my management console and checked the budget page and my created budget was there.  
-![budget](vscode-local:/c%3A/Users/Jay/Pictures/budget%20completion.png)   
+ ![budget completion](https://user-images.githubusercontent.com/105195327/219722136-5dfcfa9b-7b28-40b9-8f6d-399e8a248252.png)  
+
 ---
