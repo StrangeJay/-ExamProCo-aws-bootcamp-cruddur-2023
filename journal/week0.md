@@ -114,3 +114,15 @@ I went to this [tutorial](https://aws.amazon.com/premiumsupport/knowledge-center
  ![budget completion](https://user-images.githubusercontent.com/105195327/219722136-5dfcfa9b-7b28-40b9-8f6d-399e8a248252.png)  
 
 ---
+## My Conceptual diagram 
+[My crudder conceptual diagram](https://lucid.app/lucidchart/98375dfe-4833-4761-9915-4f0f1f4305c8/edit?viewport_loc=-1849%2C-124%2C1598%2C732%2C0_0&invitationId=inv_bbfc422f-3940-4692-9bd3-879087da10c9)  
+ 
+ ![My Crudder Conceptual Diagram](https://user-images.githubusercontent.com/105195327/219723694-8b0f58f8-0ebd-4c23-9b9b-a52cced04802.png)  
+
+ ---
+ ## My logical diagram 
+  [My crudder logical diagram](https://lucid.app/lucidchart/95da8a08-80d3-4b01-9b66-d932e19b7752/edit?viewport_loc=324%2C43%2C1769%2C811%2C0_0&invitationId=inv_3b1d18de-5ee0-4d22-bf14-70c3f56ac398) 
+ 
+ ![My Crudder Logical Diagram](https://user-images.githubusercontent.com/105195327/219723669-dd8987e1-87de-4c10-8911-c55b1281a642.png)
+---
+ 
