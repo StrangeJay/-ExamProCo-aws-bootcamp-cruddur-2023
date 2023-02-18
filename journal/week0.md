@@ -122,7 +122,6 @@ I went to this [tutorial](https://aws.amazon.com/premiumsupport/knowledge-center
  ---
  ## My logical diagram 
   [My crudder logical diagram](https://lucid.app/lucidchart/95da8a08-80d3-4b01-9b66-d932e19b7752/edit?viewport_loc=324%2C43%2C1769%2C811%2C0_0&invitationId=inv_3b1d18de-5ee0-4d22-bf14-70c3f56ac398) 
- 
- ![Screenshot_20230218_072715](https://user-images.githubusercontent.com/105195327/219845127-9d462d01-a3bb-46a8-b463-a24454d086d8.png)   
+ ![Screenshot_20230218_073605](https://user-images.githubusercontent.com/105195327/219845439-31205fdb-ca80-4cfc-8101-e54e7c80e96c.png)
 
  ---
