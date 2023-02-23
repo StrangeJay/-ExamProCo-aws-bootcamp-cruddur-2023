@@ -4,5 +4,6 @@
 
 ### Add a Dockerfile
 - I created a Dockerfile file in the **Bckend-flask** directory. 
-- I copied and pasted the command gotten from the [Omen king Crudder Repo](https://github.com/omenking/aws-bootcamp-cruddur-2023/blob/week-1/journal/week1.md) and pasted it into my Dockerfile.  
+- I inputed the neccesary commands needed to run my Dockerfile.  
 ![Dockerfile](vscode-local:/c%3A/Users/Jay/Pictures/Screenshots/Screenshot_20230223_130152.png)  
+- I added comments to my Dockerfile to better understand how what is going on, things being copied, and things being installed on the host OS, and things being installed in the container.  
