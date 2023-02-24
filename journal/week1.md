@@ -32,6 +32,10 @@
 ![http 200](https://user-images.githubusercontent.com/105195327/221193529-5474a0f8-c781-432c-829d-698c55a8e1de.png)
 
 - I stopped the server with `ctrl + c`  
+- I unset the frontend and backend variables by running the commands below 
+`unset FRONTEND_URL`
+`unset BACKEND_URL`  
+- I confirmed the unsetting by running `env | grep FRONTEND` and `env | grep BACKEND` 
 
 ### Add a Dockerfile
 - I created a Dockerfile file in the **backend-flask** directory. 
@@ -40,4 +44,8 @@
 
 - I added comments to my Dockerfile to better understand how what is going on, things being copied, and things being installed on the host OS, and things being installed in the container.  
 
-
+### Build Container 
+- I went back to my product directory by running `cd ..` 
+- I built my docker container by running the following command 
+`docker build -t  backend-flask ./backend-flask`  
+![built image](vscode-local:/c%3A/Users/Jay/Pictures/successfully%20built%20docker%20image.png)  
