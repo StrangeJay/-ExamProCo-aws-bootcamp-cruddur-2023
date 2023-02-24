@@ -11,15 +11,21 @@
 
 ![not found url](https://user-images.githubusercontent.com/105195327/221189534-19281e49-4311-4695-b0f2-cae97a3ca286.png)  
 
-- I unlocked the 4567 port and made it public, and tried again, this time i got a different error  
-![internal server error](https://user-images.githubusercontent.com/105195327/221190136-ee1b6d0a-1981-4d52-bc0e-8a3ee38f5800.png)  
+- I unlocked the 4567 port and made it public, and tried again, i got the same error. 
 
 - I was receiving a 404 error in the terminal
 ![404 error](https://user-images.githubusercontent.com/105195327/221190502-f32e218b-1490-48ce-abd5-22516ecbf105.png)  
+*This means the server is running and it's accepting requests, but nothing is showing up*.   
 
-- I saved the frontend and backend url as environment variables 
-- I made sure i appended `/api/activities/home` to the url 
-- I unlocked the port on the port tab
+- I appended the endpoint `/api/activities/home` to the url and this time i got a different error   
+![internal server error](https://user-images.githubusercontent.com/105195327/221190136-ee1b6d0a-1981-4d52-bc0e-8a3ee38f5800.png)  
+
+- I configured the frontend and backend environment variable 
+
+- I tried the command agaain, and tgis time i got data in json format  
+
+
+
 
 ### Add a Dockerfile
 - I created a Dockerfile file in the **backend-flask** directory. 
