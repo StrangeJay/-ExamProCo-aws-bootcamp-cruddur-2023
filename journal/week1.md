@@ -26,6 +26,7 @@
 - I tried the command agaain, and this time i got data in json format  
 ![json data](https://user-images.githubusercontent.com/105195327/221193492-e0bee396-3042-4fe4-b950-8d60f48d3ae2.png)
 
+- I got a 200 status response code on my terminal, which indicates the request has suceeded  
 ![http 200](https://user-images.githubusercontent.com/105195327/221193529-5474a0f8-c781-432c-829d-698c55a8e1de.png)
 
 
