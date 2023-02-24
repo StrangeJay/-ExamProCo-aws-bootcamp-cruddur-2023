@@ -63,10 +63,11 @@
 ![Daemon error](https://user-images.githubusercontent.com/105195327/221319475-ea838168-e202-4713-94f6-c2d45e9a4a0a.png)  
 
 - I realised the container image name has to be the last point so i flipped the command a bit and ran `docker run --rm -p 4567:4567 -it -e FRONTEND_URL -e BACKEND_URL backend -flask`  
-- It was successful 
-- I could've used the command `docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask` and then i wouldn't have had to set the frontend and backend environment variable first like i did.  
-- I went to my exposed ports to make sure port 4567 is open and public, i visited the web address with the necessary endpoint and i was taken to the page below.  
+*I could've used the command `docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask` and then i wouldn't have had to set the frontend and backend environment variable first like i did.*  
+- It was successful. Or at least i thought it was.   
+- I went to my exposed ports to make sure port 4567 is open and public, i visited the web address with the necessary endpoint and i was taken to the error page below.  
 ![running container](https://user-images.githubusercontent.com/105195327/221319497-9a93f95e-832f-4b04-a408-4417f2a1a7de.png)  
+- I ran the second command that adds the setting of environment variable `docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask` and this time i got the desired result.  
 
 
 
