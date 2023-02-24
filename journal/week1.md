@@ -52,3 +52,11 @@
 
 - I ran `docker images` to see my docker images
 ![docker image](https://user-images.githubusercontent.com/105195327/221204637-e07381cd-4392-46ca-8e23-9cff5c8bd127.png)
+
+#### Setting Environment Variables
+- I tried setting it with this command `FRONTEND_URL="*" BACKEND_URL="*" docker run --rm -p 4567:4567 -it backend-flask` and i got **not found** when i went to the address. 
+- I checked docker logs by clicking on the Docker icon and right clicking the running container, then i clicked **attach shell**  
+- I checked if the environment variable has been set by typing `env`, no frontend or backend environment variable was set.  
+- I stopped the running container
+
+
