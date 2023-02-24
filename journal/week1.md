@@ -21,9 +21,12 @@
 ![internal server error](https://user-images.githubusercontent.com/105195327/221190136-ee1b6d0a-1981-4d52-bc0e-8a3ee38f5800.png)  
 
 - I configured the frontend and backend environment variable 
+![Fend Bend Var](https://user-images.githubusercontent.com/105195327/221193448-aa861acb-543a-4484-839c-1c93ab593c14.png)
 
-- I tried the command agaain, and tgis time i got data in json format  
+- I tried the command agaain, and this time i got data in json format  
+![json data](https://user-images.githubusercontent.com/105195327/221193492-e0bee396-3042-4fe4-b950-8d60f48d3ae2.png)
 
+![http 200](https://user-images.githubusercontent.com/105195327/221193529-5474a0f8-c781-432c-829d-698c55a8e1de.png)
 
 
 
