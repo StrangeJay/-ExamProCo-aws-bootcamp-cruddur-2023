@@ -67,7 +67,11 @@
 - It was successful. Or at least i thought it was.   
 - I went to my exposed ports to make sure port 4567 is open and public, i visited the web address with the necessary endpoint and i was taken to the error page below.  
 ![running container](https://user-images.githubusercontent.com/105195327/221319497-9a93f95e-832f-4b04-a408-4417f2a1a7de.png)  
+- I saw the following error in my terminal  
+![error](https://user-images.githubusercontent.com/105195327/221320653-a6a522b7-aa1f-4ce9-ac0e-d7be19e2e0f9.png)  
+
 - I ran the second command that adds the setting of environment variable `docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask` and this time i got the desired result.  
+![Screenshot_20230225_002925](https://user-images.githubusercontent.com/105195327/221320692-d1be8aec-c9ef-44b8-8265-4fca04a84d77.png)  
 
 
 
