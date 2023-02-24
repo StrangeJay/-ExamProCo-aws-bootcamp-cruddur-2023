@@ -48,4 +48,7 @@
 - I went back to my product directory by running `cd ..` 
 - I built my docker container by running the following command 
 `docker build -t  backend-flask ./backend-flask`  
-![built image](vscode-local:/c%3A/Users/Jay/Pictures/successfully%20built%20docker%20image.png)  
+![successfully built docker image](https://user-images.githubusercontent.com/105195327/221204548-c60b937c-8ced-4ed0-8e21-bb4431d3fde9.png)
+
+- I ran `docker images` to see my docker images
+![docker image](https://user-images.githubusercontent.com/105195327/221204637-e07381cd-4392-46ca-8e23-9cff5c8bd127.png)
