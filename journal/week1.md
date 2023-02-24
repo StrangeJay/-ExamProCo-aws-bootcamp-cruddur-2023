@@ -1,6 +1,6 @@
 # Week 1 — App Containerization 
 
-## Contenarize Backend 
+## Containerize Backend  
 
 ### Run Flask locally
 - I changed directory to the **backend-flask** directory
@@ -28,18 +28,18 @@
 - I tried the command again, and this time i got data in json format  
 ![json data](https://user-images.githubusercontent.com/105195327/221193492-e0bee396-3042-4fe4-b950-8d60f48d3ae2.png)
 
-- I got a 200 status response code on my terminal, which indicates the request has suceeded  
+- I got a 200 status response code on my terminal, which indicates the request has succeeded  
 ![http 200](https://user-images.githubusercontent.com/105195327/221193529-5474a0f8-c781-432c-829d-698c55a8e1de.png)
 
 - I stopped the server with `ctrl + c`  
 - I unset the frontend and backend variables by running the commands below 
 `unset FRONTEND_URL`
 `unset BACKEND_URL`  
-- I confirmed the unsetting by running `env | grep FRONTEND` and `env | grep BACKEND` 
+- I confirmed that i unset the environment variable by running `env | grep FRONTEND` and `env | grep BACKEND` 
 
 ### Add a Dockerfile
 - I created a Dockerfile file in the **backend-flask** directory. 
-- I inputed the neccesary commands needed to run my Dockerfile.  
+- I inputted the necessary commands needed to run my Dockerfile.  
 ![Screenshot_20230223_130152](https://user-images.githubusercontent.com/105195327/220917090-cbbccaf3-76b8-49ae-807b-554eda20b384.png)
 
 - I added comments to my Dockerfile to better understand how what is going on, things being copied, and things being installed on the host OS, and things being installed in the container.  
@@ -57,6 +57,15 @@
 - I tried setting it with this command `FRONTEND_URL="*" BACKEND_URL="*" docker run --rm -p 4567:4567 -it backend-flask` and i got **not found** when i went to the address. 
 - I checked docker logs by clicking on the Docker icon and right clicking the running container, then i clicked **attach shell**  
 - I checked if the environment variable has been set by typing `env`, no frontend or backend environment variable was set.  
-- I stopped the running container
+- I stopped the running container  
+- I set the frontend and backend environment variable by running `set FRONTEND_URL="*"` and `set BACKEND_URL="*"` respectively.  
+- i ran the command `docker run --rm -p 4567:4567 -it backend-flask -e FRONTEND_URL -e BACKEND_URL` and i got an error message 
+
+
+- I realised the container image name has to be the last point so i flipped the command a bit and ran `docker run --rm -p 4567:4567 -it -e FRONTEND_URL -e BACKEND_URL backend -flask`  
+- It was successful 
+- I could've used the command `docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask` and then i wouldn't have had to set the frontend and backend environment variable first like i did.  
+- I went to my exposed ports to make sure port 4567 is open and public, i visited the web address with the necessary endpoint and i was taken to a functioning page.  
+
 
 
