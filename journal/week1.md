@@ -72,9 +72,10 @@
 
 - I ran the second command that adds the setting of environment variable `docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask` and this time i got the desired result.  
 ![Screenshot_20230225_002925](https://user-images.githubusercontent.com/105195327/221320692-d1be8aec-c9ef-44b8-8265-4fca04a84d77.png)  
-- I ran `docker ps` to confirm that my container is running.  
+- I ran `docker ps` to confirm that my container is running. 
+![running container2](https://user-images.githubusercontent.com/105195327/221321915-dc80aa3e-a469-467d-83c8-ae3b3e812a7c.png)  
 
-_note_ The **--rm** flag cleans up the image when we stop the container, the **e** flag sets environment variable. 
+> **Note** The **"--rm"** flag cleans up the image when we stop the container, the **"-e"** flag sets environment variable. 
 ---
 ## Containerize Frontend
 
