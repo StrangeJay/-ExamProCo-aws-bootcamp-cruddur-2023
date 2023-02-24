@@ -2,7 +2,7 @@
 
 ## Contenarize Backend 
 
-### Run Python 
+### Run Flask locally
 - I changed directory to the **backend-flask** directory
 - I ran `pip3 install -r requirements.txt` to install the necessary requirements
 - I ran the code `python3 -m flask run --host=0.0.0.0 --port=4567` 
@@ -20,16 +20,18 @@
 - I appended the endpoint `/api/activities/home` to the url and this time i got a different error   
 ![internal server error](https://user-images.githubusercontent.com/105195327/221190136-ee1b6d0a-1981-4d52-bc0e-8a3ee38f5800.png)  
 
-- I configured the frontend and backend environment variable 
+- I configured the frontend and backend environment variable by running the following command 
+`export FRONTEND_URL="*"`  
+`export BACKEND_URL="*"`  
 ![Fend Bend Var](https://user-images.githubusercontent.com/105195327/221193448-aa861acb-543a-4484-839c-1c93ab593c14.png)
 
-- I tried the command agaain, and this time i got data in json format  
+- I tried the command again, and this time i got data in json format  
 ![json data](https://user-images.githubusercontent.com/105195327/221193492-e0bee396-3042-4fe4-b950-8d60f48d3ae2.png)
 
 - I got a 200 status response code on my terminal, which indicates the request has suceeded  
 ![http 200](https://user-images.githubusercontent.com/105195327/221193529-5474a0f8-c781-432c-829d-698c55a8e1de.png)
 
-
+- I stopped the server with `ctrl + c`  
 
 ### Add a Dockerfile
 - I created a Dockerfile file in the **backend-flask** directory. 
