@@ -111,5 +111,16 @@
 
 ---
 ## Creating The Notification Feature For Frontend and Backend
+- I went to the app.py file in the backend-flask directory  
+- I created a parameter for my notifications in the app.py file  
+
+- In the backend-flask directory, i created a **notifications_activities.py** file in the services directory. 
+- I added an import statement for notifications  
+- I opened the notifications_activities.py file and using home_activities as a guide i inputted some data  
+
+- I visited the notifications endpoint and got an error 
+
+- I fixed the error by changing app.route definitions in the app.py file to **"data_notifications()"** and this fixed the problem.  
+
 
 
