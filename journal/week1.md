@@ -139,35 +139,36 @@
 ## Adding DynamoDB Local and Postgres
 - I opened my dockercompose.yml file  
 - I integrated the postgre and DynamoDB commands in it.  
+![Screenshot_20230225_145021](https://user-images.githubusercontent.com/105195327/221361133-98f25425-a429-493c-a739-54218aa7d7c8.png)  
 
 ### DynamoDB Local 
-> services:
-  dynamodb-local:
-    # https://stackoverflow.com/questions/67533058/persist-local-dynamodb-data-in-volumes-lack-permission-unable-to-open-databa
-    # We needed to add user:root to get this working.
-    user: root
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
-    image: "amazon/dynamodb-local:latest"
-    container_name: dynamodb-local
-    ports:
-      - "8000:8000"
-    volumes:
-      - "./docker/dynamodb:/home/dynamodblocal/data"
-    working_dir: /home/dynamodblocal 
+> services:  
+  dynamodb-local:  
+    # https://stackoverflow.com/questions/67533058/persist-local-dynamodb-data-in-volumes-lack-permission-unable-to-open-databa  
+    # We needed to add user:root to get this working.  
+    user: root  
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"  
+    image: "amazon/dynamodb-local:latest"  
+    container_name: dynamodb-local  
+    ports:  
+      - "8000:8000"  
+    volumes:  
+      - "./docker/dynamodb:/home/dynamodblocal/data"  
+    working_dir: /home/dynamodblocal  
 
 
 ### Postgre 
-> services:
-  db:
-    image: postgres:13-alpine
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-    ports:
-      - '5432:5432'
-    volumes: 
-      - db:/var/lib/postgresql/data
+> services:  
+  db:  
+    image: postgres:13-alpine  
+    restart: always  
+    environment:  
+      - POSTGRES_USER=postgres  
+      - POSTGRES_PASSWORD=password  
+    ports:  
+      - '5432:5432'  
+    volumes:  
+      - db:/var/lib/postgresql/data  
 
 
 ### Volume
@@ -175,6 +176,10 @@
   db:
     driver: local
 
-- I opened the necessary ports and i ran docker-compose up. All containers were successfully created.  
+- I opened the necessary ports and i ran docker-compose up. 
+![Screenshot_20230225_145710](https://user-images.githubusercontent.com/105195327/221361154-8e450dd3-1fcc-4770-92c5-ba509e954b3f.png)  
+
+- All containers were successfully created.  
+![Screenshot_20230225_145850](https://user-images.githubusercontent.com/105195327/221361167-6ec45aca-788a-4cde-892d-7b1f943fe23f.png)  
 
 
