@@ -135,5 +135,45 @@
 - I created a **"NotificationsFeedPage.css"** file.  
 - I saved my changes and refreshed the web address and my changes were seen.  
   ![Screenshot_20230225_142333](https://user-images.githubusercontent.com/105195327/221359283-644b7c40-e8c5-41e1-aee6-e97468035f6b.png)  
+---
+## Adding DynamoDB Local and Postgres
+- I opened my dockercompose.yml file  
+- I integrated the postgre and DynamoDB commands in it.  
 
+### DynamoDB Local 
+> services:
+  dynamodb-local:
+    # https://stackoverflow.com/questions/67533058/persist-local-dynamodb-data-in-volumes-lack-permission-unable-to-open-databa
+    # We needed to add user:root to get this working.
+    user: root
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    image: "amazon/dynamodb-local:latest"
+    container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./docker/dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal 
+
+
+### Postgre 
+> services:
+  db:
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+
+
+### Volume
+> volumes:
+  db:
+    driver: local
+
+    
 
