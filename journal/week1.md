@@ -193,7 +193,7 @@
 
 - I copied and pasted the first 3 commands needed to install posgre client, one by one, an ran them in the terminal.  
 - I ran the last line of command  
-- I typed **"psql"** to see if it worked and i got an error.  
+- I typed **"psql -Upostgres --host localhost"** to see if it worked and it did.  So we know it's working. 
 
 
 - 
