@@ -80,18 +80,20 @@
 ## Containerize Frontend
 - I changed directory to my front end directory `frontend-react-js` and ran `npm i`
 - I created a Dockerfile in my frontend directory and copied the command below into it.  
-> `FROM node:16.18
 
-> ENV PORT=3000
+> FROM node:16.18
 
-> COPY . /frontend-react-js
-> WORKDIR /frontend-react-js
-> RUN npm install
-> EXPOSE ${PORT}
-> CMD ["npm", "start"]`  
+> ENV PORT=3000  
+
+> COPY . /frontend-react-js  
+> WORKDIR /frontend-react-js  
+> RUN npm install  
+> EXPOSE ${PORT}  
+> CMD ["npm", "start"]  
 
 - I went back to my product directory with `cd ..`  
 - i created a **docker-compose.yml file** and pasted the necessary text into the file.  
 - I right-clicked the **docker-compose.yml** file, and clicked on "Compose Up". *An alternative would've been to run `docker-compose up` in the terminal.  
+---
 
 
