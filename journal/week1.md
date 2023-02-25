@@ -113,14 +113,17 @@
 ## Creating The Notification Feature For Frontend and Backend
 - I went to the app.py file in the backend-flask directory  
 - I created a parameter for my notifications in the app.py file  
+![notifications api](https://user-images.githubusercontent.com/105195327/221357021-833e3a7a-699e-4c08-87e0-0b05fc74bb14.png)  
 
 - In the backend-flask directory, i created a **notifications_activities.py** file in the services directory. 
 - I added an import statement for notifications  
 - I opened the notifications_activities.py file and using home_activities as a guide i inputted some data  
+![notifications activities](https://user-images.githubusercontent.com/105195327/221357091-91778e9c-ca51-40df-b940-0d2af5f7741d.png)  
 
-- I visited the notifications endpoint and got an error 
+- I visited the notifications endpoint and got an error  
+![error trying to run notifications](https://user-images.githubusercontent.com/105195327/221357101-a3ad2db0-fc4c-48dd-a01f-2048a32fd082.png)  
 
 - I fixed the error by changing app.route definitions in the app.py file to **"data_notifications()"** and this fixed the problem.  
-
+![notifications api working](https://user-images.githubusercontent.com/105195327/221357111-9fac2dc2-3e24-48b5-bcbf-3d8227725de7.png)  
 
 
