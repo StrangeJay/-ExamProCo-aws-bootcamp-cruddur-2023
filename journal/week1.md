@@ -175,5 +175,6 @@
   db:
     driver: local
 
-    
+- I opened the necessary ports and i ran docker-compose up. All containers were successfully created.  
+
 
