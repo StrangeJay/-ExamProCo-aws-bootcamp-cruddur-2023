@@ -94,10 +94,17 @@
 - I went back to my product directory with `cd ..`  
 - i created a **docker-compose.yml file** and pasted the necessary text into the file.  
 - I right-clicked the **docker-compose.yml** file, and clicked on "Compose Up". *An alternative would've been to run `docker-compose up` in the terminal.  
-- The containers were sucessfully started 
+- The containers were successfully started 
 ![started container](https://user-images.githubusercontent.com/105195327/221348897-ce7b6f18-4ae2-4e39-a0c5-42a610384c59.png)  
 - Frontend was served 
 ![working frontend container](https://user-images.githubusercontent.com/105195327/221348914-5ef2722e-a8e8-4055-a625-a42dba0927f6.png)  
 ---
+## Add an endpoint to the application
+- I clicked on the open api icon 
+- I right clicked on the existing openapi and selected "add path", and a section was created below the existing commands.  
+- I added description and set a tag to allow me group endpoints under activities.  
+- I set it to return application/json, i set a reference, and committed my changes. 
+---
+## Creating The Notification Feature For Frontend and Backend
 
 
