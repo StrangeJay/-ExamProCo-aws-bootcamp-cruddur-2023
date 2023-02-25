@@ -111,6 +111,8 @@
 
 ---
 ## Creating The Notification Feature For Frontend and Backend
+
+### Backend 
 - I went to the app.py file in the backend-flask directory  
 - I created a parameter for my notifications in the app.py file  
 ![notifications api](https://user-images.githubusercontent.com/105195327/221357021-833e3a7a-699e-4c08-87e0-0b05fc74bb14.png)  
@@ -126,4 +128,10 @@
 - I fixed the error by changing app.route definitions in the app.py file to **"data_notifications()"** and this fixed the problem.  
 ![notifications api working](https://user-images.githubusercontent.com/105195327/221357111-9fac2dc2-3e24-48b5-bcbf-3d8227725de7.png)  
 
+### Frontend
+- I went to the frontend directory and opened the **"App.js"** file. 
+- I created the path for my notifications feed page and added the import statement. 
+- I created a **"NotificationsFeedPage.js"** file in pages directory and using the **"HomeFeedPage.js"** as a guide i inputted the required data. 
+- I created a **"NotificationsFeedPage.css"** file.  
+- I saved my changes and refreshed the web address and my changes were seen.  
 
