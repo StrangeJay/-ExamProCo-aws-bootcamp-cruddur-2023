@@ -96,14 +96,19 @@
 - I right-clicked the **docker-compose.yml** file, and clicked on "Compose Up". *An alternative would've been to run `docker-compose up` in the terminal.  
 - The containers were successfully started 
 ![started container](https://user-images.githubusercontent.com/105195327/221348897-ce7b6f18-4ae2-4e39-a0c5-42a610384c59.png)  
-- Frontend was served 
-![working frontend container](https://user-images.githubusercontent.com/105195327/221348914-5ef2722e-a8e8-4055-a625-a42dba0927f6.png)  
+- Frontend was served and communicating with the backend.  
+![Screenshot_20230225_121134](https://user-images.githubusercontent.com/105195327/221354628-f6011cd5-f325-4b73-9c8a-5a25b1c8dbb7.png)
+
 ---
 ## Add an endpoint to the application
 - I clicked on the open api icon 
 - I right clicked on the existing openapi and selected "add path", and a section was created below the existing commands.  
+![new api for notification](https://user-images.githubusercontent.com/105195327/221354669-5db9a557-27dc-440b-901f-d1115f0d035f.png)  
+
 - I added description and set a tag to allow me group endpoints under activities.  
 - I set it to return application/json, i set a reference, and committed my changes. 
+![open api update](https://user-images.githubusercontent.com/105195327/221354693-7d20273c-8a86-4318-8b53-0d4e37a83011.png)  
+
 ---
 ## Creating The Notification Feature For Frontend and Backend
 
