@@ -182,4 +182,18 @@
 - All containers were successfully created.  
 ![Screenshot_20230225_145850](https://user-images.githubusercontent.com/105195327/221361167-6ec45aca-788a-4cde-892d-7b1f943fe23f.png)  
 
+### Install postgre client library in gitpod
+- I added the code below to my gitpod.yml file
+>   - name: postgres  
+    init: |  
+      curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg  
+      echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list  
+      sudo apt update  
+      sudo apt install -y postgresql-client-13 libpq-dev  
 
+- I copied and pasted the first 3 commands needed to install posgre client, one by one, an ran them in the terminal.  
+- I ran the last line of command  
+- I typed **"psql"** to see if it worked and i got an error.  
+
+
+- 
