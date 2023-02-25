@@ -134,5 +134,6 @@
 - I created a **"NotificationsFeedPage.js"** file in pages directory and using the **"HomeFeedPage.js"** as a guide i inputted the required data. 
 - I created a **"NotificationsFeedPage.css"** file.  
 - I saved my changes and refreshed the web address and my changes were seen.  
-![Screenshot_20230225_141528](https://user-images.githubusercontent.com/105195327/221359103-25bf6088-485c-421f-84eb-02882877d810.png)  
+  ![Screenshot_20230225_142333](https://user-images.githubusercontent.com/105195327/221359283-644b7c40-e8c5-41e1-aee6-e97468035f6b.png)  
+
 
