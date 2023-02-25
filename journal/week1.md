@@ -94,6 +94,10 @@
 - I went back to my product directory with `cd ..`  
 - i created a **docker-compose.yml file** and pasted the necessary text into the file.  
 - I right-clicked the **docker-compose.yml** file, and clicked on "Compose Up". *An alternative would've been to run `docker-compose up` in the terminal.  
+- The containers were sucessfully started 
+![started container](https://user-images.githubusercontent.com/105195327/221348897-ce7b6f18-4ae2-4e39-a0c5-42a610384c59.png)  
+- Frontend was served 
+![working frontend container](https://user-images.githubusercontent.com/105195327/221348914-5ef2722e-a8e8-4055-a625-a42dba0927f6.png)  
 ---
 
 
