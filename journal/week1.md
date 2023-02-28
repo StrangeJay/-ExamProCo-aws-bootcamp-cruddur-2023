@@ -196,3 +196,28 @@
 - I typed **"psql -Upostgres --host localhost"** to see if it worked and it did.  So we know it's working. 
 ![postgre working](https://user-images.githubusercontent.com/105195327/221365067-892b626a-9034-44ad-abe5-24bfd84285a6.png)
 ---
+## Push and tag an image to Docker Hub
+- i logged in to [docker hub](https://hub.docker.com/) 
+- I created a repository 
+- I logged into docker from the command line with `docker login` 
+
+- I created my image and tagged it during creation
+- I checked the image ID using `docker images`  
+- I clicked on the docker icon and found the needed image 
+- I right clicked and chose **push** 
+- I inputed my dockerhub username 
+
+
+- I inputed my password 
+
+
+- I chose a namespace and put in the repo name with tag assigned 
+
+
+- I clicked on enter and the image was pushed 
+
+
+- I repeated the same process for the second image  
+
+
+- Both images are now on my dockerhub repo  
