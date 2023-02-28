@@ -199,25 +199,32 @@
 ## Push and tag an image to Docker Hub
 - i logged in to [docker hub](https://hub.docker.com/) 
 - I created a repository 
+![docker hub repo](https://user-images.githubusercontent.com/105195327/221829414-e0b1a144-7834-4529-a3ec-f51a7b2a572d.png)  
+
 - I logged into docker from the command line with `docker login` 
+![Docker login](https://user-images.githubusercontent.com/105195327/221829518-45520508-4d87-4a49-b07b-a7d665069877.png)  
 
 - I created my image and tagged it during creation
 - I checked the image ID using `docker images`  
-- I clicked on the docker icon and found the needed image 
-- I right clicked and chose **push** 
-- I inputed my dockerhub username 
+![docker images](https://user-images.githubusercontent.com/105195327/221829625-4b52b92f-78b2-446c-8541-c71c3531a2ea.png)  
 
+- I clicked on the docker icon and found the needed image  
+- I right clicked and chose **push** 
+![Docker Push](https://user-images.githubusercontent.com/105195327/221829798-1198dc35-8050-4278-8820-2f37faf48bfc.png)  
+
+- I inputed my dockerhub username 
+![docker registry](https://user-images.githubusercontent.com/105195327/221829960-e6b4481f-b97c-4827-bb8e-fe8b394ffa8b.png)  
 
 - I inputed my password 
+![Docker password](https://user-images.githubusercontent.com/105195327/221830009-c1d9dd71-9d81-4e94-92c1-d5f787deac71.png)  
 
-
-- I chose a namespace and put in the repo name with tag assigned 
-
-
-- I clicked on enter and the image was pushed 
-
+- I chose the namespace and put in the repo name with tag assigned, I clicked on enter and the image was pushed 
+![pushed frontend dockerhub](https://user-images.githubusercontent.com/105195327/221830417-eaaebef2-4787-4a94-9560-20fa30d5ca11.png)  
 
 - I repeated the same process for the second image  
-
+![backend namespace](https://user-images.githubusercontent.com/105195327/221830642-8fc0183f-c385-4b0d-8644-72896497f2a5.png)
 
 - Both images are now on my dockerhub repo  
+![pushed dockerhub images](https://user-images.githubusercontent.com/105195327/221830774-39891e16-39b7-4534-85cf-6543243f97fe.png)  
+---
+
