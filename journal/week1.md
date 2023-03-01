@@ -1,4 +1,7 @@
 # Week 1 — App Containerization 
+---
+## REQUIRED WORK
+---
 
 ## Containerize Backend  
 
@@ -196,6 +199,9 @@
 - I typed **"psql -Upostgres --host localhost"** to see if it worked and it did.  So we know it's working. 
 ![postgre working](https://user-images.githubusercontent.com/105195327/221365067-892b626a-9034-44ad-abe5-24bfd84285a6.png)
 ---
+## HOMEWORK CHALLENGES
+---
+
 ## Push and tag an image to Docker Hub
 - i logged in to [docker hub](https://hub.docker.com/) 
 - I created a repository 
