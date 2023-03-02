@@ -18,7 +18,7 @@
 ![OTEL env ](https://user-images.githubusercontent.com/105195327/222524148-2f3816d0-2976-476a-8e58-661d2f012422.png)  
 
 - I changed directory to the **backend-flask** directory
-- I added the following commands to my requirements.txt file 
+- I went to honeycombs python instruction section, copied the installation commands there and added them to my requirements.txt file 
 >   opentelemetry-api
     opentelemetry-sdk 
     opentelemetry-exporter-otlp-proto-http 
@@ -27,5 +27,27 @@
 
 and ran `pip install -r requirements.txt`   
 
-- 
+- I copied the import statements from initialize section and pasted it in my **app.py** file.  
 
+>   from opentelemetry import trace
+    from opentelemetry.instrumentation.flask import FlaskInstrumentor
+    from opentelemetry.instrumentation.requests import RequestsInstrumentor
+    from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+    from opentelemetry.sdk.trace import TracerProvider
+    from opentelemetry.sdk.trace.export import BatchSpanProcessor
+
+
+- I copied the trace provider section to my app.py file 
+
+>   # Initialize tracing and an exporter that can send data to Honeycomb
+    provider = TracerProvider()
+    processor = BatchSpanProcessor(OTLPSpanExporter())
+    provider.add_span_processor(processor)
+    trace.set_tracer_provider(provider)
+    tracer = trace.get_tracer(__name__) 
+
+- I copied and pasted the part to initialise automatic instrumentations with flask, removing the already existing `app = Flask(__name__)` line.  
+>   FlaskInstrumentor().instrument_app(app)
+    RequestsInstrumentor().instrument()  
+
+-     
