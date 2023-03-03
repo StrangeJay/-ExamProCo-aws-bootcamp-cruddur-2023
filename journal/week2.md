@@ -98,6 +98,8 @@ and ran `pip install -r requirements.txt`
 `tracer = trace.get_tracer("home.activities")` 
 `with tracer.start_as_current_span("home-activities-mock-data"):`  
 to my **home_activities.py** file. 
+![add tracer](https://user-images.githubusercontent.com/105195327/222827129-b25cc64f-ff18-4427-8a0d-d689efc2ae75.png)  
+
 - I went to my frontend directory, did my `npm i`
 - I docker comosed up, went to the web pages to check them out, then i went to honeycomb to see if the extra span would show up for 'Home activities'  
 
