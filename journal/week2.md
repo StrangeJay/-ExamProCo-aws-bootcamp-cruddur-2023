@@ -11,9 +11,9 @@
 - I pasted it to the terminal and set it as an environment variable using the `export HONEYCOMB_API_KEY="<insert your api key here>"` command. And i saved it using `gp env export HONEYCOMB_API_KEY="<insert API key here>"`  
 - I set my honeycomb service name and saved to the environment. 
 - I added the OTEL service name, endpoint and headers to my docker-compose.yml file  
-> OTEL_SERVICE_NAME: "${HONEYCOMB_SERVICE_NAME}"
-  OTEL_EXPORTER_OTLP_ENDPOINT: "https://api.honeycomb.io"
-  OTEL_EXPORTER_OTLP_HEADERS: "x-honeycomb-team=${HONEYCOMB_API_KEY}"  
+> OTEL_SERVICE_NAME: "${HONEYCOMB_SERVICE_NAME}"  
+  OTEL_EXPORTER_OTLP_ENDPOINT: "https://api.honeycomb.io"  
+  OTEL_EXPORTER_OTLP_HEADERS: "x-honeycomb-team=${HONEYCOMB_API_KEY}"    
   
 ![OTEL env ](https://user-images.githubusercontent.com/105195327/222524148-2f3816d0-2976-476a-8e58-661d2f012422.png)  
 
@@ -29,7 +29,7 @@ and ran `pip install -r requirements.txt`
 
 - I copied the import statements from initialize section and pasted it in my **app.py** file.  
 
->   from opentelemetry import trace
+>   from opentelemetry import trace  
     from opentelemetry.instrumentation.flask import FlaskInstrumentor
     from opentelemetry.instrumentation.requests import RequestsInstrumentor
     from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
@@ -40,14 +40,22 @@ and ran `pip install -r requirements.txt`
 - I copied the trace provider section to my app.py file 
 
 >   # Initialize tracing and an exporter that can send data to Honeycomb
-    provider = TracerProvider()
-    processor = BatchSpanProcessor(OTLPSpanExporter())
-    provider.add_span_processor(processor)
-    trace.set_tracer_provider(provider)
-    tracer = trace.get_tracer(__name__) 
+    provider = TracerProvider()  
+    processor = BatchSpanProcessor(OTLPSpanExporter())  
+    provider.add_span_processor(processor)  
+    trace.set_tracer_provider(provider)  
+    tracer = trace.get_tracer(__name__)  
 
 - I copied and pasted the part to initialise automatic instrumentations with flask, removing the already existing `app = Flask(__name__)` line.  
->   FlaskInstrumentor().instrument_app(app)
+>   FlaskInstrumentor().instrument_app(app)  
     RequestsInstrumentor().instrument()  
 
--     
+- I changed directory to my **frontend-react-js** directory, and i ran `npm i`.   
+-  I went back to my production directory, right clicked on my docker-compose file, and did a docker-compose up. 
+
+
+- I went to honeycomb and checked for data, and there was data in the dataset.  
+-  
+- I set my ports on the gitpod.yml file, so i don't have to keep unlocking them everytime.  
+- I ran a trace for specific api calls to see more details  
+
