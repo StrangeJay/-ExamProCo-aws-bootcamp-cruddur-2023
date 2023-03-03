@@ -59,3 +59,19 @@ and ran `pip install -r requirements.txt`
 - I set my ports on the gitpod.yml file, so i don't have to keep unlocking them everytime.  
 - I ran a trace for specific api calls to see more details  
 
+### Hardcoding a SPAN 
+- I checked the [honeycomb docs](https://docs.honeycomb.io/getting-data-in/opentelemetry/python/) for the required command to aquire a tracer for my **home activities**  
+- I copied the command 
+`from opentelemetry import trace` 
+`tracer = trace.get_tracer("home.activities")` 
+`with tracer.start_as_current_span("home-activities-mock-data"):`  
+to my **home_activities.py** file. 
+- I went to my frontend directory, did my `npm i`
+- I docker comosed up, went to the web pages to check them out, then i went to honeycomb to see if the extra span would show up for 'Home activities'  
+
+
+### Adding Attributes to the span 
+- I went back to the honeycombs python docs, copied the necesasary command for adding attributes, and i added it to my **home_activities.py** file. 
+
+
+
