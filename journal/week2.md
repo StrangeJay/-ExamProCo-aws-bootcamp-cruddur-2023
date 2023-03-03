@@ -131,8 +131,93 @@ span.set_attribute("app.result_length", len(results))
 ## X-Ray
 ### Instrument AWS X-Ray for Flask 
 - I updated my **gitpod.yml** file, so i don't have to `npm i` everytime.  
+- I went to check the [AWS SDK for python](https://github.com/aws/aws-xray-sdk-python) instructions.  
+- I changed directory to my **backend-flask** directory
+- I added the `aws-xray-sdk` command to my requirements.txt file and ran `pip install -r requirements.txt` to install dependencies. 
+
+### Add to app.py 
+- i added the commands below to my app.py file 
+```
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+XRayMiddleware(app, xray_recorder)
+```
+
+### Setup AWS X-RAY Resources 
+- I created an **xray.json** file in my **aws/json** folder.  
+- I inputted the commands below in the file json file.  
+
+```
+{
+  "SamplingRule": {
+      "RuleName": "Cruddur",
+      "ResourceARN": "*",
+      "Priority": 9000,
+      "FixedRate": 0.1,
+      "ReservoirSize": 5,
+      "ServiceName": "backend-flask",
+      "ServiceType": "*",
+      "Host": "*",
+      "HTTPMethod": "*",
+      "URLPath": "*",
+      "Version": 1
+  }
+}
+```
+
+### Create an xray group
+- I ran the command below, in my terminal.  
+```
+FLASK_ADDRESS="https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+aws xray create-group \
+   --group-name "Cruddur" \
+   --filter-expression "service(\"backend-flask\")"
+```
+
+### Create a sampling rule 
+- I ran the following command in my terminal and it returned json 
+
+```
+aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
+```
+- Confirm on the AWS console that the xray sampling rule has been created  
 
 
+### Install the X-RAY Daemon 
+- [Github AWS X-RAY Daemon]( wget https://s3.us-east-2.amazonaws.com/aws-xray-assets.us-east-2/xray-daemon/aws-xray-daemon-3.x.deb
+ sudo dpkg -i **.deb)  
 
+- [X-RAY Docker Compose example](https://github.com/marjamis/xray/blob/master/docker-compose.yml)  
+
+```
+wget https://s3.us-east-2.amazonaws.com/aws-xray-assets.us-east-2/xray-daemon/aws-xray-daemon-3.x.deb
+sudo dpkg -i **.deb
+```
+
+### Add Deamon Service to Docker Compose
+- I added the following commands to my **docker-compose.yml** file.  
+```
+  xray-daemon:
+    image: "amazon/aws-xray-daemon"
+    environment:
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_REGION: "us-east-1"
+    command:
+      - "xray -o -b xray-daemon:2000"
+    ports:
+      - 2000:2000/udp
+```
+
+- I add these two environment variables to the **backend-flask** section of my `docker-compose.yml` file.  
+```
+      AWS_XRAY_URL: "*4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
+      AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
+```
+
+- 
 
 
