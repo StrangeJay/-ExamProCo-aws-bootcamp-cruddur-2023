@@ -127,6 +127,10 @@ span.set_attribute("app.result_length", len(results))
 
 ![app  attributed query](https://user-images.githubusercontent.com/105195327/222831013-ec83c399-cc38-4126-a814-2c05969d8e25.png)
 
+---
+## X-Ray
+### Instrument AWS X-Ray for Flask 
+- I updated my **gitpod.yml** file, so i don't have to `npm i` everytime.  
 
 
 
