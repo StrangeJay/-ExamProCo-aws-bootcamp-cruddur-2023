@@ -94,18 +94,41 @@ and ran `pip install -r requirements.txt`
 ### Hardcoding a SPAN 
 - I checked the [honeycomb docs](https://docs.honeycomb.io/getting-data-in/opentelemetry/python/) for the required command to aquire a tracer for my **home activities**  
 - I copied the command 
-`from opentelemetry import trace` 
-`tracer = trace.get_tracer("home.activities")` 
-`with tracer.start_as_current_span("home-activities-mock-data"):`  
-to my **home_activities.py** file. 
+```
+from opentelemetry import trace` 
+tracer = trace.get_tracer("home.activities")` 
+with tracer.start_as_current_span("home-activities-mock-data"):
+```
+to my **home_activities.py** file.  
+
 ![add tracer](https://user-images.githubusercontent.com/105195327/222827129-b25cc64f-ff18-4427-8a0d-d689efc2ae75.png)  
 
 - I went to my frontend directory, did my `npm i`
 - I docker comosed up, went to the web pages to check them out, then i went to honeycomb to see if the extra span would show up for 'Home activities'  
+![extra span](https://user-images.githubusercontent.com/105195327/222829679-643f51cc-6588-4d0b-a849-3f6860a6281d.png)  
 
+![full view extra span](https://user-images.githubusercontent.com/105195327/222829970-9c8a0f96-93b2-442d-a430-6f614be5652b.png)
 
 ### Adding Attributes to the span 
-- I went back to the honeycombs python docs, copied the necesasary command for adding attributes, and i added it to my **home_activities.py** file. 
+- I went back to the honeycombs python docs, copied the necesasary command for adding attributes, and i added it to my **home_activities.py** file.  
+```
+span = trace.get_current_span()
+span.set_attribute("user.id", user.id())
+``` 
+- I edited it with the necessary information i'd use to identify what i wanted.  
+```
+span.set_attribute("app.now", now.isofformat()) 
+span.set_attribute("app.result_length", len(results))
+``` 
+![span attribute](https://user-images.githubusercontent.com/105195327/222830886-a0a15ef9-6afd-4bbf-b8de-3fa636c5fa8c.png)  
+
+- I refreshed the web pages and revisited my honeycome query page  
+![attributed query run](https://user-images.githubusercontent.com/105195327/222830988-ba69e30b-3d51-4bc5-bc3e-a710c9466c9e.png)  
+
+![app  attributed query](https://user-images.githubusercontent.com/105195327/222831013-ec83c399-cc38-4126-a814-2c05969d8e25.png)
+
+
+
 
 
 
