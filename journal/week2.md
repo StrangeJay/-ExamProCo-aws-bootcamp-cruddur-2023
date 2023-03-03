@@ -8,56 +8,88 @@
 
 ![HC api key](https://user-images.githubusercontent.com/105195327/222524060-aaaa66f0-813b-442c-a186-f0cbfb5d1943.png)  
 
-- I pasted it to the terminal and set it as an environment variable using the `export HONEYCOMB_API_KEY="<insert your api key here>"` command. And i saved it using `gp env export HONEYCOMB_API_KEY="<insert API key here>"`  
+- I pasted it to the terminal and set it as an environment variable using the `export HONEYCOMB_API_KEY="<insert your api key here>"` command. 
+And i saved it using `gp env export HONEYCOMB_API_KEY="<insert API key here>"`  
 - I set my honeycomb service name and saved to the environment. 
 - I added the OTEL service name, endpoint and headers to my docker-compose.yml file  
-> OTEL_SERVICE_NAME: "${HONEYCOMB_SERVICE_NAME}"  
+``` 
+  OTEL_SERVICE_NAME: "${HONEYCOMB_SERVICE_NAME}"  
   OTEL_EXPORTER_OTLP_ENDPOINT: "https://api.honeycomb.io"  
   OTEL_EXPORTER_OTLP_HEADERS: "x-honeycomb-team=${HONEYCOMB_API_KEY}"    
+```  
   
 ![OTEL env ](https://user-images.githubusercontent.com/105195327/222524148-2f3816d0-2976-476a-8e58-661d2f012422.png)  
 
 - I changed directory to the **backend-flask** directory
 - I went to honeycombs python instruction section, copied the installation commands there and added them to my requirements.txt file 
->   opentelemetry-api
+![honeycomb pip install](https://user-images.githubusercontent.com/105195327/222602728-dad95858-7ad9-40bd-8a5c-8c4430bec3e3.png)  
+
+```   
+    opentelemetry-api
     opentelemetry-sdk 
     opentelemetry-exporter-otlp-proto-http 
     opentelemetry-instrumentation-flask 
     opentelemetry-instrumentation-requests  
+```    
 
 and ran `pip install -r requirements.txt`   
 
 - I copied the import statements from initialize section and pasted it in my **app.py** file.  
 
->   from opentelemetry import trace  
+
+``` 
+    from opentelemetry import trace  
     from opentelemetry.instrumentation.flask import FlaskInstrumentor
     from opentelemetry.instrumentation.requests import RequestsInstrumentor
     from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
     from opentelemetry.sdk.trace import TracerProvider
     from opentelemetry.sdk.trace.export import BatchSpanProcessor
-
+```    
+![app py initialise import](https://user-images.githubusercontent.com/105195327/222602981-ee91dcbf-e80b-43ae-a49e-a4fd9351f645.png)  
 
 - I copied the trace provider section to my app.py file 
 
->   # Initialize tracing and an exporter that can send data to Honeycomb
+``` 
+    # Initialize tracing and an exporter that can send data to Honeycomb
     provider = TracerProvider()  
     processor = BatchSpanProcessor(OTLPSpanExporter())  
     provider.add_span_processor(processor)  
     trace.set_tracer_provider(provider)  
     tracer = trace.get_tracer(__name__)  
+```    
 
 - I copied and pasted the part to initialise automatic instrumentations with flask, removing the already existing `app = Flask(__name__)` line.  
->   FlaskInstrumentor().instrument_app(app)  
-    RequestsInstrumentor().instrument()  
+``` 
+    FlaskInstrumentor().instrument_app(app)  
+    RequestsInstrumentor().instrument() 
+```    
+
+![complete Honeycomb ish](https://user-images.githubusercontent.com/105195327/222603107-1c3d352c-4d33-44e3-8896-7eac31f80216.png)  
+
 
 - I changed directory to my **frontend-react-js** directory, and i ran `npm i`.   
--  I went back to my production directory, right clicked on my docker-compose file, and did a docker-compose up. 
+- I set my ports on the gitpod.yml file, so i don't have to keep unlocking them everytime.  
+- I went back to my production directory, right clicked on my docker-compose file, and did a docker-compose up. 
+![Docker compose up  HC](https://user-images.githubusercontent.com/105195327/222603276-d5804af9-de1d-4a0b-98ef-326f70ffe2a4.png)  
+
+![docker running perfectly](https://user-images.githubusercontent.com/105195327/222603295-9315611e-b1f9-44af-8aca-b4724d36079c.png)  
+
+- The containers are running. And the backend and frontend are up.
+![backend working](https://user-images.githubusercontent.com/105195327/222603329-b636674c-9127-4fca-9987-f576d80e4781.png)  
+
+![frontend working](https://user-images.githubusercontent.com/105195327/222603355-c267bee0-dbf1-4b10-b8ab-f886b4000e10.png)  
 
 
 - I went to honeycomb and checked for data, and there was data in the dataset.  
--  
-- I set my ports on the gitpod.yml file, so i don't have to keep unlocking them everytime.  
+![honeycomb data set](https://user-images.githubusercontent.com/105195327/222603517-99e74ac5-158a-49c6-af97-aa5fc7f2d8e0.png)  
+
+![honeycomb data feed](https://user-images.githubusercontent.com/105195327/222603551-3dbb07e7-5649-4efd-beae-0bfe1d0d311c.png)  
+
 - I ran a trace for specific api calls to see more details  
+![Screenshot 2023-03-03 012357](https://user-images.githubusercontent.com/105195327/222603723-fcd025d5-71e7-4354-ab04-57a31cb81e2c.png)
+
+ 
+---
 
 ### Hardcoding a SPAN 
 - I checked the [honeycomb docs](https://docs.honeycomb.io/getting-data-in/opentelemetry/python/) for the required command to aquire a tracer for my **home activities**  
