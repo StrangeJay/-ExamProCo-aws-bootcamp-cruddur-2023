@@ -231,7 +231,19 @@ sudo dpkg -i **.deb
 ---
 
 ## Cloudwatch logs
+- I added `watchtower` to my requirements.txt file, changed directory to my backend flask and ran `pip install -r requirements.txt`   
 
+- I added the import statement to my app.py  
+```
+import watchtower
+import logging
+from time import strftime
+```
+
+- i added `LOGGER.info("HomeActivities)` to my **home_activities.py** file and `LOGGER.info("test log")` to my **app.py** file.  
+
+
+- I saved all changes and did a docker compose up.  
 
 
 
