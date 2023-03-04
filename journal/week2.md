@@ -310,8 +310,11 @@ def after_request(response):
 ---
 ## Rollbar 
 -  I added `blinker` and `rollbar` to my **requirements.txt** file.  
+![requirements txt changes](https://user-images.githubusercontent.com/105195327/222921301-d6914560-ea45-43d1-ade6-04b583b3b5ff.png)  
+
 - I changed directory to my **backend-flask** directory and i ran `pip install -r requirements.txt` 
-- I went to rollbar, i copied my access token and saved it as an env var in my workspace.  
+- I went to rollbar, i copied my access token and saved it as an env var in my workspace.  ![Rollbar access token](https://user-images.githubusercontent.com/105195327/222921321-629ce524-c951-48e4-bc82-e481598a3229.png)  
+
 - I confirmed with `env | grep ROLLBAR` and i got my value.  
 - I added the following commands gotten from [rollbar](https://app.rollbar.com/a/jaybills369) to my app.py file.  
 
@@ -321,7 +324,6 @@ import rollbar
 import rollbar.contrib.flask
 from flask import got_request_exception
 ```
-
 
 
 ```
@@ -342,6 +344,7 @@ def init_rollbar():
     # send exceptions from `app` to rollbar, using flask's signal system.
     got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
 ```
+![rollbar 2nd command](https://user-images.githubusercontent.com/105195327/222921359-73c34e91-608d-4639-b5e9-173fbd665551.png)  
 
 - I added a test endpoint 
 
@@ -351,9 +354,12 @@ def rollbar_test():
     rollbar.report_message('Hello World!', 'warning')
     return "Hello World!"
 ``` 
+![rollbar 3rd command](https://user-images.githubusercontent.com/105195327/222921381-bd19207f-a850-48c3-b0c8-055fee70a1a0.png)  
 
 - I did a docker compose up. 
 - There was an error with the placement of one of the commands, so i fixed that and composed up again.  
+![fix](https://user-images.githubusercontent.com/105195327/222921398-937bf0d5-71a1-451f-975c-8e482be22e85.png)  
 
+- I tested the endpoint and got output  
+![rollbar test endpoint](https://user-images.githubusercontent.com/105195327/222921416-ae14cbe3-172c-4a7a-9038-d8573ade8ad9.png)  
 
-- 
