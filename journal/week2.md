@@ -379,6 +379,9 @@ def rollbar_test():
 
 ![500 err0e1](https://user-images.githubusercontent.com/105195327/222922828-786ee132-014f-434e-91e6-8afaee8890d7.png)  
 
+- I investigted for a while  
+https://user-images.githubusercontent.com/105195327/222922997-d7864539-0547-45c9-b915-8d4d063e6edf.mp4  
+
 ---
 # THE END!!!
 ---
