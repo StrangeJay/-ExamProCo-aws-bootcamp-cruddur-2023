@@ -364,4 +364,7 @@ def rollbar_test():
 ![rollbar test endpoint](https://user-images.githubusercontent.com/105195327/222921416-ae14cbe3-172c-4a7a-9038-d8573ade8ad9.png)  
 
 
-- 
+- I restarted my containers and went to check rollbar, and everything was running fine.  
+
+
+- I created a 500 error to test how it works.  
