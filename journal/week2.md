@@ -228,6 +228,10 @@ sudo dpkg -i **.deb
 
 
 - I ran my query, clicked into the information and went through everything.  
+---
+
+## Cloudwatch logs
+
 
 
 
