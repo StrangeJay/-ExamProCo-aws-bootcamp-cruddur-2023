@@ -247,6 +247,11 @@ from time import strftime
 
 
 - I saved all changes and did a docker compose up.  
+- I got an error while trying to access the activities/home endpoint, i made fixes to the app.py and home_activities. py file, and it worked.  
+
+
+## Rollbar 
+
 
 
 
