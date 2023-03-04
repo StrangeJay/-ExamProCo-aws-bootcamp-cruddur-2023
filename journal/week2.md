@@ -363,8 +363,24 @@ def rollbar_test():
 - I tested the endpoint and got output  
 ![rollbar test endpoint](https://user-images.githubusercontent.com/105195327/222921416-ae14cbe3-172c-4a7a-9038-d8573ade8ad9.png)  
 
+- I checked logs and i was getting an error that told me to set rollbar_access_token, i did that by passing rollbar access token into my docker-compose file.  
+![PASS ROLLBAR ACCESS TOKEN TO dcfile](https://user-images.githubusercontent.com/105195327/222922781-4ed741cd-3569-4700-af7c-db2744f3429d.png)  
 
 - I restarted my containers and went to check rollbar, and everything was running fine.  
+![ROLLBAR FINE](https://user-images.githubusercontent.com/105195327/222922726-d2698bcf-19aa-4e9a-9b14-ac3f46b11c0a.png)  
 
+![Running rollbar](https://user-images.githubusercontent.com/105195327/222922798-d059dc32-0e5f-441d-a0d2-799433ac6647.png)  
 
-- I created a 500 error to test how it works.  
+![Running rollbar2](https://user-images.githubusercontent.com/105195327/222922802-4ef1848a-e3e5-47c0-bc68-07485bef85e7.png)  
+
+- I created a 500 error to test how it works  
+
+![500 error](https://user-images.githubusercontent.com/105195327/222922820-f654dd1c-bece-4c92-86a3-277dd98f4a20.png)  
+
+![500 err0e1](https://user-images.githubusercontent.com/105195327/222922828-786ee132-014f-434e-91e6-8afaee8890d7.png)  
+
+---
+# THE END!!!
+---
+
+## FOR NOW!!!
