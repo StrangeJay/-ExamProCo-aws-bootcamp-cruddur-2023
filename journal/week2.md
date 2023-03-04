@@ -219,6 +219,15 @@ sudo dpkg -i **.deb
 ```
 
 - I composed up to see if it'll work 
+- I got an error while running docker-compose up, the xray port wasn't being served.  
+- I checked my docker-compose file and noticed i placed my xray dependencies in the wrong place and so i fixed that and tried running it again and the containers where created 
+- I visited the frontend and backend web pages, then checked the xray container logs to make sure there's communication.  
+
+
+- I went to xray in the AWS management console to see the traces  
+
+
+- I ran my query, clicked into the information and went through everything.  
 
 
 
