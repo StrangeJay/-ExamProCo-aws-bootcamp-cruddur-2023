@@ -356,4 +356,8 @@ def rollbar_test():
 - There was an error with the placement of one of the commands, so i fixed that and composed up again.  
 
 
-- 
+- I restarted my containers and went to check rollbar, and everything was running fine.  
+
+
+- I created a 500 error to test how it works.  
+
