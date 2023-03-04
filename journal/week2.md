@@ -131,9 +131,11 @@ span.set_attribute("app.result_length", len(results))
 ## X-Ray
 ### Instrument AWS X-Ray for Flask 
 - I updated my **gitpod.yml** file, so i don't have to `npm i` everytime.  
+![react gipod yml update](https://user-images.githubusercontent.com/105195327/222869264-c2f77d03-ff47-4903-b71e-fc088c87aaad.png)  
+
 - I went to check the [AWS SDK for python](https://github.com/aws/aws-xray-sdk-python) instructions.  
 - I changed directory to my **backend-flask** directory
-- I added the `aws-xray-sdk` command to my requirements.txt file and ran `pip install -r requirements.txt` to install dependencies. 
+- I added the `aws-xray-sdk` command to my requirements.txt file and ran `pip install -r requirements.txt` to install dependencies.  
 
 ### Add to app.py 
 - i added the commands below to my app.py file 
@@ -145,6 +147,8 @@ xray_url = os.getenv("AWS_XRAY_URL")
 xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 XRayMiddleware(app, xray_recorder)
 ```
+
+![xray fix in app-py](https://user-images.githubusercontent.com/105195327/222869374-73b06a3a-3246-46a7-88a1-9fb45e623337.png)  
 
 ### Setup AWS X-RAY Resources 
 - I created an **xray.json** file in my **aws/json** folder.  
@@ -175,7 +179,10 @@ FLASK_ADDRESS="https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HO
 aws xray create-group \
    --group-name "Cruddur" \
    --filter-expression "service(\"backend-flask\")"
-```
+``` 
+
+![xray group](https://user-images.githubusercontent.com/105195327/222870575-f2cba06b-443c-4859-9bcb-9e9e10eb0e1f.png)  
+
 
 ### Create a sampling rule 
 - I ran the following command in my terminal and it returned json 
@@ -183,8 +190,10 @@ aws xray create-group \
 ```
 aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
 ```
-- Confirm on the AWS console that the xray sampling rule has been created  
+![xray json returned](https://user-images.githubusercontent.com/105195327/222869484-941fc617-6c99-442a-932d-7f6fe5c7a8b1.png)  
 
+- Confirm on the AWS console that the xray sampling rule has been created  
+![crudder rule](https://user-images.githubusercontent.com/105195327/222870544-9e740ec9-32e3-4d3d-89ee-1ec6efae883e.png)  
 
 ### Install the X-RAY Daemon 
 - [Github AWS X-RAY Daemon]( wget https://s3.us-east-2.amazonaws.com/aws-xray-assets.us-east-2/xray-daemon/aws-xray-daemon-3.x.deb
@@ -199,6 +208,7 @@ sudo dpkg -i **.deb
 
 ### Add Deamon Service to Docker Compose
 - I added the following commands to my **docker-compose.yml** file.  
+
 ```
   xray-daemon:
     image: "amazon/aws-xray-daemon"
@@ -211,6 +221,7 @@ sudo dpkg -i **.deb
     ports:
       - 2000:2000/udp
 ```
+![xray in dockercompose](https://user-images.githubusercontent.com/105195327/222869576-6e2ed7ab-7b5e-4633-a543-562b31303019.png)  
 
 - I add these two environment variables to the **backend-flask** section of my `docker-compose.yml` file.  
 ```
@@ -218,39 +229,84 @@ sudo dpkg -i **.deb
       AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
 ```
 
+![xray in backend docker compose](https://user-images.githubusercontent.com/105195327/222869613-ca13ee8d-5837-4ebc-ade0-5fa9e0e50fb4.png)  
+
 - I composed up to see if it'll work 
 - I got an error while running docker-compose up, the xray port wasn't being served.  
 - I checked my docker-compose file and noticed i placed my xray dependencies in the wrong place and so i fixed that and tried running it again and the containers where created 
-- I visited the frontend and backend web pages, then checked the xray container logs to make sure there's communication.  
+![xray fix in app-py](https://user-images.githubusercontent.com/105195327/222869668-22649999-c6ae-4805-8355-a23f514e4a4e.png)  
 
+- I visited the frontend and backend web pages, then checked the xray container logs to make sure there's communication.  
+![xray successfully sent data](https://user-images.githubusercontent.com/105195327/222869774-de9f15f0-bffc-42ec-b911-82c9e98488e5.png)  
 
 - I went to xray in the AWS management console to see the traces  
+![xray traces in aws console](https://user-images.githubusercontent.com/105195327/222869820-a034654b-f304-41d5-9bc5-eceb63fbac97.png)  
 
+- I ran my query, clicked into the information and went through everything. 
+![xray traces in console2](https://user-images.githubusercontent.com/105195327/222869827-189fa714-a67a-4a0f-8984-5cce9f352c7e.png)  
 
-- I ran my query, clicked into the information and went through everything.  
+![xray traces in console3](https://user-images.githubusercontent.com/105195327/222869842-2c8aeedc-8044-4020-918b-0852611e4b65.png)  
+
+### Check service data for the last 10 minutes 
+```
+EPOCH=$(date +%s)
+aws xray get-service-graph --start-time $(($EPOCH-600)) --end-time $EPOCH
+```
 ---
 
 ## Cloudwatch logs
 - I added `watchtower` to my requirements.txt file, changed directory to my backend flask and ran `pip install -r requirements.txt`   
 
-- I added the import statement to my app.py  
+- I added the following to my app.py  
 ```
 import watchtower
 import logging
 from time import strftime
 ```
 
-- i added `LOGGER.info("HomeActivities)` to my **home_activities.py** file and `LOGGER.info("test log")` to my **app.py** file.  
+![cloudwatch logs app](https://user-images.githubusercontent.com/105195327/222869900-3c5b3580-07b0-435f-a9ca-0b8265c27731.png)  
 
+```
+# Configuring Logger to Use CloudWatch  
+LOGGER = logging.getLogger(__name__)
+LOGGER.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
+LOGGER.addHandler(console_handler)
+LOGGER.addHandler(cw_handler)
+```
+![conf logger to use cloudwatch logs](https://user-images.githubusercontent.com/105195327/222870251-168a6766-44a5-45f4-a316-f4a33fe28395.png)   
+
+```
+@app.after_request
+def after_request(response):
+    timestamp = strftime('[%Y-%b-%d %H:%M]')
+    LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+    return response
+``` 
+
+![conf logger error](https://user-images.githubusercontent.com/105195327/222870340-134efa6d-a915-4db8-9f7c-39c67246f304.png)  
+
+- i added `LOGGER.info("HomeActivities)` to my **home_activities.py** file and `LOGGER.info("test log")` to my **app.py** file.  
+![logger info activities](https://user-images.githubusercontent.com/105195327/222869954-291ff88d-a53e-4ca4-ae4f-f283eb612c5d.png)  
 
 - I set my region, and access keys env var in backend-flask 
-
+![region and access keys](https://user-images.githubusercontent.com/105195327/222870012-54fb502e-c0da-4b07-81fc-e9b1813fdfce.png)  
 
 - I saved all changes and did a docker compose up.  
 - I got an error while trying to access the activities/home endpoint, i made fixes to the app.py and home_activities. py file, and it worked.  
+![Changes in logger app dot py](https://user-images.githubusercontent.com/105195327/222870118-9a0e8fc7-8783-4e80-a659-24efba77e0c3.png)   
 
+- I went to cloudtrain in the aws console to check it out  
+![cloudwatch logs created in console](https://user-images.githubusercontent.com/105195327/222870613-75371573-443a-45c8-b20b-4a2e2b6d4570.png)  
+
+![cloudwatch logs created in console2](https://user-images.githubusercontent.com/105195327/222870627-655f4c36-b7eb-4a90-92fb-39836c292bde.png)  
+
+![cloudwatch logs created in console3](https://user-images.githubusercontent.com/105195327/222870636-cee47571-1a94-4b7e-8c61-ce6e86fbe866.png)  
 
 - I disabled after confirming, and i turned off all cloudwatch and xray commands to save on spend... 
+![save on spend](https://user-images.githubusercontent.com/105195327/222870655-70695c54-46c0-4b0d-96e3-9cb2fc3e269f.png)  
+
 ---
 ## Rollbar 
 
