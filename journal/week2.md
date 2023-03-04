@@ -250,6 +250,8 @@ from time import strftime
 - I got an error while trying to access the activities/home endpoint, i made fixes to the app.py and home_activities. py file, and it worked.  
 
 
+- I disabled after confirming, and i turned off all cloudwatch and xray commands to save on spend... 
+---
 ## Rollbar 
 
 
