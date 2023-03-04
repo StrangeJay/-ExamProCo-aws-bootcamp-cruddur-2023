@@ -237,7 +237,7 @@ sudo dpkg -i **.deb
 ```
 import watchtower
 import logging
-from time import strftime
+from time import strftime 
 ```
 
 - i added `LOGGER.info("HomeActivities)` to my **home_activities.py** file and `LOGGER.info("test log")` to my **app.py** file.  
@@ -253,7 +253,48 @@ from time import strftime
 - I disabled after confirming, and i turned off all cloudwatch and xray commands to save on spend... 
 ---
 ## Rollbar 
+-  I added `blinker` and `rollbar` to my **requirements.txt** file.  
+- I changed directory to my **backend-flask** directory and i ran `pip install -r requirements.txt` 
+- I went to rollbar, i copied my access token and saved it as an env var in my workspace.  
+- I confirmed with `env | grep ROLLBAR` and i got my value.  
+- I added the following commands gotten from [rollbar](https://app.rollbar.com/a/jaybills369) to my app.py file.  
+
+```
+import os
+import rollbar
+import rollbar.contrib.flask
+from flask import got_request_exception
+```
 
 
 
+```
+rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
+@app.before_first_request
+def init_rollbar():
+    """init rollbar module"""
+    rollbar.init(
+        # access token
+        rollbar_access_token,
+        # environment name
+        'production',
+        # server root directory, makes tracebacks prettier
+        root=os.path.dirname(os.path.realpath(__file__)),
+        # flask already sets up logging
+        allow_logging_basic_config=False)
+
+    # send exceptions from `app` to rollbar, using flask's signal system.
+    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+```
+
+- I added a test endpoint 
+
+```
+@app.route('/rollbar/test')
+def rollbar_test():
+    rollbar.report_message('Hello World!', 'warning')
+    return "Hello World!"
+``` 
+
+- I did a docker compose up. 
 
