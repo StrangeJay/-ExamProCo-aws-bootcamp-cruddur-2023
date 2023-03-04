@@ -243,6 +243,9 @@ from time import strftime
 - i added `LOGGER.info("HomeActivities)` to my **home_activities.py** file and `LOGGER.info("test log")` to my **app.py** file.  
 
 
+- I set my region, and access keys env var in backend-flask 
+
+
 - I saved all changes and did a docker compose up.  
 
 
