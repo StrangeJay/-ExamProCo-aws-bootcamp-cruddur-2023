@@ -353,4 +353,7 @@ def rollbar_test():
 ``` 
 
 - I did a docker compose up. 
+- There was an error with the placement of one of the commands, so i fixed that and composed up again.  
 
+
+- 
