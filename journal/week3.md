@@ -1,6 +1,6 @@
 # Week 3 — Decentralized Authentication 
 
-
+## Create user pool on AWS 
 - I went to my AWS management console, searched for **Amazon Cognito** and clicked into it.  ![create user pool](https://user-images.githubusercontent.com/105195327/224273651-e778ad11-d0ed-40a1-a5e7-7d2bc5b2052e.png)  
 
 - I saw 2 options for provider types, ""Cognito User Pool"" and ""Federated Identity Providers**  
@@ -18,10 +18,18 @@
 
 - I enabled self account recovery to allow users revover their accounts by themselves without having to email me to reset it for them.  
 
-- I chose only email as the delivery method for recovery message, because it cost money to use SMS and i don't want to incure spend.  
+- I chose only email as the delivery method for recovery message, because it cost money to use SMS and i don't want to incure spend. Email costs less and right now is free because my free tier covers it and my Amazon SES grants me 62,000 Outbound messages per month.     
 ![password recovery](https://user-images.githubusercontent.com/105195327/224283434-8e80f7be-4bce-411e-92b9-ccc3d7ada17c.png)  
+- On the next page, i left everything on default, then for the **"required attribute"** all i selected was **"name"**  
+![attribute change](https://user-images.githubusercontent.com/105195327/224288305-928f2858-ed74-4a09-851b-013357b44605.png)  
 
+> **Note** When an attribute is selected, it can't be changed(only the value changes) so make sure what you're selecting is what you actually want.  
 
+- Next page required me to make a selection between sending email with Amazon SES or Cognito. SES is the recommended, but it involves extra setting(which requires having a domain name) that we would do much later, for now, we would be using Cognito.  
+![content message delivery](https://user-images.githubusercontent.com/105195327/224290216-24ec66eb-3d69-40e8-b1bc-fd850804aa2b.png)  
+*Cognito allows you send 50 messages, that's very low, which is why i might change the settings later.*  
 
+- On the next page i set App client name and user pool name, then i left everything else as default.  
+- My user pool was successfully created. 
 
 
