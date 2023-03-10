@@ -96,5 +96,35 @@ import { Auth } from 'aws-amplify';
 
 
 
--
+- I went back to my App.js file and corrected some typo. I composed down and composed up again, and the frontend was working fine.  
+
+
+
+#### Signin Page
+- I went to my SigninPage.js file and replaced the import cookie line with `import { Auth } from 'aws-amplify';`  
+
+- I replaced the onsubmit code with the one below.  
+```
+const onsubmit = async (event) => {
+  setErrors('')
+  event.preventDefault();
+  try {
+    Auth.signIn(email, password)
+      .then(user => {
+        localStorage.setItem("access_token", user.signInUserSession.accessToken.jwtToken)
+        window.location.href = "/"
+      })
+      .catch(err => { console.log('Error!', err) });
+  } catch (error) {
+    if (error.code == 'UserNotConfirmedException') {
+      window.location.href = "/confirm"
+    }
+    setCognitoErrors(error.message)
+  }
+  return false
+}
+```
+
+
+- 
 
