@@ -126,5 +126,11 @@ const onsubmit = async (event) => {
 ```
 
 
+- I saved and went back to the frontend URL, i tried signing in a user that doesn't exist and i got an error saying **"Error! NotAuthorizedException: Incorrect username or password."** while inspecting the page, but i want it to give the error message on the signin page. I went back to check my code.  
+
+- 
+
+
+
 - 
 
