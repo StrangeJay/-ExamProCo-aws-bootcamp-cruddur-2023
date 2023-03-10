@@ -71,4 +71,25 @@ Amplify.configure({
 - I got the client side ID by clicking into my user pool, navigating to *App Integration**, and scrolling down to **App analytics**  
 
 
-- 
+---
+## Conditionally show components based on if we're logged in or logged out 
+
+### Starting with our HomeFeedPage 
+- I navugated to my HomeFeedPage.js file and added `import { Auth } from 'aws-amplify';` import statement.  
+
+- I was going to set a react state to manage a users variable/object. That'll say Usernname, Email, PhoneNumber... That'll be displayed.  I was going to add `const [user, setUser] = React.useState(null);` to my HomeFeedPage.js, in the section with other const statement. but it was already there.  
+
+- I checked to see if i had the **checkAuth** code in my HomeFeedPage.js, and i replaced the existing one, with the one below.  
+
+#### Update ProfileInfo.js   
+```
+import { Auth } from 'aws-amplify';
+```
+- I used the line above to replace the cookie import line.   
+
+
+- I removed the remaining cookie signout line.   
+
+
+
+
