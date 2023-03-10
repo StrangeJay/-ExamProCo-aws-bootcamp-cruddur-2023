@@ -31,5 +31,11 @@
 
 - On the next page i set App client name and user pool name, then i left everything else as default.  
 - My user pool was successfully created. 
+---
+
+## Install AWS Amplify
+# - I went to look for the frontend code for cognito. 
+- I went to my frontend directory, then i ran `npm i aws-amplify --save` to install amplify on my terminal. The **--save** adds it to the package.json file.  
+- I checked my package.json file to be sure it was added to the package.  
 
 
