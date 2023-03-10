@@ -59,7 +59,7 @@ Amplify.configure({
     // identityPoolId: process.env.REACT_APP_IDENTITY_POOL_ID, // REQUIRED - Amazon Cognito Identity Pool ID
     region: process.env.REACT_APP_AWS_PROJECT_REGION,           // REQUIRED - Amazon Cognito Region
     userPoolId: process.env.REACT_APP_AWS_USER_POOLS_ID,         // OPTIONAL - Amazon Cognito User Pool ID
-    userPoolWebClientId: process.env.REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID,   // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
+    userPoolWebClientId: process.env.REACT_APP_AWS_CLIENT_ID,   // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
   }
 });
 ```
@@ -92,5 +92,9 @@ import { Auth } from 'aws-amplify';
 
 
 ### Signin Page 
+- First i decided to compose up to make sure my configurations have been perfect so far. After creating the containers i went to the frontend URL and it was blank.  
 
+
+
+-
 
