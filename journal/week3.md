@@ -216,6 +216,8 @@ const onsubmit = async (event) => {
 
 
 ### Confirmation Page
+- I went to my ConfirmationPage.js file, i replaced the import cookie line with `import { Auth } from 'aws-amplify';` 
+
 
 
 
