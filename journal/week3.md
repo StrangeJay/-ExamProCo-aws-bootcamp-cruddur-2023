@@ -263,7 +263,49 @@ i saved and refreshed the site then tried to log in but i got an error.
 
 - I went to check my userpool and i noticed i set "email" and "username" for signup options, as opposed to just email. So i deleted the user pool and created another one. I made sure to add the "preferred username" attribute in this one.  
 
-- I updated my user pool and client ID env var  
+- I updated my user pool and client ID env var, docker composed up and refreshed the web page. It was functional. 
+
+
+
+
+
+- I signed up and signed in right after and it worked, now i want to create a recovery page. For users who forget their password.  
+
+## Recovery Page
+- I went to my RecoverPage.js file and copied the `import { Auth } from 'aws-amplify';` import ststement.  
+
+- I put in my **"send code"** and **"confirm code"** .  
+
+*Send code* 
+
+```
+const onsubmit_send_code = async (event) => {
+    event.preventDefault();
+    setErrors('')
+    Auth.forgotPassword(username)
+    .then((data) => setFormState('confirm_code') )
+    .catch((err) => setErrors(err.message) );
+    return false
+  }
+```
+
+*Confirm code*
+
+```
+  const onsubmit_confirm_code = async (event) => {
+    event.preventDefault();
+    setErrors('')
+    if (password == passwordAgain){
+      Auth.forgotPasswordSubmit(username, code, password)
+      .then((data) => setFormState('success'))
+      .catch((err) => setErrors(err.message) );
+    } else {
+      setErrors('Passwords do not match')
+    }
+    return false
+  }
+```
+
 
 
 
