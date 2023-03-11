@@ -306,6 +306,41 @@ const onsubmit_send_code = async (event) => {
   }
 ```
 
+- I saved and committed my changes. 
+
+
+
+- I received an email with the recovery code.  
+
+
+
+- I changed my password and logged in with the new password, and it was functional. I was signed in.  
+
+
+## Authenticating the server side
+- I added in my `HomeFeedPage.js` a header to pass along the access token  
+
+```
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("access_token")}`
+  }
+```
+
+- To be able to read that authorization token in my backend, i imported request.  
+
+
+- I updated my CORS. I went to app.py and inputed the following code.  
+
+```
+cors = CORS(
+  app, 
+  resources={r"/api/*": {"origins": origins}},
+  headers=['Content-Type', 'Authorization'], 
+  expose_headers='Authorization',
+  methods="OPTIONS,GET,HEAD,POST"
+)
+```
+
 
 
 
