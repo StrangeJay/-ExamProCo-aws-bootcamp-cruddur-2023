@@ -343,7 +343,9 @@ cors = CORS(
 
 
 - I got an error. I went searching for answers.  
-- I imported sys 
+- I imported sys and tried again but it still didn't work.  
+- I signed out, signed in again, refreshed the page a bunch of times and i saw the **AUTH HEADER**  
+---
 
 
 
