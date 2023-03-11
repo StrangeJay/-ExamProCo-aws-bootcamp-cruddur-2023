@@ -37,12 +37,13 @@
 # - I went to look for the frontend code for cognito. 
 - I went to my frontend directory, then i ran `npm i aws-amplify --save` to install amplify on my terminal. The **--save** adds it to the package.json file.  
 - I checked my package.json file to be sure it was added to the package.  
+ ![aws amplify installation](https://user-images.githubusercontent.com/105195327/224457063-c7d2ed45-ae2f-4bcf-b48f-025bc71fe5d9.png)  
 
 ## Configure Amplify 
 
 - I copied the code `import { Amplify } from 'aws-amplify';
 ` to my App.js file.  
-
+![amplify in AppJs](https://user-images.githubusercontent.com/105195327/224457087-a6aadf44-6b7f-469a-bb1e-5576d63dd4ec.png)  
 
 - I added the commands below to the App.js file, right below the import statements.  
 
@@ -65,43 +66,49 @@ Amplify.configure({
 ```
 
 - I copied the commands below to the frontend section of my dockerfile, and i'm going to fill the values in.  
-- I got the user pool ID from my user pool page  
+![dockerfile amplify ish](https://user-images.githubusercontent.com/105195327/224457146-a2a0edd2-5646-4277-8a71-718d745296d0.png)  
 
+- I got the user pool ID from my user pool page  
+![user pool ID](https://user-images.githubusercontent.com/105195327/224457163-55c3d93c-8c57-499d-b0b1-20ec48656acd.png)  
 
 - I got the client side ID by clicking into my user pool, navigating to *App Integration**, and scrolling down to **App analytics**  
+![app client id 1st](https://user-images.githubusercontent.com/105195327/224457190-2452f080-df05-47b8-953a-b2faeb0a1596.png)  
 
+![app client id](https://user-images.githubusercontent.com/105195327/224457207-e2429711-2482-4779-9d06-30909d4997b7.png)  
 
 ---
 ## Conditionally show components based on if we're logged in or logged out 
 
 ### Starting with our HomeFeedPage 
-- I navugated to my HomeFeedPage.js file and added `import { Auth } from 'aws-amplify';` import statement.  
+- I navigated to my HomeFeedPage.js file and added `import { Auth } from 'aws-amplify';` import statement.  
 
 - I was going to set a react state to manage a users variable/object. That'll say Usernname, Email, PhoneNumber... That'll be displayed.  I was going to add `const [user, setUser] = React.useState(null);` to my HomeFeedPage.js, in the section with other const statement. but it was already there.  
+![react state](https://user-images.githubusercontent.com/105195327/224457326-2d6640bd-1133-4fb6-91ba-f768c8f1d136.png)  
 
 - I checked to see if i had the **checkAuth** code in my HomeFeedPage.js, and i replaced the existing one, with the one below.  
+![checkAuth](https://user-images.githubusercontent.com/105195327/224475274-25bcf267-0752-4fd7-9249-8d1bf9982cec.png)   
 
 #### Update ProfileInfo.js   
 ```
 import { Auth } from 'aws-amplify';
 ```
 - I used the line above to replace the cookie import line.   
-
+![profileInfo replacement](https://user-images.githubusercontent.com/105195327/224475321-21f2614c-dc99-4c9e-b9e1-fe705f42c179.png)  
 
 - I removed the remaining cookie signout line.   
+![cookie replacement line](https://user-images.githubusercontent.com/105195327/224475264-71b74365-24c6-4ebd-bb82-e8cbcd26e8ce.png)
 
 
 ### Signin Page 
 - First i decided to compose up to make sure my configurations have been perfect so far. After creating the containers i went to the frontend URL and it was blank.  
-
-
+![blank frontend](https://user-images.githubusercontent.com/105195327/224475404-03d09074-08a0-4d2c-80c1-8140c81b0d77.png)  
 
 - I went back to my App.js file and corrected some typo. I composed down and composed up again, and the frontend was working fine.  
-
-
+![frontend working](https://user-images.githubusercontent.com/105195327/224475413-6931599b-26f1-4873-8994-cc4e85e593cc.png)  
 
 #### Signin Page
 - I went to my SigninPage.js file and replaced the import cookie line with `import { Auth } from 'aws-amplify';`  
+![signin page](https://user-images.githubusercontent.com/105195327/224475437-f8eaa353-5241-4e3d-9ad7-99e640b45b78.png)  
 
 - I replaced the onsubmit code with the one below.  
 ```
@@ -125,14 +132,26 @@ const onsubmit = async (event) => {
 }
 ```
 
+![signin paage on submit](https://user-images.githubusercontent.com/105195327/224475458-f9f1e155-221c-4483-89d3-f49dc93efa45.png)  
 
-- I saved and went back to the frontend URL, i tried signing in a user that doesn't exist and i got an error saying **"Error! NotAuthorizedException: Incorrect username or password."** while inspecting the page, but i want it to give the error message on the signin page. I went back to check my code.  
+- I saved and went back to the frontend URL, i tried signing in a user that doesn't exist and i got an error saying **"Error! NotAuthorizedException: Incorrect username or password."** while inspecting the page.  
+![no user error](https://user-images.githubusercontent.com/105195327/224475482-3d707b8d-5fc0-44dd-b0b0-b4cf991cffd5.png)  
 
+- The error was expected, but i wanted it to give the error message on the signin page. I went back to check my code.  
 
 - I made some changes and tried it again. This time it worked.  
-
+![signin error showing at log in](https://user-images.githubusercontent.com/105195327/224475511-0c241188-ce1b-4123-89c6-6f325917010c.png)  
 
 - Went to my user pool on AWS to add a user.  
+![create user](https://user-images.githubusercontent.com/105195327/224475517-b4e6b65c-b24d-4d50-a18c-2d91ab7d1ddc.png)  
 
-- I tried signing in again but got a different error.  
+![created the user details](https://user-images.githubusercontent.com/105195327/224475539-1f1d8f5c-097d-4e2b-9cb5-6fb07581e0d7.png)  
+
+- I tried signing in to confirm the user is recognised, but i got an error.  
+![error for created user signin](https://user-images.githubusercontent.com/105195327/224475548-12cc567a-54bb-4286-8ebc-937bf14d2f03.png)
+
+- I went back to my code to do some investigations and find out what's wrong.  
+
+
+
 
