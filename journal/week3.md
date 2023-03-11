@@ -10,13 +10,13 @@
 > **Note** "Cognito user pool" is for when you're making a web application and you want to add login and signup, and manage it externally. While federated identity providers, is when you want to be able to login using a social identity from another provider. With user pool you can add different methods of identity providers, but federated is a little different. 
 
 - I checked the option to log in with **user name** and **email.**  
-- I set password polict to default    
+- I set password policy to default    
 ![Password policy](https://user-images.githubusercontent.com/105195327/224280889-959ea303-7c11-4fe3-ba37-77ad1899ef44.png)  
 
 - I left the option to use MFA unchecked, to save and prevent spend.  
 ![MFA](https://user-images.githubusercontent.com/105195327/224281027-e64de56f-78c3-4741-8414-91a43712da72.png)  
 
-- I enabled self account recovery to allow users revover their accounts by themselves without having to email me to reset it for them.  
+- I enabled self account recovery to allow users recover their accounts by themselves without having to email me to reset it for them.  
 
 - I chose only email as the delivery method for recovery message, because it cost money to use SMS and i don't want to incure spend. Email costs less and right now is free because my free tier covers it and my Amazon SES grants me 62,000 Outbound messages per month.     
 ![password recovery](https://user-images.githubusercontent.com/105195327/224283434-8e80f7be-4bce-411e-92b9-ccc3d7ada17c.png)  
@@ -82,7 +82,7 @@ Amplify.configure({
 ### Starting with our HomeFeedPage 
 - I navigated to my HomeFeedPage.js file and added `import { Auth } from 'aws-amplify';` import statement.  
 
-- I was going to set a react state to manage a users variable/object. That'll say Usernname, Email, PhoneNumber... That'll be displayed.  I was going to add `const [user, setUser] = React.useState(null);` to my HomeFeedPage.js, in the section with other const statement. but it was already there.  
+- I was going to set a react state to manage a users variable/object. That'll say Username, Email, PhoneNumber... That'll be displayed.  I was going to add `const [user, setUser] = React.useState(null);` to my HomeFeedPage.js, in the section with other const statement. but it was already there.  
 ![react state](https://user-images.githubusercontent.com/105195327/224457326-2d6640bd-1133-4fb6-91ba-f768c8f1d136.png)  
 
 - I checked to see if i had the **checkAuth** code in my HomeFeedPage.js, and i replaced the existing one, with the one below.  
