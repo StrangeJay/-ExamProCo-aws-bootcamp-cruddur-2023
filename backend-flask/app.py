@@ -153,7 +153,7 @@ def data_create_message():
 def data_home():
   app.logger.debug('AUTH HEADER')
   print(
-    request.headers.get('Authorizatio')
+    request.headers.get('Authorization')
   )
   data = HomeActivities.run()
   return data, 200
