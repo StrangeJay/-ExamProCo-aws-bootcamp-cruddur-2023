@@ -181,8 +181,41 @@ then i went back to try it out and it worked.
 ---
 
 ## Signup Page
+- I went to my SignupPage.js file to implement my codes. 
+
+- i replaced the import cookie line with `import { Auth } from 'aws-amplify';` like i did for the signin page. 
+
+- I replaced the **onsubmit** section with the code below.  
+
+```
+const onsubmit = async (event) => {
+  event.preventDefault();
+  setErrors('')
+  try {
+    const { user } = await Auth.signUp({
+      username: email,
+      password: password,
+      attributes: {
+        name: name,
+        email: email,
+        preferred_username: username,
+      },
+      autoSignIn: { // optional - enables auto sign in after user is confirmed
+        enabled: true,
+      }
+    });
+    console.log(user);
+    window.location.href = `/confirm?email=${email}`
+  } catch (error) {
+      console.log(error);
+      setErrors(error.message)
+  }
+  return false
+}
+```
 
 
+### Confirmation Page
 
 
 
