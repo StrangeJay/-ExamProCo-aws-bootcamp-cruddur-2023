@@ -39,7 +39,7 @@
 - I checked my package.json file to be sure it was added to the package.  
  ![aws amplify installation](https://user-images.githubusercontent.com/105195327/224457063-c7d2ed45-ae2f-4bcf-b48f-025bc71fe5d9.png)  
 
-## Configure Amplify 
+### Configure Amplify 
 
 - I copied the code `import { Amplify } from 'aws-amplify';
 ` to my App.js file.  
@@ -97,16 +97,16 @@ import { Auth } from 'aws-amplify';
 
 - I removed the remaining cookie signout line.   
 ![cookie replacement line](https://user-images.githubusercontent.com/105195327/224475264-71b74365-24c6-4ebd-bb82-e8cbcd26e8ce.png)
+---
 
-
-### Signin Page 
+#### Test Work So Far 
 - First i decided to compose up to make sure my configurations have been perfect so far. After creating the containers i went to the frontend URL and it was blank.  
 ![blank frontend](https://user-images.githubusercontent.com/105195327/224475404-03d09074-08a0-4d2c-80c1-8140c81b0d77.png)  
 
 - I went back to my App.js file and corrected some typo. I composed down and composed up again, and the frontend was working fine.  
 ![frontend working](https://user-images.githubusercontent.com/105195327/224475413-6931599b-26f1-4873-8994-cc4e85e593cc.png)  
-
-#### Signin Page
+---
+## Signin Page
 - I went to my SigninPage.js file and replaced the import cookie line with `import { Auth } from 'aws-amplify';`  
 ![signin page](https://user-images.githubusercontent.com/105195327/224475437-f8eaa353-5241-4e3d-9ad7-99e640b45b78.png)  
 
@@ -154,6 +154,7 @@ const onsubmit = async (event) => {
 ---
 #### Fix
 - This line of code was what caused the error, because i haven't set the token yet. I will leave it as it is for now, and find a quick fix to continue testing.  
+![no jwt token yet](https://user-images.githubusercontent.com/105195327/224495993-27cf391e-3ef5-4c8a-b571-86733a8ac35c.png)  
 
 - I googled a fix for the problem and found one [here](https://stackoverflow.com/questions/40287012/how-to-change-user-status-force-change-password) 
 
@@ -165,17 +166,23 @@ aws cognito-idp admin-set-user-password \
   --permanent
 ```
 
-
 - I went to my terminal and ran this code `aws cognito-idp admin-set-user-password --username jay_kaneki --password Testing123. --user-pool-id us-east-1_oIWpVFT2R --permanent` 
 then i went back to try it out and it worked.  
+![signed in](https://user-images.githubusercontent.com/105195327/224496037-ac575fa8-c77c-44cd-bc22-88faba2d664e.png)  
 
 - I clicked on signout and i was successfully signed out. 
 
 - I remembered the username section said "@handle" instead of the actual users handle because we didn't select "prefered username" as an attribute. We would fix that.  
 
 - I went to my created user, set a name and set additional attribute and a value.  
+![user attribute](https://user-images.githubusercontent.com/105195327/224496105-0bb5665e-a932-4406-842a-b7f143f9bf99.png)  
+
+![attribute change2](https://user-images.githubusercontent.com/105195327/224496127-08c44d6c-97a8-47d2-9ec2-366bbcfe7646.png)  
+
+![attribute change3](https://user-images.githubusercontent.com/105195327/224496138-5696b67c-b0c6-4342-8e4f-7ab3d67dc030.png)  
 
 - I signed back in and the user handle was there.  
+![preferred username shows](https://user-images.githubusercontent.com/105195327/224496155-c658c520-011c-4a3d-9338-e4a12bb5ecc7.png)  
 
 - I signed out, went back to my user to delete that user because i want to create the signup function next, so we can add our user with the signup button.  
 ---
@@ -214,8 +221,10 @@ const onsubmit = async (event) => {
 }
 ```
 
+![signup onsubmit change](https://user-images.githubusercontent.com/105195327/224496194-1111df9d-7090-4f24-9a3f-e3fa57e618bb.png)  
+---
 
-### Confirmation Page
+## Confirmation Page
 - I went to my ConfirmationPage.js file, i replaced the import cookie line with `import { Auth } from 'aws-amplify';` 
 
 - I replaced the resend code with the lines of code below  
@@ -258,18 +267,19 @@ const onsubmit = async (event) => {
 ```
 
 i saved and refreshed the site then tried to log in but i got an error.  
-
-
+![signup error](https://user-images.githubusercontent.com/105195327/224496252-6d3a26a0-5ae1-46c3-ba5f-74509d6d3c83.png)  
 
 - I went to check my userpool and i noticed i set "email" and "username" for signup options, as opposed to just email. So i deleted the user pool and created another one. I made sure to add the "preferred username" attribute in this one.  
 
 - I updated my user pool and client ID env var, docker composed up and refreshed the web page. It was functional. 
+![email confirmation code](https://user-images.githubusercontent.com/105195327/224496328-1ecb1594-7719-499c-b0dc-6554cf55d66a.png)  
 
+- I signed up and signed in right after and it worked. 
+![signup sign in working](https://user-images.githubusercontent.com/105195327/224496345-0e9dfe95-eed6-42e9-9ee0-3ba328bfcfa3.png)  
 
-
-
-
-- I signed up and signed in right after and it worked, now i want to create a recovery page. For users who forget their password.  
+![working signup user created](https://user-images.githubusercontent.com/105195327/224496434-be296e89-2979-4684-9c00-47c7ec0ad72a.png)  
+*Now i want to create a recovery page. For users who forget their password.*  
+---
 
 ## Recovery Page
 - I went to my RecoverPage.js file and copied the `import { Auth } from 'aws-amplify';` import ststement.  
@@ -305,17 +315,15 @@ const onsubmit_send_code = async (event) => {
     return false
   }
 ```
+![recovery codes](https://user-images.githubusercontent.com/105195327/224496591-deca5900-8173-45ae-8c25-15fbc49be769.png)  
 
 - I saved and committed my changes. 
-
-
-
 - I received an email with the recovery code.  
-
-
+![successful password recovery](https://user-images.githubusercontent.com/105195327/224496677-edb5ee00-3281-409d-a2a6-931638093479.png)  
 
 - I changed my password and logged in with the new password, and it was functional. I was signed in.  
-
+![password reset login try](https://user-images.githubusercontent.com/105195327/224496691-c53d037c-801f-4667-a41c-613bf7591111.png)  
+---
 
 ## Authenticating the server side
 - I added in my `HomeFeedPage.js` a header to pass along the access token  
@@ -325,9 +333,10 @@ const onsubmit_send_code = async (event) => {
     Authorization: `Bearer ${localStorage.getItem("access_token")}`
   }
 ```
+![authentication homefeed code](https://user-images.githubusercontent.com/105195327/224496718-3f628de7-e565-4b39-a4db-29947fc4b3dc.png)  
 
 - To be able to read that authorization token in my backend, i imported request.  
-
+![authorisation stuff app and homefeed](https://user-images.githubusercontent.com/105195327/224496747-ddde78b0-5854-41f4-a3ff-a72518675d98.png)  
 
 - I updated my CORS. I went to app.py and inputed the following code.  
 
@@ -340,11 +349,18 @@ cors = CORS(
   methods="OPTIONS,GET,HEAD,POST"
 )
 ```
+![cors update](https://user-images.githubusercontent.com/105195327/224496756-b81ef412-8658-4295-a3a2-a1ddb10ac790.png)  
 
+- I added app logger  
+![App logger](https://user-images.githubusercontent.com/105195327/224496861-5d8d6e37-5326-47d5-8cc3-9f52a8eeb6b2.png)  
+ 
+- I went to the website, refreshed and went to check my backend logs. I wasn't getting the desired results. My AUTH HEADER wasn't showing up.    
+![logger not showing](https://user-images.githubusercontent.com/105195327/224496889-73fcce40-46bf-4303-9b88-c091bef00fae.png)  
+*I went searching for answers.* 
 
-- I got an error. I went searching for answers.  
 - I imported sys and tried again but it still didn't work.  
-- I signed out, signed in again, refreshed the page a bunch of times and i saw the **AUTH HEADER**  
+- I signed out, signed in again, refreshed the page and content was served once again. I refreshed a bunch of times and went to check my backend container logs and i saw the **AUTH HEADER**  
+![auth header](https://user-images.githubusercontent.com/105195327/224496939-3231adee-169d-42ca-b577-ead44e96358a.png)  
 ---
 
 
