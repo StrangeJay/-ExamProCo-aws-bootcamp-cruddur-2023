@@ -151,6 +151,38 @@ const onsubmit = async (event) => {
 ![error for created user signin](https://user-images.githubusercontent.com/105195327/224475548-12cc567a-54bb-4286-8ebc-937bf14d2f03.png)
 
 - I went back to my code to do some investigations and find out what's wrong.  
+---
+#### Fix
+- This line of code was what caused the error, because i haven't set the token yet. I will leave it as it is for now, and find a quick fix to continue testing.  
+
+- I googled a fix for the problem and found one [here](https://stackoverflow.com/questions/40287012/how-to-change-user-status-force-change-password) 
+
+```
+aws cognito-idp admin-set-user-password \
+  --user-pool-id <your-user-pool-id> \
+  --username <username> \
+  --password <password> \
+  --permanent
+```
+
+
+- I went to my terminal and ran this code `aws cognito-idp admin-set-user-password --username jay_kaneki --password Testing123. --user-pool-id us-east-1_oIWpVFT2R --permanent` 
+then i went back to try it out and it worked.  
+
+- I clicked on signout and i was successfully signed out. 
+
+- I remembered the username section said "@handle" instead of the actual users handle because we didn't select "prefered username" as an attribute. We would fix that.  
+
+- I went to my created user, set a name and set additional attribute and a value.  
+
+- I signed back in and the user handle was there.  
+
+- I signed out, went back to my user to delete that user because i want to create the signup function next, so we can add our user with the signup button.  
+---
+
+## Signup Page
+
+
 
 
 
