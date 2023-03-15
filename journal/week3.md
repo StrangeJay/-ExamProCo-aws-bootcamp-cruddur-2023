@@ -364,6 +364,10 @@ cors = CORS(
 - I signed out, signed in again, refreshed the page and content was served once again. I refreshed a bunch of times and went to check my backend container logs and i saw the **AUTH HEADER**  
 ![auth header](https://user-images.githubusercontent.com/105195327/224496939-3231adee-169d-42ca-b577-ead44e96358a.png)  
 ---
+### JWT Authentication
+- I followed the instructions in this [video](https://www.youtube.com/watch?v=9obl7rVgzJw&t=6s) 
+- I went to the frontend url to test it out and it worked.  
+![authenticated jwt](https://user-images.githubusercontent.com/105195327/225450569-33fccfd7-98ca-4be8-b255-d65f9b8a891b.png)  
 
 
 
