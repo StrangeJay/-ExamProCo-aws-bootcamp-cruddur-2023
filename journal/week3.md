@@ -318,6 +318,8 @@ const onsubmit_send_code = async (event) => {
 ![recovery codes](https://user-images.githubusercontent.com/105195327/224496591-deca5900-8173-45ae-8c25-15fbc49be769.png)  
 
 - I saved and committed my changes. 
+- I went back to the frontend page, and clicked on login 
+- I clicked on forgot password  
 - I received an email with the recovery code.  
 ![successful password recovery](https://user-images.githubusercontent.com/105195327/224496677-edb5ee00-3281-409d-a2a6-931638093479.png)  
 
