@@ -266,7 +266,7 @@ const onsubmit = async (event) => {
 }
 ```
 
-i saved and refreshed the site then tried to log in but i got an error.  
+i saved and refreshed the site then tried to signup but i got an error.  
 ![signup error](https://user-images.githubusercontent.com/105195327/224496252-6d3a26a0-5ae1-46c3-ba5f-74509d6d3c83.png)  
 
 - I went to check my userpool and i noticed i set "email" and "username" for signup options, as opposed to just email. So i deleted the user pool and created another one. I made sure to add the "preferred username" attribute in this one.  
