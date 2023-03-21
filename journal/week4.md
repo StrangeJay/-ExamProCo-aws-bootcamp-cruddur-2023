@@ -89,7 +89,7 @@ DELETE FROM table_name WHERE condition; -- Delete data from a table
 ```
 CREATE database cruddur;
 ``` 
-- I created a database named **"Crudder"** and ran the command for listing databases, to confirm its creation.  
+- I created a database named **"Cruddur"** and ran the command for listing databases, to confirm its creation.  
 
 
 ### Import Script 
