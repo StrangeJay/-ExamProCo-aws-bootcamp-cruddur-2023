@@ -12,7 +12,7 @@ aws rds create-db-instance \
   --engine postgres \
   --engine-version  14.6 \
   --master-username crudderroot \
-  --master-user-password generalt666. \
+  --master-user-password <password> \
   --allocated-storage 20 \
   --availability-zone us-east-1a \
   --backup-retention-period 0 \
@@ -126,7 +126,16 @@ gp env CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
 
 #### Setting a production URL string 
 ```
-PROD_CONNECTION_URL="postgresql://crudderroot:generalt666.@cruddur-db-instance.cjpatr1usl1t.us-east-1.rds.amazonaws.com:5432/cruddur"
+PROD_CONNECTION_URL="postgresql://crudderroot:generalt666.@<RDS endpoint>:5432/cruddur"
 ``` 
-- I ran this command in my terminal. The endpoint detail is gotting from the RDS **connectivity and security** section.  
+- I ran this command in my terminal. The endpoint detail is gotten from the RDS **connectivity and security** section.  
+
+
+#### Easing the DB processes, 
+- I created a new folder in the backend directory called **"bin"**. *Bin stands for Binary. This is where i'll save all my bash scripts*. Inside the bin directory i'll  create 3 files named **"db-create"**, **"db-drop"**, **"db-schema-load"**.   
+
+- I opened the db-create file, found out where bash is in my terminal and used it to add my SHEBANG.  
+
+
+
 
