@@ -134,12 +134,139 @@ PROD_CONNECTION_URL="postgresql://crudderroot:generalt666.@<RDS endpoint>:5432/c
 #### Easing the DB processes, 
 - I created a new folder in the backend directory called **"bin"**. *Bin stands for Binary. This is where i'll save all my bash scripts*. Inside the bin directory i'll  create 3 files named **"db-create"**, **"db-drop"**, **"db-schema-load"**.   
 
-- I opened the db-create file, found out where bash is in my terminal and used it to add my SHEBANG.  
+- I opened the db-drop file, found out where bash is in my terminal and used it to add my SHEBANG.  
 
 - I want to create a script that would allow me drop the database easily, the created bin files do not have execute permission so i have to give it to them by running "chmod u+x bin/db-create", "chmod u+x bin/db-drop", "chmod u+x bin/db-schema-drop" 
 
 
 
+- I coied the line of code below to my **db-drop** file  
+```
+#! /usr/bin/bash
 
+echo "db-drop"
+
+NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
+psql $NO_DB_CONNECTION_URL -c "DROP database cruddur;"  
+```  
+
+and i ran it on my terminal with `./bin/db-drop` and the database was dropped.  
+
+
+
+- I went to the **db-create** file, and copied the code below into it.  
+```
+#!/usr/bin/bash
+
+echo "db-create" 
+
+NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
+psql $NO_DB_CONNECTION_URL -c "CREATE database cruddur;"
+```
+
+- I executed the script by running `.bin/db-create` in my terminal.   
+
+
+
+- I went to my **schema-load** file, and copied the code below into it. 
+
+``` 
+#!/usr/bin/bash
+
+echo "db-schema-load"
+
+schema_path="$(realpath .)/db/schema.sql"
+echo $schema_path
+
+psql $CONNECTION_URL cruddur < $schema_path
+```
+
+- I executed the script by running `./bin/db-schema-load` in my terminal. and it worked.  
+
+
+
+
+- Now, i want to make sure this script can be executed from any directory, so i changed back to my root directory, and ran the script with `./backend-flask/bin/db-schema-load` and i got an error saying "No such file or directory".  
+
+
+
+- I'll figure it out later, for now it works in the backend directory so i'll have to stick to that.  
+
+
+- I want to write an if statement in my **db-schema-load** file, that allows me toggle between local mode and production mode.  I went back to my backend-flask directory, i copied the code below into the **db-schema-load** file.  
+
+```
+if [ "$1" = "prod" ]; then
+  echo "Running in production mode"
+  URL=$PROD_CONNECTION_URL
+else
+  URL=$CONNECTION_URL
+fi
+```
+
+- I executed it by running `./bin/db-schema-load prod`  
+
+
+
+- It's not connecting to production because we're presently not running it, so i got this error message after a period of it hanging.  
+
+> _Note_ Whenever you see something hanging, it's usually because of connection issues.  
+
+
+##### Colour coding my scripts 
+- I added the line of code below to my **schema-load** file. 
+```
+GREEN='\033[1;32m'
+NO_COLOR='\033[0m'
+LABEL="db-schema-load"
+printf "${GREEN}== ${LABEL}${NO_COLOR}\n"
+```
+And i got this colour after executing the script. 
+
+
+
+- I did a different color for the other 2 files.   
+
+
+
+---
+## Creating Tables
+[Helpful doc for learning how to create tables](https://www.postgresql.org/docs/current/sql-createtable.html)  
+
+- I went to my **schema.sql** file, and i pasted the following code below there.  
+```
+CREATE TABLE public.users (
+  uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  display_name text,
+  handle text
+  cognito_user_id text,
+  created_at TIMESTAMP default current_timestamp NOT NULL
+);
+
+CREATE TABLE public.activities (
+  uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  message text NOT NULL,
+  replies_count integer DEFAULT 0,
+  reposts_count integer DEFAULT 0,
+  likes_count integer DEFAULT 0,
+  reply_to_activity_uuid integer,
+  expires_at TIMESTAMP,
+  created_at TIMESTAMP default current_timestamp NOT NULL
+);
+``` 
+
+
+
+- If i run this code twice, it'll create problems, so i added commands to drop the table if they already exist before creating them again.  
+```
+DROP TABLE IF EXISTS public.users;
+DROP TABLE IF EXISTS public.activities;
+```
+
+- I ran them with `./bin/db-schema-load`  
+
+
+
+- 
 
 
