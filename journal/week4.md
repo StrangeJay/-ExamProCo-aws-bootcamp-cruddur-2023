@@ -136,6 +136,10 @@ PROD_CONNECTION_URL="postgresql://crudderroot:generalt666.@<RDS endpoint>:5432/c
 
 - I opened the db-create file, found out where bash is in my terminal and used it to add my SHEBANG.  
 
+- I want to create a script that would allow me drop the database easily, the created bin files do not have execute permission so i have to give it to them by running "chmod u+x bin/db-create", "chmod u+x bin/db-drop", "chmod u+x bin/db-schema-drop" 
+
+
+
 
 
 
