@@ -267,6 +267,36 @@ DROP TABLE IF EXISTS public.activities;
 
 
 
-- 
+- I kept getting an error saying 
+*"psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+        Is the server running locally and accepting connections on that socket?"*  
+
+- I went back to my **db-schema-load** file and realised there was a typo, i fixed that and tried again and it worked this time.  
+
+
+
+
+- I created a new file for connection. "db-connect", and i gave it execute privileges with `chmod u+x .bin/db-connect`  
+and i ran it with `./bin/db-connect`  
+
+
+
+- I wanted to see my tables so i ran the `\dt` command to confirm the existence of my table.  
+
+
+
+- I created a db-seed file.  
+
+
+
+
+
+- Created another file in the db directory named **seed.sql**  
+
+
+
+
+- It didn't run so i went to my **schema.sql** and added the user uuid, i ran my schema with `./bin/db-schema-load` then i ran the seed again with `./bin/db-seed`and it works now.  
+
 
 

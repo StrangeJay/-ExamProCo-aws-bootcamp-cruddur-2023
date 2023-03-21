@@ -2,15 +2,12 @@
 
 GREEN='\033[1;32m'
 NO_COLOR='\033[0m'
-LABEL="db-schema-load"
+LABEL="db-seed"
 printf "${GREEN}== ${LABEL}${NO_COLOR}\n"
 
+seed_path="$(realpath .)/db/seed.sql"
 
-echo "db-schema-load"
-
-schema_path="$(realpath .)/db/schema.sql"
-
-echo $schema_path
+echo $seed_path
 
 
 if [ "$1" = "prod" ]; then
@@ -21,4 +18,4 @@ else
 fi
 
 
-psql $URL cruddur < $schema_path
+psql $CONNECTION_URL cruddur < $seed_path
