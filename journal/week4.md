@@ -101,7 +101,7 @@ CREATE database cruddur;
 ```
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
-I added this command to my [**"schema.sql"**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/db/seed.sql) file.  
+I added this command to my [**"schema.sql"**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/db/schema.sql) file.  
 
 - I ran \q to quit postgres from the terminal. I made sure i was in my backend directory and i ran this code  
 ```
