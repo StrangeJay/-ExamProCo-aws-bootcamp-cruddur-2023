@@ -27,35 +27,33 @@ aws rds create-db-instance \
   --no-deletion-protection
 ```
 - I got a json output which was a sign that it has probably started working. 
-
-
+![output for cli db run](https://user-images.githubusercontent.com/105195327/226775503-77ae4e6c-38d6-4e1e-aaba-403c9a8539b1.png)   
 
 - I went to my aws management console and searched RDS to see if the instance is in creation mode.  
-
-
+![db creation in console](https://user-images.githubusercontent.com/105195327/226775536-cf94ad82-6c95-4069-b8db-b514428e844f.png)  
 
 - I went to my docker-compose file to make sure the database commands are still there.  
-*I commented out my dynamoDB lin because i don't presently need it*  
+*I commented out my dynamoDB line because i don't presently need it*  
+![db in dockercompose](https://user-images.githubusercontent.com/105195327/226775634-5cef7b7f-c708-4826-83ad-4d85a8ee51a2.png)   
 
 - I composed up and started my containers.  
 
 - While my containers where being created i went to check if my RDS was available.  
-
-
+![RDS running in console](https://user-images.githubusercontent.com/105195327/226775658-f5dc558b-b546-46f1-a388-b86a68a6f41d.png)   
 
 - I stopped the instance because i don't need it right now and i want to prevent spend.   
 *you can only temporarily stop for 7days so i'll be sure to not forget about the instance and come back to it when i need it*  
-
+![stop rds instance](https://user-images.githubusercontent.com/105195327/226775729-0a056fbc-2661-4bea-b309-b2b7ea252fca.png)   
 
 - Checked if my pg container is running now.  
-
+![running pg container](https://user-images.githubusercontent.com/105195327/226775781-8d8400b1-44d7-4e65-af2e-1e4042acba6c.png)  
 
 - I made sure i can connect to my pg instance so i used psql. i copied the code below to my terminal.  
 ```
 psql -Upostgres --host localhost
 ```
 
-
+![psql login](https://user-images.githubusercontent.com/105195327/226775836-bd7424a1-279a-486d-8775-447d8c2a8f2c.png)  
 
 *It prompted me for a password and the password is "password".*   
 
@@ -81,21 +79,23 @@ DELETE FROM table_name WHERE condition; -- Delete data from a table
 ```  
 
 - I ran the `\l` command to show a list of the current databases.   
+![list of pg databases](https://user-images.githubusercontent.com/105195327/226775867-04c2fd82-113c-4f04-bf6c-99dcf58f3a93.png)   
 
+> **Note** When setting up your database from the CLI next time, don't forget to specify your character encoding. I didn't set this now because i'm just testing it out, but if it causes problems later on, i'll do that.  Also set timezone.    
 
-> _Note_ When setting up your database from the CLI next time, don't forget to specify your character encoding. I didn't set this now because i'm just testing it out, but if it causes problems later on, i'll do that.  Also set timezone.    
-
+---
 ### Create a database 
 ```
 CREATE database cruddur;
 ``` 
 - I created a database named **"Cruddur"** and ran the command for listing databases, to confirm its creation.  
+![created db 1st](https://user-images.githubusercontent.com/105195327/226776281-3edc7d9a-2434-4810-b70d-5ec5e7522100.png)  
+
+![created db](https://user-images.githubusercontent.com/105195327/226776057-904f849b-a759-4dc1-a7cf-23599f418db9.png)   
 
 
 ### Import Script 
 - I created a new SQL file called **schema.sql** and i placed it in **backend-flask/db**.   
-
-
 
 #### Add UUID extension 
 ```
@@ -112,35 +112,43 @@ psql cruddur < db/schema.sql -h localhost -U postgres
 ```
 psql postgresql://postgres:password@localhost:5432/cruddur
 ```
+![crudder db](https://user-images.githubusercontent.com/105195327/226777603-542fea3f-c762-4dbb-a467-060e00201503.png)
+
 - I ran the command above in my terminal and it opened up my **cruddur** database. Now i'm going to exit the postgres terminal and set it as an environment variable.   
 
 ```
 export CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
 ```
 - I typed psql CONNECTION_URL and i was connected to the crudder database.  
+![psql db connection](https://user-images.githubusercontent.com/105195327/226777886-4e6f0d3e-dbfd-4578-9388-15a9339dfec3.png)   
 
 - I set it to persist in gitpod environment, so i don't have to set it again.  
 ```
 gp env CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
 ``` 
 
+---
 #### Setting a production URL string 
 ```
-PROD_CONNECTION_URL="postgresql://crudderroot:generalt666.@<RDS endpoint>:5432/cruddur"
+PROD_CONNECTION_URL="postgresql://crudderroot:<password>@<RDS endpoint>:5432/cruddur"
 ``` 
-- I ran this command in my terminal. The endpoint detail is gotten from the RDS **connectivity and security** section.  
+> **Note** Replace <password> with your RDS password, and <RDS endpoint> with your RDS endpoint.  
+  *The endpoint detail is gotten from the RDS **"connectivity and security"** section.*  
+  ![RDS endpoint cleaned](https://user-images.githubusercontent.com/105195327/226778632-774328be-e4b6-410e-a8e9-eb01830da68c.png)   
 
+- I ran this command in my terminal. 
 
+---
 #### Easing the DB processes, 
 - I created a new folder in the backend directory called **"bin"**. *Bin stands for Binary. This is where i'll save all my bash scripts*. Inside the bin directory i'll  create 3 files named **"db-create"**, **"db-drop"**, **"db-schema-load"**.   
 
 - I opened the db-drop file, found out where bash is in my terminal and used it to add my SHEBANG.  
+  ![whereis bash](https://user-images.githubusercontent.com/105195327/226778748-1b9e7f44-19f2-4c01-b200-f4818bf55a49.png)  
 
 - I want to create a script that would allow me drop the database easily, the created bin files do not have execute permission so i have to give it to them by running "chmod u+x bin/db-create", "chmod u+x bin/db-drop", "chmod u+x bin/db-schema-drop" 
+![bin files with permission](https://user-images.githubusercontent.com/105195327/226778877-b04dca40-aebf-42ee-89cc-d93d50ab764b.png)  
 
-
-
-- I coied the line of code below to my **db-drop** file  
+- I copied the line of code below to my **db-drop** file  
 ```
 #! /usr/bin/bash
 
@@ -151,8 +159,7 @@ psql $NO_DB_CONNECTION_URL -c "DROP database cruddur;"
 ```  
 
 and i ran it on my terminal with `./bin/db-drop` and the database was dropped.  
-
-
+![drop database confirmed](https://user-images.githubusercontent.com/105195327/226779343-7945dd43-786d-45be-83b8-a7533fe7acc8.png)   
 
 - I went to the **db-create** file, and copied the code below into it.  
 ```
@@ -165,8 +172,7 @@ psql $NO_DB_CONNECTION_URL -c "CREATE database cruddur;"
 ```
 
 - I executed the script by running `.bin/db-create` in my terminal.   
-
-
+![create database](https://user-images.githubusercontent.com/105195327/226779420-d1680357-0485-468f-ba03-05beeb190707.png)   
 
 - I went to my **schema-load** file, and copied the code below into it. 
 
@@ -182,13 +188,10 @@ psql $CONNECTION_URL cruddur < $schema_path
 ```
 
 - I executed the script by running `./bin/db-schema-load` in my terminal. and it worked.  
-
-
-
+![schema load script](https://user-images.githubusercontent.com/105195327/226779511-c1fd220c-9902-47b1-9ff5-9c6265c2af3c.png)   
 
 - Now, i want to make sure this script can be executed from any directory, so i changed back to my root directory, and ran the script with `./backend-flask/bin/db-schema-load` and i got an error saying "No such file or directory".  
-
-
+![db schema error](https://user-images.githubusercontent.com/105195327/226779569-d4a4b648-fea8-4f10-91c0-2da24f1e2d5b.png)  
 
 - I'll figure it out later, for now it works in the backend directory so i'll have to stick to that.  
 
@@ -202,15 +205,15 @@ if [ "$1" = "prod" ]; then
 else
   URL=$CONNECTION_URL
 fi
-```
+``` 
+                                           
+![schema if statement](https://user-images.githubusercontent.com/105195327/226779873-f576e50f-9331-4491-ad3c-914fbacf3c2a.png)
 
 - I executed it by running `./bin/db-schema-load prod`  
+![schema load prod mode](https://user-images.githubusercontent.com/105195327/226779924-729a773b-ba0f-4ae1-9d0b-c9c9665e430a.png)   
+*It's not connecting to production because we're presently not running it.*  
 
-
-
-- It's not connecting to production because we're presently not running it, so i got this error message after a period of it hanging.  
-
-> _Note_ Whenever you see something hanging, it's usually because of connection issues.  
+> **Note** Whenever you see something hanging, it's usually because of connection issues.  
 
 
 ##### Colour coding my scripts 
@@ -222,12 +225,10 @@ LABEL="db-schema-load"
 printf "${GREEN}== ${LABEL}${NO_COLOR}\n"
 ```
 And i got this colour after executing the script. 
-
-
+![colour code schema](https://user-images.githubusercontent.com/105195327/226780087-25d748a1-b930-46c5-ae99-bbe8c52ae320.png)   
 
 - I did a different color for the other 2 files.   
-
-
+![Colour code all](https://user-images.githubusercontent.com/105195327/226780131-cb1f3d34-e931-48b9-8ee0-949cc4ff9037.png)  
 
 ---
 ## Creating Tables
@@ -254,8 +255,7 @@ CREATE TABLE public.activities (
   created_at TIMESTAMP default current_timestamp NOT NULL
 );
 ``` 
-
-
+![create table](https://user-images.githubusercontent.com/105195327/226780193-3bc98b14-f607-497b-87bf-2c680ed73699.png)   
 
 - If i run this code twice, it'll create problems, so i added commands to drop the table if they already exist before creating them again.  
 ```
@@ -264,39 +264,51 @@ DROP TABLE IF EXISTS public.activities;
 ```
 
 - I ran them with `./bin/db-schema-load`  
-
-
-
-- I kept getting an error saying 
-*"psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
-        Is the server running locally and accepting connections on that socket?"*  
+  
+- I kept getting an error  
+![create table rror](https://user-images.githubusercontent.com/105195327/226780366-01db013e-6b03-4c82-9a12-cf01f9050ee8.png)   
 
 - I went back to my **db-schema-load** file and realised there was a typo, i fixed that and tried again and it worked this time.  
-
-
-
+![create table working](https://user-images.githubusercontent.com/105195327/226780468-9a65e774-b235-45ae-a917-460948d1f119.png)   
 
 - I created a new file for connection. "db-connect", and i gave it execute privileges with `chmod u+x .bin/db-connect`  
 and i ran it with `./bin/db-connect`  
-
-
+![db connect done](https://user-images.githubusercontent.com/105195327/226780544-fdd90a67-84ba-4561-b149-7e6deeff888b.png)   
 
 - I wanted to see my tables so i ran the `\dt` command to confirm the existence of my table.  
+![my tables viewed](https://user-images.githubusercontent.com/105195327/226780571-3268ce6c-49d1-429c-9afa-2f83252059ed.png)   
 
+- I created a db-seed file and copied the code below into it.  
+```
+seed_path="$(realpath .)/db/seed.sql"
 
+echo $seed_path
 
-- I created a db-seed file.  
+psql $CONNECTION_URL cruddur < $seed_path
+```
+- Created another file in the db directory named **seed.sql** and copied the code below into it.  
+```
+INSERT INTO public.users (display_name, handle, cognito_user_id)
+VALUES
+  ('Andrew Brown', 'andrewbrown' ,'MOCK'),
+  ('Andrew Bayko', 'bayko' ,'MOCK'),
+  ('Jay Kaneki', 'jay' ,'MOCK');
 
+INSERT INTO public.activities (user_uuid, message, expires_at)
+VALUES
+  (
+    (SELECT uuid from public.users WHERE users.handle = 'andrewbrown' LIMIT 1),
+    'This was imported as seed data!',
+    current_timestamp + interval '10 day'
+  )
+```
+                                         
+- I ran it with `./bin/db-seed` but it didn't run.  
+  ![error running seed](https://user-images.githubusercontent.com/105195327/226781569-0e02fa74-de46-48d0-9cb4-f537de30227a.png)   
 
+- I went to my **schema.sql** and added the user uuid, i ran my schema with `./bin/db-schema-load` then i ran the seed again with `./bin/db-seed`and it works now.  
+![user uuid line](https://user-images.githubusercontent.com/105195327/226781610-a2c313f9-0104-40c6-a446-2193c169aace.png)   
 
-
-
-- Created another file in the db directory named **seed.sql**  
-
-
-
-
-- It didn't run so i went to my **schema.sql** and added the user uuid, i ran my schema with `./bin/db-schema-load` then i ran the seed again with `./bin/db-seed`and it works now.  
-
+![seeded data](https://user-images.githubusercontent.com/105195327/226781659-02e343a3-339a-49b6-8e7e-044c6d0191e9.png)   
 
 
