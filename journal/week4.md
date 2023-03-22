@@ -32,7 +32,7 @@ aws rds create-db-instance \
 - I went to my aws management console and searched RDS to see if the instance is in creation mode.  
 ![db creation in console](https://user-images.githubusercontent.com/105195327/226775536-cf94ad82-6c95-4069-b8db-b514428e844f.png)  
 
-- I went to my docker-compose file to make sure the database commands are still there.  
+- I went to my [docker-compose file](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/docker-compose.yml) to make sure the database commands are still there.  
 *I commented out my dynamoDB line because i don't presently need it*  
 ![db in dockercompose](https://user-images.githubusercontent.com/105195327/226775634-5cef7b7f-c708-4826-83ad-4d85a8ee51a2.png)   
 
@@ -95,13 +95,13 @@ CREATE database cruddur;
 
 
 ### Import Script 
-- I created a new SQL file called **schema.sql** and i placed it in **backend-flask/db**.   
+- I created a new SQL file called [**schema.sql**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/db/seed.sql) and i placed it in [**backend-flask/db**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/tree/main/backend-flask/db).   
 
 #### Add UUID extension 
 ```
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
-I added this command to my **"schema.sql"** file.  
+I added this command to my [**"schema.sql"**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/db/seed.sql) file.  
 
 - I ran \q to quit postgres from the terminal. I made sure i was in my backend directory and i ran this code  
 ```
@@ -142,13 +142,13 @@ PROD_CONNECTION_URL="postgresql://crudderroot:<password>@<RDS endpoint>:5432/cru
 #### Easing the DB processes, 
 - I created a new folder in the backend directory called **"bin"**. *Bin stands for Binary. This is where i'll save all my bash scripts*. Inside the bin directory i'll  create 3 files named **"db-create"**, **"db-drop"**, **"db-schema-load"**.   
 
-- I opened the db-drop file, found out where bash is in my terminal and used it to add my SHEBANG.  
+- I opened the [db-drop file](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-drop), found out where bash is in my terminal and used it to add my SHEBANG.  
   ![whereis bash](https://user-images.githubusercontent.com/105195327/226778748-1b9e7f44-19f2-4c01-b200-f4818bf55a49.png)  
 
 - I want to create a script that would allow me drop the database easily, the created bin files do not have execute permission so i have to give it to them by running "chmod u+x bin/db-create", "chmod u+x bin/db-drop", "chmod u+x bin/db-schema-drop" 
 ![bin files with permission](https://user-images.githubusercontent.com/105195327/226778877-b04dca40-aebf-42ee-89cc-d93d50ab764b.png)  
 
-- I copied the line of code below to my **db-drop** file  
+- I copied the line of code below to my [**db-drop**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-drop) file  
 ```
 #! /usr/bin/bash
 
@@ -161,7 +161,7 @@ psql $NO_DB_CONNECTION_URL -c "DROP database cruddur;"
 and i ran it on my terminal with `./bin/db-drop` and the database was dropped.  
 ![drop database confirmed](https://user-images.githubusercontent.com/105195327/226779343-7945dd43-786d-45be-83b8-a7533fe7acc8.png)   
 
-- I went to the **db-create** file, and copied the code below into it.  
+- I went to the [**db-create**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-create) file, and copied the code below into it.  
 ```
 #!/usr/bin/bash
 
@@ -174,7 +174,7 @@ psql $NO_DB_CONNECTION_URL -c "CREATE database cruddur;"
 - I executed the script by running `.bin/db-create` in my terminal.   
 ![create database](https://user-images.githubusercontent.com/105195327/226779420-d1680357-0485-468f-ba03-05beeb190707.png)   
 
-- I went to my **schema-load** file, and copied the code below into it. 
+- I went to my [**schema-load**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-schema-load) file, and copied the code below into it. 
 
 ``` 
 #!/usr/bin/bash
@@ -196,7 +196,7 @@ psql $CONNECTION_URL cruddur < $schema_path
 - I'll figure it out later, for now it works in the backend directory so i'll have to stick to that.  
 
 
-- I want to write an if statement in my **db-schema-load** file, that allows me toggle between local mode and production mode.  I went back to my backend-flask directory, i copied the code below into the **db-schema-load** file.  
+- I want to write an if statement in my [**db-schema-load**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-schema-load) file, that allows me toggle between local mode and production mode.  I went back to my backend-flask directory, i copied the code below into the [**db-schema-load**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-schema-load) file.  
 
 ```
 if [ "$1" = "prod" ]; then
@@ -217,7 +217,7 @@ fi
 
 
 ##### Colour coding my scripts 
-- I added the line of code below to my **schema-load** file. 
+- I added the line of code below to my [**db-schema-load**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-schema-load) file. 
 ```
 GREEN='\033[1;32m'
 NO_COLOR='\033[0m'
@@ -234,7 +234,7 @@ And i got this colour after executing the script.
 ## Creating Tables
 [Helpful doc for learning how to create tables](https://www.postgresql.org/docs/current/sql-createtable.html)  
 
-- I went to my **schema.sql** file, and i pasted the following code below there.  
+- I went to my [**schema.sql**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/db/schema.sql) file, and i pasted the following code below there.  
 ```
 CREATE TABLE public.users (
   uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -268,17 +268,17 @@ DROP TABLE IF EXISTS public.activities;
 - I kept getting an error  
 ![create table rror](https://user-images.githubusercontent.com/105195327/226780366-01db013e-6b03-4c82-9a12-cf01f9050ee8.png)   
 
-- I went back to my **db-schema-load** file and realised there was a typo, i fixed that and tried again and it worked this time.  
+- I went back to my [**db-schema-load**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-schema-load) file and realised there was a typo, i fixed that and tried again and it worked this time.  
 ![create table working](https://user-images.githubusercontent.com/105195327/226780468-9a65e774-b235-45ae-a917-460948d1f119.png)   
 
-- I created a new file for connection. "db-connect", and i gave it execute privileges with `chmod u+x .bin/db-connect`  
+- I created a new file for connection. ["db-connect"](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-connect), and i gave it execute privileges with `chmod u+x .bin/db-connect`  
 and i ran it with `./bin/db-connect`  
 ![db connect done](https://user-images.githubusercontent.com/105195327/226780544-fdd90a67-84ba-4561-b149-7e6deeff888b.png)   
 
 - I wanted to see my tables so i ran the `\dt` command to confirm the existence of my table.  
 ![my tables viewed](https://user-images.githubusercontent.com/105195327/226780571-3268ce6c-49d1-429c-9afa-2f83252059ed.png)   
 
-- I created a db-seed file and copied the code below into it.  
+- I created a [db-seed file](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-seed) and copied the code below into it.  
 ```
 seed_path="$(realpath .)/db/seed.sql"
 
@@ -286,7 +286,7 @@ echo $seed_path
 
 psql $CONNECTION_URL cruddur < $seed_path
 ```
-- Created another file in the db directory named **seed.sql** and copied the code below into it.  
+- Created another file in the db directory named [**seed.sql**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/db/seed.sql) and copied the code below into it.  
 ```
 INSERT INTO public.users (display_name, handle, cognito_user_id)
 VALUES
@@ -306,7 +306,7 @@ VALUES
 - I ran it with `./bin/db-seed` but it didn't run.  
   ![error running seed](https://user-images.githubusercontent.com/105195327/226781569-0e02fa74-de46-48d0-9cb4-f537de30227a.png)   
 
-- I went to my **schema.sql** and added the user uuid, i ran my schema with `./bin/db-schema-load` then i ran the seed again with `./bin/db-seed`and it works now.  
+- I went to my [**schema.sql**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/db/schema.sql) and added the user uuid, i ran my schema with `./bin/db-schema-load` then i ran the seed again with `./bin/db-seed`and it works now.  
 ![user uuid line](https://user-images.githubusercontent.com/105195327/226781610-a2c313f9-0104-40c6-a446-2193c169aace.png)   
 
 ![seeded data](https://user-images.githubusercontent.com/105195327/226781659-02e343a3-339a-49b6-8e7e-044c6d0191e9.png)   
