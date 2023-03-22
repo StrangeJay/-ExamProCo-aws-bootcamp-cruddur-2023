@@ -217,6 +217,7 @@ fi
 
 
 ##### Colour coding my scripts 
+[Colour code examples](https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux)
 - I added the line of code below to my [**db-schema-load**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-schema-load) file. 
 ```
 GREEN='\033[1;32m'
