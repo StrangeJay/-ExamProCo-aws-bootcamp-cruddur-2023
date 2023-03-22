@@ -174,7 +174,7 @@ psql $NO_DB_CONNECTION_URL -c "CREATE database cruddur;"
 - I executed the script by running `.bin/db-create` in my terminal.   
 ![create database](https://user-images.githubusercontent.com/105195327/226779420-d1680357-0485-468f-ba03-05beeb190707.png)   
 
-- I went to my [**schema-load**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-schema-load) file, and copied the code below into it. 
+- I went to my [**db- schema-load**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/bin/db-schema-load) file, and copied the code below into it. 
 
 ``` 
 #!/usr/bin/bash
@@ -306,7 +306,7 @@ VALUES
 - I ran it with `./bin/db-seed` but it didn't run.  
   ![error running seed](https://user-images.githubusercontent.com/105195327/226781569-0e02fa74-de46-48d0-9cb4-f537de30227a.png)   
 
-- I went to my [**schema.sql**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/db/schema.sql) and added the user uuid, i ran my schema with `./bin/db-schema-load` then i ran the seed again with `./bin/db-seed`and it works now.  
+- I went to my [**schema.sql**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/db/schema.sql) file and added the user uuid, i ran my schema with `./bin/db-schema-load` then i ran the seed again with `./bin/db-seed`and it works now.  
 ![user uuid line](https://user-images.githubusercontent.com/105195327/226781610-a2c313f9-0104-40c6-a446-2193c169aace.png)   
 
 ![seeded data](https://user-images.githubusercontent.com/105195327/226781659-02e343a3-339a-49b6-8e7e-044c6d0191e9.png)   
