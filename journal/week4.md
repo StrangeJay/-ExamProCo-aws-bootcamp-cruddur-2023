@@ -95,7 +95,7 @@ CREATE database cruddur;
 
 
 ### Import Script 
-- I created a new SQL file called [**schema.sql**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/db/seed.sql) and i placed it in [**backend-flask/db**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/tree/main/backend-flask/db).   
+- I created a new SQL file called [**schema.sql**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/blob/main/backend-flask/db/schema.sql) and i placed it in [**backend-flask/db**](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/tree/main/backend-flask/db).   
 
 #### Add UUID extension 
 ```
