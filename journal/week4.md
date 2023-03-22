@@ -119,7 +119,7 @@ psql postgresql://postgres:password@localhost:5432/cruddur
 ```
 export CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
 ```
-- I typed psql CONNECTION_URL and i was connected to the crudder database.  
+- I typed psql $CONNECTION_URL and i was connected to the crudder database.  
 ![psql db connection](https://user-images.githubusercontent.com/105195327/226777886-4e6f0d3e-dbfd-4578-9388-15a9339dfec3.png)   
 
 - I set it to persist in gitpod environment, so i don't have to set it again.  
