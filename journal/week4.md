@@ -119,7 +119,7 @@ psql postgresql://postgres:password@localhost:5432/cruddur
 ```
 export CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
 ```
-- I typed psql $CONNECTION_URL and i was connected to the crudder database.  
+- I typed psql $CONNECTION_URL and i was connected to the cruddur database.  
 ![psql db connection](https://user-images.githubusercontent.com/105195327/226777886-4e6f0d3e-dbfd-4578-9388-15a9339dfec3.png)   
 
 - I set it to persist in gitpod environment, so i don't have to set it again.  
@@ -324,7 +324,7 @@ I stopped my workspace for a while, to be continued later.
 
 
 
-- I tried listing the tables but i realised there was nothing there. The previous setups didn't persist, so i'll have to run the commands agaian. I ran them and connected to my database again and everything was fine. 
+- I tried listing the tables but i realised there was nothing there. The previous setups didn't persist, so i'll have to run the commands again. I ran them and connected to my database again and everything was fine. 
 
 
 
@@ -377,7 +377,31 @@ from pg_stat_activity;"
 - I gave the file execute privileges, and ran `./bin/db-sessions`  
 
 
-- I created a file **"db-setup"** to easily setup everything for our database.  
+- I created a file **"db-setup"** to easily setup everything for our database. I copied the code below into the file.  
+
+```
+#!/usr/bin/bash 
+
+-e # stop if it fails at any point
+
+BLUE='\033[1;34m'
+NO_COLOR='\033[0m'
+LABEL="db-setup"
+printf "${BLUE}== ${LABEL}${NO_COLOR}\n"
+
+echo "db-setup"
+
+bin_path="$(realpath .)/bin"
+
+source "$bin_path/db-drop"
+source "$bin_path/db-create"
+source "$bin_path/db-schema-load"
+source "$bin_path/db-seed"
+```
+
+
+
+- I gave it execute privileges and ran `./bin/db-setup` 
  
 
 
