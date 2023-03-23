@@ -312,4 +312,78 @@ VALUES
 
 ![seeded data](https://user-images.githubusercontent.com/105195327/226781659-02e343a3-339a-49b6-8e7e-044c6d0191e9.png)   
 
+I stopped my workspace for a while, to be continued later.  
+---
+- I tried connecting to my database with `./bin/db-connect` but i got an error 
+
+
+
+- I created my database again. signing in with `psql -Upostgres --host localhost` then i ran `CREATE database cruddur;` and my database was created. 
+
+- I quit and went back to my directory to run `./bin/db-connect` again and i was connected to my database.  
+
+
+
+- I tried listing the tables but i realised there was nothing there. The previous setups didn't persist, so i'll have to run the commands agaian. I ran them and connected to my database again and everything was fine. 
+
+
+
+
+- I ran `SELECT * FROM activities;` to get a view of what's been happening in the database.   
+
+
+
+
+- I'm going to query my database now. 
+
+
+- I used my postgres explorer to access mty database and see how it looks. I deleted the session when i was done.  
+
+
+
+###### db-sessions
+- I created a file in my [bin directory](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/tree/main/backend-flask/bin), named **db-sessions**  
+
+- I copied the code below into the file.  
+```
+#!/usr/bin/bash 
+
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="db-sessions"
+printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
+
+
+if [ "$1" = "prod" ]; then
+  echo "Running in production mode"
+  URL=$PROD_CONNECTION_URL
+else
+  URL=$CONNECTION_URL
+fi
+
+
+NO_DB_URL=$(sed 's/\/cruddur//g' <<<"$URL")
+psql $NO_DB_URL -c "select pid as process_id, \
+       usename as user,  \
+       datname as db, \
+       client_addr, \
+       application_name as app,\
+       state \
+from pg_stat_activity;"
+``` 
+
+*This would check the idle connections left open.*  
+
+- I gave the file execute privileges, and ran `./bin/db-sessions`  
+
+
+- I created a file **"db-setup"** to easily setup everything for our database.  
+ 
+
+
+
+
+
+
+
 

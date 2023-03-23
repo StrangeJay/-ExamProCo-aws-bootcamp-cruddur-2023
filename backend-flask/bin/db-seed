@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 
-GREEN='\033[1;32m'
+PURPLE='\033[1;35m'
 NO_COLOR='\033[0m'
 LABEL="db-seed"
-printf "${GREEN}== ${LABEL}${NO_COLOR}\n"
+printf "${PURPLE}== ${LABEL}${NO_COLOR}\n"
 
 seed_path="$(realpath .)/db/seed.sql"
 
