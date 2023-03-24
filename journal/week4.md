@@ -402,7 +402,44 @@ source "$bin_path/db-seed"
 
 
 - I gave it execute privileges and ran `./bin/db-setup` 
- 
+*I'm only doing this locally, so i didn't add an if else statement*  
+
+
+##### Installing Postgres driver  
+- I added `psycopg[binary]` and `psycopg[pool]` to my requirement.txt file. Then i ran `pip install requirements.txt`   
+Next i'm going to create a connection pool.  
+
+- I created a new file in my **backend-flask/lib** directory named **"db.py"**  and i copied the command below into the file.  
+```
+from psycopg_pool import ConnectionPool
+import os
+
+
+connection_url = os.getenv("CONNECTION_URL")
+pool = ConnectionPool(connection_url)
+```
+
+- I passed my connection pool through my **"docker-compose.yml"** file.  
+
+
+- I imported the connection pool into my **"home_activities.py"** file.  
+```
+from lib.db import pool 
+``` 
+
+```
+ sql = """
+      SELELECT * FROM activities
+      """  
+      with pool.connection() as conn:
+        with conn.cursor() as cur:
+          cur.execute(sql)
+          # this will return a tuple
+          # the first field being the data
+          json = cur.fetchall()
+      return json[0]
+      return results
+```
 
 
 
