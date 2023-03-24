@@ -558,6 +558,6 @@ ORDER BY activities.created_at DESC
 
 
 
-- 
+*Everytime the environment is spinned up, i'll have to update the GITPOD ip in my security group, so i'm going to create a script that automatically updates it whenever i spin up a new environment.*
 
 
