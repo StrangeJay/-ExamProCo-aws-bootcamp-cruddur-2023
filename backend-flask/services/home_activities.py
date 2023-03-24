@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from opentelemetry import trace
 
 # import connection pool
-from lib.db import pool, query_wrap_array 
+from lib.db import pool, query_wrap_object, query_wrap_array 
 
 # import logging  
 

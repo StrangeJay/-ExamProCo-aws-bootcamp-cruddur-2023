@@ -491,11 +491,17 @@ def query_wrap_array(template):
 
 
 
-- I updated the sql command and added the query_wrap_array.  I saved and refreshed the frontend URL, then i got this error.  
+- I updated the sql command and added the query_wrap_array.  I saved and refreshed the frontend URL, then i got this error saying "TypeError: expected bytes, NoneType found".  
 
 
 
-- 
+- I went to check my **"db.py code and i realised i forgot to add the return statement, so i did that, saved and refreshed the frontend URL again."**  
+
+- I got an error saying 
+**"psycopg.errors.SyntaxError: syntax error at or near "{"
+LINE 3:   {template}
+          ^"**  
+
 
 
 
