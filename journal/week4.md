@@ -546,9 +546,18 @@ ORDER BY activities.created_at DESC
 
 
 
-- I saved the code to get my IP as an environment variable using `GITPOD_IP=$(curl ifconfig.me)`  
+- I saved the code to get my IP as an environment variable using `export GITPOD_IP=$(curl ifconfig.me)`  
 
 
-- I ran `psql $PROD_CONNECTION_URL` again and this time i got an error saying my password authentication failed
+- I ran `psql $PROD_CONNECTION_URL` again and this time i got an error saying my password authentication failed. I did some searching and realised i had a typographical error in my master username. I didn't feel like deleting and recreating a new RDS instance so i went to my terminal and changed the master username to fit the one created.  I ran `psql $PROD_CONNECTION_URL` and it worked.  
+
+
+
+- I ran `\l` to see the list of my tables.  
+
+
+
+
+- 
 
 
