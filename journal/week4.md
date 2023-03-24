@@ -441,7 +441,16 @@ from lib.db import pool
       return results
 ```
 
+- I composed up and visited my frontend URL, the page was blank so i viewed logs and i saw a bunch of errors there.  
 
+- I checked the backend URL and i also got an error saying **"pool timeout"**. I checked the backend container logs and i saw the same error.  
+
+
+
+
+
+
+- 
 
 
 
