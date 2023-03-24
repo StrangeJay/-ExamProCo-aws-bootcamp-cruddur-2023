@@ -504,8 +504,51 @@ LINE 3:   {template}
 
 
 - I asked chatgpt and i was given instructions to use double braces to escape the braces in the 'COALESCE' function. I tried that and i still had the same error, I added the **"query_wrap_object"** import statement to my **"home_activities.py"** file. I got the same error. 
-I changed from single quotes to double quotes in wrapping my sql query. 
+I changed from single quotes to double quotes in wrapping my sql query. I refreshed the frontend page and it served data. 
+But i got an error saying my token was expired.  
 
 
+
+- I closed my workspace and restarted it and now authentication has returned.    
+
+
+
+- Now i want to query the database. I copied the code below into my **"home_activities.py"** 
+```
+SELECT
+  activities.uuid,
+  users.display_name,
+  users.handle,
+  activities.message,
+  activities.replies_count,
+  activities.reposts_count,
+  activities.likes_count,
+  activities.reply_to_activity_uuid,
+  activities.expires_at,
+  activities.created_at
+FROM public.activities
+LEFT JOIN public.users ON users.uuid = activities.user_uuid
+ORDER BY activities.created_at DESC
+```
+
+- I went to my AWS console, went to my RDS and restarted my RDS. I went to my terminal to run `echo PROD_CONNECTION_URL` and it exported my URL. 
+
+- I ran `psql $PROD_CONNECTION_URL` and it was hanging, we have to get the gitpod address and make it available to the security group.  
+
+
+- I went to add a new rule to my security group. To allow git pod to access my RDS. 
+
+
+
+
+- I ran `curl ifconfig.me` in my terminal. I got the IP address and added it to the source of my inbound rule.     
+
+
+
+
+- I saved the code to get my IP as an environment variable using `GITPOD_IP=$(curl ifconfig.me)`  
+
+
+- I ran `psql $PROD_CONNECTION_URL` again and this time i got an error saying my password authentication failed
 
 
