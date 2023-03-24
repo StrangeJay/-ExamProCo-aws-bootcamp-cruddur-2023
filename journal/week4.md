@@ -445,8 +445,53 @@ from lib.db import pool
 
 - I checked the backend URL and i also got an error saying **"pool timeout"**. I checked the backend container logs and i saw the same error.  
 
+- I went to my docker-compose file to change my **"CONNECTION_URL"**  and i composed up again. I checked the backend URL and got a syntax error.  
 
 
+
+
+- I fixed the syntax error and got a type error.  
+
+
+
+
+- I added rows and got an error saying json is not defined.   
+
+
+
+
+- I removed the json line and got an error saying results error, so i removed the result line and i got back some error. It isn't properly fed so i'm going to tweak it a bit. I want to return raw json from postgres and then pass it along, *that way i don't have to worry about additional overhead*   
+
+
+
+
+
+
+- I went to my db.py file and copied the code below into the file.  
+```
+def query_wrap_object(template):
+  sql = '''
+  (SELECT COALESCE(row_to_json(object_row),'{}'::json) FROM (
+  {template}
+  ) object_row);
+  '''
+
+def query_wrap_array(template):
+  sql = '''
+  (SELECT COALESCE(array_to_json(array_agg(row_to_json(array_row))),'[]'::json) FROM (
+  {template}
+  ) array_row);
+  '''
+```
+
+
+
+
+- I went to my **"home_activities.py"** file and updated the import command by adding `query_wrap_array` 
+
+
+
+- I updated the sql command and added the query_wrap_array.  I saved and refreshed the frontend URL, then i got this error.  
 
 
 
