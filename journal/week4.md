@@ -503,7 +503,8 @@ LINE 3:   {template}
           ^"**  
 
 
-
+- I asked chatgpt and i was given instructions to use double braces to escape the braces in the 'COALESCE' function. I tried that and i still had the same error, I added the **"query_wrap_object"** import statement to my **"home_activities.py"** file. I got the same error. 
+I changed from single quotes to double quotes in wrapping my sql query. 
 
 
 
