@@ -601,6 +601,21 @@ command: |
       source  "$THEIA_WORKSPACE_ROOT/backend-flask/rds-update-sg-rule"
 ``` 
 
+- I wanted to test this so i closed my workspace, removed the inbound rule in my security group and started the workspace again. The sg update rule was working. 
+
+
+
+
+- I checked my security group inbound rule from the console and the new GITPOD_IP has been added.  
+
+
+
+
+
+- I ran my db-setup and db-connect, and everything works fine. Data is being loaded on my frontend. 
+
+
+
 
 
 
