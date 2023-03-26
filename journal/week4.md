@@ -561,3 +561,47 @@ ORDER BY activities.created_at DESC
 *Everytime the environment is spinned up, i'll have to update the GITPOD ip in my security group, so i'm going to create a script that automatically updates it whenever i spin up a new environment.*
 
 
+- I went to my management console to grab the security group ID and the security group rule ID, i inputed them in the commands below and ran it in my terminal.  
+
+```
+export DB_SG_ID="<sg-ID>"
+gp env DB_SG_ID="<sg-ID>"
+export DB_SG_RULE_ID="<sgr-ID>"
+gp env DB_SG_RULE_ID="<sgr-ID>" 
+```
+
+- Now i'll use this command to automate the process. 
+```
+aws ec2 modify-security-group-rules \
+    --group-id $DB_SG_ID \
+    --security-group-rules "SecurityGroupRuleId=$DB_SG_RULE_ID,SecurityGroupRule={Description=GITPOD,IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32}"
+``` 
+
+To test it i'll remove my previous inbound rule, run this command, then go and check if the new one has been set. 
+
+- I kept getting an error message saying CIDR block /32 is malformed. 
+
+
+
+
+- After much investigation, i realised i didn't save my GITPOD_IP to the environment and i stopped and restarted my workspace prior to this step. So i exported my GITPOD_IP again and saved to env. I tried running the command again and it worked this time. 
+
+
+
+*I want this to be updated everytime i start my workspace, so i'm going to create an additional script to that effect.* 
+
+
+- I went to my **"bin"** directory and created another script called **"rds-update-sg-rule"** i copied the command into it and gave it execute priviledges.  
+
+###### Set it to autorun during startup 
+- I went to my gitpod.yml file and put the command below in it.  
+```
+command: |
+      export GITPOD_IP=$(curl ifconfig.me)
+      source  "$THEIA_WORKSPACE_ROOT/backend-flask/rds-update-sg-rule"
+``` 
+
+
+
+
+
