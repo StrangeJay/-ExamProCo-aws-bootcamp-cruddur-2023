@@ -314,35 +314,27 @@ VALUES
 
 I stopped my workspace for a while, to be continued later.  
 ---
+  
 - I tried connecting to my database with `./bin/db-connect` but i got an error 
-
-
+![error trying to log back in](https://user-images.githubusercontent.com/105195327/227788948-97a787ea-2673-459d-b1f4-e253f2e94916.png)   
 
 - I created my database again. signing in with `psql -Upostgres --host localhost` then i ran `CREATE database cruddur;` and my database was created. 
 
 - I quit and went back to my directory to run `./bin/db-connect` again and i was connected to my database.  
+![db connecting now](https://user-images.githubusercontent.com/105195327/227789127-9ddde347-dc24-4c6e-bce4-af165ea86de4.png)  
 
-
-
-- I tried listing the tables but i realised there was nothing there. The previous setups didn't persist, so i'll have to run the commands again. I ran them and connected to my database again and everything was fine. 
-
-
-
+- I tried listing the tables but i realised there was nothing there. The previous setups didn't persist, so i'll have to run the commands again. I ran them and connected to my database again and everything was fine.  
+![Ran all scripts again](https://user-images.githubusercontent.com/105195327/227789245-17ca27c2-4bf9-4d74-8753-6c6c9f204d56.png)  
 
 - I ran `SELECT * FROM activities;` to get a view of what's been happening in the database.   
+![SELECT ALL FROM](https://user-images.githubusercontent.com/105195327/227789256-72c95283-7173-40b7-92d1-bd4804efcfea.png)  
 
-
-
-
-- I'm going to query my database now. 
-
-
+###### Testing out 
 - I used my postgres explorer to access mty database and see how it looks. I deleted the session when i was done.  
+![postgres explorer connection](https://user-images.githubusercontent.com/105195327/227789562-3999de29-6881-4f80-9f17-4bad9741ad21.png)   
 
-
-
-###### db-sessions
-- I created a file in my [bin directory](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/tree/main/backend-flask/bin), named **db-sessions**  
+##### db-sessions
+- I created a file in my [bin directory](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/tree/main/backend-flask/bin), named **db-sessions**                                
 
 - I copied the code below into the file.  
 ```
@@ -375,7 +367,7 @@ from pg_stat_activity;"
 *This would check the idle connections left open.*  
 
 - I gave the file execute privileges, and ran `./bin/db-sessions`  
-
+![one active db session](https://user-images.githubusercontent.com/105195327/227789634-9b46d069-d28b-49c7-a368-050f1a4fdc3a.png)  
 
 - I created a file **"db-setup"** to easily setup everything for our database. I copied the code below into the file.  
 
@@ -399,13 +391,12 @@ source "$bin_path/db-schema-load"
 source "$bin_path/db-seed"
 ```
 
-
-
 - I gave it execute privileges and ran `./bin/db-setup` 
 *I'm only doing this locally, so i didn't add an if else statement*  
-
-
-##### Installing Postgres driver  
+![db setup](https://user-images.githubusercontent.com/105195327/227789678-28085cba-c741-4cff-ba12-0d072bb72a8f.png)
+---
+  
+#### Installing Postgres driver  
 - I added `psycopg[binary]` and `psycopg[pool]` to my requirement.txt file. Then i ran `pip install requirements.txt`   
 Next i'm going to create a connection pool.  
 
@@ -418,9 +409,10 @@ import os
 connection_url = os.getenv("CONNECTION_URL")
 pool = ConnectionPool(connection_url)
 ```
+![Connection pool](https://user-images.githubusercontent.com/105195327/227789716-712ffbf9-292b-485a-bfda-5948bd898020.png)  
 
 - I passed my connection pool through my **"docker-compose.yml"** file.  
-
+![docker compose connection url](https://user-images.githubusercontent.com/105195327/227789726-ae2a389b-4155-4423-ae9e-2e43a7e0d607.png)  
 
 - I imported the connection pool into my **"home_activities.py"** file.  
 ```
@@ -440,32 +432,32 @@ from lib.db import pool
       return json[0]
       return results
 ```
+![connection pool home activities](https://user-images.githubusercontent.com/105195327/227789746-37c8e01e-d315-4b88-8d64-1b896b1e1d57.png)  
 
 - I composed up and visited my frontend URL, the page was blank so i viewed logs and i saw a bunch of errors there.  
+![errors in frontend logs](https://user-images.githubusercontent.com/105195327/227789798-440d7999-91c9-4ecc-9603-c11c296a00be.png)  
 
 - I checked the backend URL and i also got an error saying **"pool timeout"**. I checked the backend container logs and i saw the same error.  
+![backend pool timeout error](https://user-images.githubusercontent.com/105195327/227789904-78599609-06f4-4af3-8113-383fdcba4cff.png)  
+  
+  ![backend error log pool error](https://user-images.githubusercontent.com/105195327/227789927-41557518-c64f-4006-a212-755df27aa61c.png)  
 
 - I went to my docker-compose file to change my **"CONNECTION_URL"**  and i composed up again. I checked the backend URL and got a syntax error.  
 
+![error logs 1st fix connection url](https://user-images.githubusercontent.com/105195327/227789966-78f78709-da6c-4d14-a5cd-712866d47444.png)  
 
-
+![backend syntax error](https://user-images.githubusercontent.com/105195327/227789975-623aaa6c-67b8-4467-a703-415887f4c470.png)  
+  
+  ![syntax error in home activities](https://user-images.githubusercontent.com/105195327/227790300-0986e12f-f6de-4c5b-8414-308fb95e5ce5.png)
 
 - I fixed the syntax error and got a type error.  
-
-
-
+![type error backend](https://user-images.githubusercontent.com/105195327/227790317-3e5b79e0-e4a0-4be0-89f9-533f8d2c1764.png)   
 
 - I added rows and got an error saying json is not defined.   
-
-
-
+![name error logs backend](https://user-images.githubusercontent.com/105195327/227790338-3265e81b-2261-4a55-9706-48dd296cee71.png)   
 
 - I removed the json line and got an error saying results error, so i removed the result line and i got back some error. It isn't properly fed so i'm going to tweak it a bit. I want to return raw json from postgres and then pass it along, *that way i don't have to worry about additional overhead*   
-
-
-
-
-
+![data but not perfect yet](https://user-images.githubusercontent.com/105195327/227790407-eb70e564-4271-4019-9410-ab8d085a7df7.png)   
 
 - I went to my db.py file and copied the code below into the file.  
 ```
@@ -484,35 +476,30 @@ def query_wrap_array(template):
   '''
 ```
 
-
-
-
 - I went to my **"home_activities.py"** file and updated the import command by adding `query_wrap_array` 
+![updated import statement](https://user-images.githubusercontent.com/105195327/227790514-d072e2f2-8beb-4913-adb6-3d88b6e3c16f.png)   
 
+- I updated the sql command and added the query_wrap_array.  I saved and refreshed the frontend URL, then i got this error saying "TypeError: expected bytes, NoneType found".  ![update home activities with querry](https://user-images.githubusercontent.com/105195327/227790534-2af93b28-44f8-4b79-b4ee-04556850037a.png)  
 
-
-- I updated the sql command and added the query_wrap_array.  I saved and refreshed the frontend URL, then i got this error saying "TypeError: expected bytes, NoneType found".  
-
-
+![sql query error](https://user-images.githubusercontent.com/105195327/227790564-026a2084-84ec-48ac-94ca-575c5f6968e3.png)  
 
 - I went to check my **"db.py code and i realised i forgot to add the return statement, so i did that, saved and refreshed the frontend URL again."**  
+![return none error fix](https://user-images.githubusercontent.com/105195327/227791022-ad41b4e2-bc8a-436f-a3b6-1571e694e044.png)  
 
 - I got an error saying 
 **"psycopg.errors.SyntaxError: syntax error at or near "{"
 LINE 3:   {template}
           ^"**  
 
-
 - I asked chatgpt and i was given instructions to use double braces to escape the braces in the 'COALESCE' function. I tried that and i still had the same error, I added the **"query_wrap_object"** import statement to my **"home_activities.py"** file. I got the same error. 
 I changed from single quotes to double quotes in wrapping my sql query. I refreshed the frontend page and it served data. 
 But i got an error saying my token was expired.  
-
-
+![frontend feeding data](https://user-images.githubusercontent.com/105195327/227791054-ef9c6b38-3c32-425c-94ac-5b688c0f8a03.png)  
 
 - I closed my workspace and restarted it and now authentication has returned.    
-
-
-
+![authentication now working](https://user-images.githubusercontent.com/105195327/227791090-ab9753bc-c465-4178-8086-956960708536.png)  
+---
+  
 - Now i want to query the database. I copied the code below into my **"home_activities.py"** 
 ```
 SELECT
@@ -530,37 +517,41 @@ FROM public.activities
 LEFT JOIN public.users ON users.uuid = activities.user_uuid
 ORDER BY activities.created_at DESC
 ```
+![data query in home activities](https://user-images.githubusercontent.com/105195327/227791106-5a82b084-a9ba-46da-8e01-dc2a2ce00965.png)   
+  
+![my first query](https://user-images.githubusercontent.com/105195327/227791149-b2c8f27d-474f-4bd7-b7c0-6663ba7b380a.png)
 
 - I went to my AWS console, went to my RDS and restarted my RDS. I went to my terminal to run `echo PROD_CONNECTION_URL` and it exported my URL. 
+![echo prod connection url](https://user-images.githubusercontent.com/105195327/227791176-55bf4a6a-d699-4a3b-96c1-c08a20f23ecb.png)  
 
 - I ran `psql $PROD_CONNECTION_URL` and it was hanging, we have to get the gitpod address and make it available to the security group.  
-
+![prod connection url hanging](https://user-images.githubusercontent.com/105195327/227791203-054f6a90-a92b-4ab4-a6da-e11ca719ca47.png)  
 
 - I went to add a new rule to my security group. To allow git pod to access my RDS. 
+![edit inbound rule](https://user-images.githubusercontent.com/105195327/227791524-5329f026-a4c1-492d-8205-ba37e2f8f2db.png)  
 
-
-
+![add security rule](https://user-images.githubusercontent.com/105195327/227791529-0068c474-9d3e-47bc-99af-930c691f5592.png)  
 
 - I ran `curl ifconfig.me` in my terminal. I got the IP address and added it to the source of my inbound rule.     
+![GITPOD curl ifconfig](https://user-images.githubusercontent.com/105195327/227791549-e2b2c71c-52f2-470d-93ca-4c9424782132.png)  
 
-
-
+![added IP to inbound rule](https://user-images.githubusercontent.com/105195327/227791591-7a44b188-1ba1-4a79-b983-ad5d57bafdd6.png)   
 
 - I saved the code to get my IP as an environment variable using `export GITPOD_IP=$(curl ifconfig.me)`  
 
-
-- I ran `psql $PROD_CONNECTION_URL` again and this time i got an error saying my password authentication failed. I did some searching and realised i had a typographical error in my master username. I didn't feel like deleting and recreating a new RDS instance so i went to my terminal and changed the master username to fit the one created.  I ran `psql $PROD_CONNECTION_URL` and it worked.  
-
-
+- I ran `psql $PROD_CONNECTION_URL` again and this time i got an error saying my password authentication failed. 
+  ![prod connection url failed password authentication](https://user-images.githubusercontent.com/105195327/227791610-6abf9897-f551-4b84-baad-cc6bcd4f5e32.png)  
+  
+- I did some searching and realised i had a typographical error in my master username. I didn't feel like deleting and recreating a new RDS instance so i went to my terminal and changed the master username to fit the one created.  I ran `psql $PROD_CONNECTION_URL` and it worked.  
+![working prod connection](https://user-images.githubusercontent.com/105195327/227791628-9d686866-c1fa-46a9-bf1d-a2f2d88d8a2b.png)   
 
 - I ran `\l` to see the list of my tables.  
-
-
-
+![database list in prod](https://user-images.githubusercontent.com/105195327/227791657-ebd56de1-d98c-4dd8-bcd7-3ace775f7ee3.png)  
 
 *Everytime the environment is spinned up, i'll have to update the GITPOD ip in my security group, so i'm going to create a script that automatically updates it whenever i spin up a new environment.*
-
-
+---
+  
+##### Automating GITPOD_IP RDS SG Update
 - I went to my management console to grab the security group ID and the security group rule ID, i inputed them in the commands below and ran it in my terminal.  
 
 ```
@@ -578,45 +569,42 @@ aws ec2 modify-security-group-rules \
 ``` 
 
 To test it i'll remove my previous inbound rule, run this command, then go and check if the new one has been set. 
+  ![working auto gitpod ip update  RDS console  1st](https://user-images.githubusercontent.com/105195327/227791801-8d0f37cc-06d6-415c-9036-445448a0c0d9.png)  
 
 - I kept getting an error message saying CIDR block /32 is malformed. 
 
-
-
-
 - After much investigation, i realised i didn't save my GITPOD_IP to the environment and i stopped and restarted my workspace prior to this step. So i exported my GITPOD_IP again and saved to env. I tried running the command again and it worked this time. 
-
-
+![working auto gitpod ip update](https://user-images.githubusercontent.com/105195327/227791859-74d1c3a8-a88e-4089-a755-6604e55373a2.png)  
+  
+![working auto gitpod ip update  RDS console](https://user-images.githubusercontent.com/105195327/227791864-c2daab27-718f-481d-8f36-69e1f3323e11.png)   
 
 *I want this to be updated everytime i start my workspace, so i'm going to create an additional script to that effect.* 
 
-
-- I went to my **"bin"** directory and created another script called **"rds-update-sg-rule"** i copied the command into it and gave it execute priviledges.  
+- I went to my **"bin"** directory and created another script called **"rds-update-sg-rule"** i copied the necessary command into it and gave it execute priviledges.  
+  ![rds-upgrade-rule and permission](https://user-images.githubusercontent.com/105195327/227791926-ffeb4c5f-e107-450e-9e83-98463d7ea33c.png)   
 
 ###### Set it to autorun during startup 
 - I went to my gitpod.yml file and put the command below in it.  
 ```
 command: |
       export GITPOD_IP=$(curl ifconfig.me)
-      source  "$THEIA_WORKSPACE_ROOT/backend-flask/rds-update-sg-rule"
+      source  "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds-update-sg-rule"
 ``` 
+![rds-update rule in gitpodyml](https://user-images.githubusercontent.com/105195327/227791937-0201cd73-a273-43c1-8df3-f5d617cd65cf.png)  
 
 - I wanted to test this so i closed my workspace, removed the inbound rule in my security group and started the workspace again. The sg update rule was working. 
-
-
-
+![working gitpod yml file](https://user-images.githubusercontent.com/105195327/227791986-577714a2-9882-41e1-bcb6-5ee8ae06ddd6.png)  
 
 - I checked my security group inbound rule from the console and the new GITPOD_IP has been added.  
-
-
-
-
+![new ip in rds console](https://user-images.githubusercontent.com/105195327/227792012-73963f19-7b91-4db8-9747-3ceb7c33900a.png)   
 
 - I ran my db-setup and db-connect, and everything works fine. Data is being loaded on my frontend. 
+![working prod connection 2](https://user-images.githubusercontent.com/105195327/227792046-3d3c4c4a-3f7a-4094-b33c-95a7c408afeb.png)  
+
+![front end showing](https://user-images.githubusercontent.com/105195327/227792054-d81c1142-2c84-497a-86eb-8395013b8a06.png)   
 
 
-
-
+---
 
 
 
