@@ -604,7 +604,13 @@ command: |
 ![front end showing](https://user-images.githubusercontent.com/105195327/227792054-d81c1142-2c84-497a-86eb-8395013b8a06.png)   
 
 
+*Stopping my workspace for a while*
 ---
+- I went to my **"dockercompose.yml"** and set my production connection url then i composed up. 
+
+- I went to the frontend URL and no data was being served, this is expected because we haven't loaded a schema. 
+ 
+
 
 
 
