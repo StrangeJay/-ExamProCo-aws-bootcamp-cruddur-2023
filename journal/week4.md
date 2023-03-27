@@ -608,7 +608,11 @@ command: |
 ---
 - I went to my **"dockercompose.yml"** and set my production connection url then i composed up. 
 
-- I went to the frontend URL and no data was being served, this is expected because we haven't loaded a schema. 
+- I ran `./bin/db-schema-load prod` in my backend directory, i went to the frontend URL and no data was being served, this is expected because we haven't loaded a schema. 
+
+
+- I checked my logs and got an error saying my app is unauthenticated.  
+ 
  
 
 
