@@ -612,6 +612,14 @@ command: |
 
 
 - I checked my logs and got an error saying my app is unauthenticated.  
+
+- I went to my AWS management console to create a lambda function  
+
+- I named it **"cruddur-post-confirmation"**, gave it python3.8 Runtime, enabled VPC and created the lambda function.  
+
+- I went to my **""aws/json""** directory and created a new directory called **"lambdas"** and inside it i created a file and called it **"cruddur-post-confirmation.py"**
+ 
+
  
  
 
