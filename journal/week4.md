@@ -688,7 +688,17 @@ def lambda_handler(event, context):
   
   
   
+ ##### Adding triggers
+ - I went to Amazon cognito to add triggers, i set a trigger for post sign-up and i created it. 
  
+ 
+ 
+ 
+ - I deleted my pre-existing user, so i can test the trigger when i signup again. 
+ 
+ 
+ 
+ - 
 
  
  
