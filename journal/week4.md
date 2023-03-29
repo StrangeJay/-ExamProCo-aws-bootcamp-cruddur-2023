@@ -683,6 +683,11 @@ def lambda_handler(event, context):
 - I got an error when i tried to verify it. 
   
   
+  
+- I went to grant "Get layer access" to my user but that didn't work. I was going to create my own layer but i needed a quick fix so i went to [psycopg2 lambda layer repo](https://github.com/jetbridge/psycopg2-lambda-layer) to be certain i got a repo that is for my region, i got one for us-east-1, i tried it and it worked.  
+  
+  
+  
  
 
  
