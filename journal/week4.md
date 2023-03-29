@@ -710,7 +710,10 @@ def lambda_handler(event, context):
 
 
 
- - It was still feeding me mock data so i went to see what was wrong
+ - It was still feeding me mock data so i went to see what was wrong 
+
+
+ - Now it's feeding me no data. I've tried about 15 times and nothing has worked so i'm taking a break. 
  
   
 
