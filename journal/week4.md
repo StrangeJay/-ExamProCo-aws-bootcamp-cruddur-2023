@@ -674,7 +674,13 @@ def lambda_handler(event, context):
 - I set the environment variable. 
   
   
--  
+###### Adding lambda layer
+- I went my management console to add a layer to my lambda function.  
+
+
+
+
+- I got an error when i tried to verify it. 
   
   
  
