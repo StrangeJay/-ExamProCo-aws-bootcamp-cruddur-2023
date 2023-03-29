@@ -698,7 +698,23 @@ def lambda_handler(event, context):
  
  
  
- - 
+ - I signed up again and got an error message during confirmation  
+
+
+
+
+ - I realised i put a space in front of the confirmation code in the process of copying and pasting it so i requested for another one and typed the code and i got no error.  
+
+
+ - I went to check the logs and there were no observable errors so i decided to test it. 
+
+
+
+ - It was still feeding me mock data so i went to see what was wrong
+ 
+  
+
+
 
  
  
