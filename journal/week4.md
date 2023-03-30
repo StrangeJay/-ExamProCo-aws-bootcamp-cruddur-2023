@@ -715,7 +715,14 @@ def lambda_handler(event, context):
 
  - Now it's feeding me no data. I've tried about 15 times and nothing has worked so i'm taking a break. 
  
-  
+---
+Finally figured out why i wasn't being fed any data. I kept creating my user before loading the prod schema and connecting, and with every user i deleted i reloaded a new schema before querrying the database for the users table. So what i did this time was that i loaded my schema, then created my user before going to connect and confirm it was added to the table. And it worked, i saw the values. 
+
+
+
+
+
+
 
 
 
