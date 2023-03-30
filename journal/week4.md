@@ -607,19 +607,24 @@ command: |
 *Stopping my workspace for a while*
 ---
 - I went to my **"dockercompose.yml"** and set my production connection url then i composed up. 
-
+![Change docker-compose connection url](https://user-images.githubusercontent.com/105195327/228760024-8ee253fb-aa7a-4bc4-9709-e17b0ff78158.png)  
+  
 - I ran `./bin/db-schema-load prod` in my backend directory, i went to the frontend URL and no data was being served, this is expected because we haven't loaded a schema. 
-
+![no frontend data](https://user-images.githubusercontent.com/105195327/228760161-60cabf6c-1749-4fcc-a71d-d1075722ef99.png)  
 
 - I checked my logs and got an error saying my app is unauthenticated.  
+![loading schema next](https://user-images.githubusercontent.com/105195327/228760485-e0859d9f-e04f-4f78-931d-570edbab0042.png)   
 
 - I went to my AWS management console to create a lambda function  
+  ![starting lambda function](https://user-images.githubusercontent.com/105195327/228761233-519dead1-c432-4534-90a8-d0d8d7f2e16f.png)   
 
 - I named it **"cruddur-post-confirmation"**, gave it python3.8 Runtime, enabled VPC and created the lambda function.  
+![lambda function and runtime python 38](https://user-images.githubusercontent.com/105195327/228761699-47ae7004-d958-4803-8a09-335d8caed020.png)  
+  
+![enabled VPC for lambda](https://user-images.githubusercontent.com/105195327/228762230-8a47f526-259b-454a-9f0f-f0736a4e3e44.png)
 
 - I went to my **""aws/json""** directory and created a new directory called **"lambdas"** and inside it i created a file and called it **"cruddur-post-confirmation.py"** 
-  
-  
+
 - I pasted the code below into it. 
 ```
 import json
@@ -656,7 +661,7 @@ def lambda_handler(event, context):
         user_handle,
         user_cognito_id
       ]
-      cur.execute(sql,*params)
+      cur.execute(sql, params)
       conn.commit() 
 
     except (Exception, psycopg2.DatabaseError) as error:
@@ -668,59 +673,71 @@ def lambda_handler(event, context):
           print('Database connection closed.')
     return event
 ```
+![cruddur-post-confirmation py](https://user-images.githubusercontent.com/105195327/228762731-a8aaca9f-ce02-4cdf-b92f-6d478bdbc4b5.png)   
   
 - I copied and pasted the same code in my lambda function code source. Then i deployed to save the code. 
-  
+  ![lambda role in function](https://user-images.githubusercontent.com/105195327/228762818-c4982ddd-a711-476d-9bad-cd65cd3afaf2.png)  
+
 - I set the environment variable. 
-  
-  
+![setting lambda env var](https://user-images.githubusercontent.com/105195327/228762931-4c89c33a-6d67-4719-99fc-bed3073ee9f2.png)   
+
+![lambda edit env var](https://user-images.githubusercontent.com/105195327/228763032-92dc68c6-ed7a-4d31-b927-ae07d0833429.png)   
+
+![lambda edit env var2](https://user-images.githubusercontent.com/105195327/228763083-341efaf1-73ff-4aba-84ff-003f4dcb0b3d.png)   
+
 ###### Adding lambda layer
 - I went my management console to add a layer to my lambda function.  
+![lambda layer](https://user-images.githubusercontent.com/105195327/228763148-67bb618e-d703-4e75-8c8a-64b9e84bd4e8.png)   
 
-
-
+![lambda layer2](https://user-images.githubusercontent.com/105195327/228763185-7bb8b73a-205f-4845-8350-b94bd393ef55.png)   
 
 - I got an error when i tried to verify it. 
+![lambda layer error](https://user-images.githubusercontent.com/105195327/228763400-e29795d3-c689-434d-b7d3-c53258380d71.png)  
   
-  
-  
-- I went to grant "Get layer access" to my user but that didn't work. I was going to create my own layer but i needed a quick fix so i went to [psycopg2 lambda layer repo](https://github.com/jetbridge/psycopg2-lambda-layer) to get a repo that is for my region, i got one for us-east-1, i tried it and it worked.  
-  
-  
+- I went to grant "Get layer access" to my user but that didn't work. 
+![letting my account get lambda layer](https://user-images.githubusercontent.com/105195327/228763652-4d35f12b-6b85-49be-b94e-0ae477023d82.png)   
+
+![lambda layer error2](https://user-images.githubusercontent.com/105195327/228763743-6efafeaa-f3d6-4649-8433-e5df5bab8423.png)   
+
+- I was going to create my own layer but i needed a quick fix so i went to [psycopg2 lambda layer repo](https://github.com/jetbridge/psycopg2-lambda-layer) to get a repo that is for my region, i got one for us-east-1, i tried it and it worked.  
+![lambda layer successfully created](https://user-images.githubusercontent.com/105195327/228763875-5e66edad-d824-462d-9161-c0a3b178ce32.png)   
   
  ##### Adding triggers
  - I went to Amazon cognito to add triggers, i set a trigger for post sign-up and i created it. 
- 
- 
- 
+ ![adding triggers](https://user-images.githubusercontent.com/105195327/228764012-ffdef042-cc49-43ff-a9b4-dfe7d6d74e59.png)   
+
+ ![lambda signup trigger](https://user-images.githubusercontent.com/105195327/228764088-8a5b026d-c6a9-4675-ae2c-d9d43083bfa4.png)  
  
  - I deleted my pre-existing user, so i can test the trigger when i signup again. 
- 
- 
- 
+ ![deleting user to test trigger](https://user-images.githubusercontent.com/105195327/228764136-bec33984-a08a-4711-b8a5-9243ab9efc09.png)   
+
  - I signed up again and got an error message during confirmation  
-
-
-
+![error testing frontend](https://user-images.githubusercontent.com/105195327/228764228-5026302c-187e-44ac-a1e1-35e896cce2b1.png)   
 
  - I realised i put a space in front of the confirmation code in the process of copying and pasting it so i requested for another one and typed the code and i got no error.  
-
-
+  
  - I went to check the logs and there were no observable errors so i decided to test it. 
+![cloudwatch log stream](https://user-images.githubusercontent.com/105195327/228764414-b15197ac-ead9-4a78-9658-f585ddddc697.png)   
+  
+![log event no error](https://user-images.githubusercontent.com/105195327/228765159-ea8c5878-b2c3-4813-8a26-32ec845bfad5.png)  
 
+ - It was still feeding me mock data so i went to see what was wrong and realised i was running the wrong commands and not accessing the prod environment. 
+![working db-connect prod users db querry](https://user-images.githubusercontent.com/105195327/228765307-4600a5ae-d4ff-450f-844c-4dcee4b6834d.png)
 
+ - Now it's feeding me no data. I've made random changes and tried various fixes about 15 times and nothing has worked so i'm taking a break. 
+ ![empty user data in crudder prod](https://user-images.githubusercontent.com/105195327/228765532-643452c4-2b0e-46dc-8153-f5b90db9d2a8.png)   
 
- - It was still feeding me mock data so i went to see what was wrong 
-
-
- - Now it's feeding me no data. I've tried about 15 times and nothing has worked so i'm taking a break. 
- 
 ---
-Finally figured out why i wasn't being fed any data. I kept creating my user before loading the prod schema and connecting, and with every user i deleted i reloaded a new schema before querrying the database for the users table. So what i did this time was that i loaded my schema, then created my user before going to connect and confirm it was added to the table. And it worked, i saw the values. 
+Finally figured out why i wasn't being fed any data. I kept creating my user before loading the prod schema and connecting, and with every user i deleted i created a new one before reloadeding a new schema and querrying the database for the users table. So what i did this time was that i loaded my schema, then created my user before going to connect and confirm it was added to the table. And it worked, i saw the values. 
+  
+![working lambda in cloudwatch](https://user-images.githubusercontent.com/105195327/228767040-c96d5604-f6c8-4345-9e42-82f219cd868b.png)   
+  
+![user table available](https://user-images.githubusercontent.com/105195327/228765960-0b4ea54d-02ff-400f-90be-c3d25501192a.png)   
 
-
-
-
+![user table available 2](https://user-images.githubusercontent.com/105195327/228766039-2f7215ff-1c39-4991-a0b2-b8ac262644c2.png)
+---
+    
+### Creating Activities
 
 
 
