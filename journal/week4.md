@@ -808,8 +808,7 @@ class CreateActivity:
       'uuid': uuid
     })
 ```
-
-
+![activities-py new code](https://user-images.githubusercontent.com/105195327/228998735-d368630e-bab0-4383-b706-48cd93db9f57.png)   
 
 ##### home_activities.py update 
 ```
@@ -831,10 +830,12 @@ class HomeActivities:
     results = db.query_array_json(sql)
     return results    
 ```
-
-
+![home_activities update](https://user-images.githubusercontent.com/105195327/228998762-cbe11110-dfb6-4c2f-ab2f-eb32356190d1.png)   
 
 ##### db.py update
+  
+![old db-py code](https://user-images.githubusercontent.com/105195327/228998854-8acb24ad-3735-4150-bade-3a45121bee74.png)   
+
 ```
 from psycopg_pool import ConnectionPool
 import os
@@ -1006,27 +1007,34 @@ WHERE
   activities.uuid = %(uuid)s
 ```
 
-- I tested out my crud and i kept getting an activity form error. So i went to the activityform component in pages/HomeFeedPage.js to pass the user_handle prop. 
+- I tested out my crud and i kept getting an activity form error.  
+  ![error when testing out crud](https://user-images.githubusercontent.com/105195327/228999023-a6a50b69-418c-4281-b954-5a8790627fd4.png)   
+So i went to the activityform component in pages/HomeFeedPage.js to pass the user_handle prop. 
 
 ###### HomeFeedPage.js update 
-
-
+![homefeed page update](https://user-images.githubusercontent.com/105195327/228999119-f598bf74-80a4-4687-875f-d3aca52d24af.png)   
 
 - In the components/ActivityForm.js, i updated the fetch request body to include the user_handle. 
-
+![activity form changes](https://user-images.githubusercontent.com/105195327/228999147-1a2a4328-3d2a-4a55-a8e7-27cf1f3b5c78.png)   
 
 - In app.py under the /api/activities route, i assigned the user_handle variable. 
 ```
 user_handle = request.json["user_handle"]
 message = request.json['message']
 ```
+![app-py changes](https://user-images.githubusercontent.com/105195327/228999199-84da1bee-6f39-4537-a32b-0c4b7ef1d0f0.png)
 
+*These changes were to ensure that the user_handle prop is passed correctly and would get included in the fetch request. So that the server can retrieve it from the request payload.* 
 
+  - I tested my crud and it worked. 
+  ![working activities](https://user-images.githubusercontent.com/105195327/228999313-2cad16f9-423b-4695-b25a-39b55086266f.png)  
+  
+![working finally](https://user-images.githubusercontent.com/105195327/228999340-feb1121f-8709-40ec-b3bc-b98270bd5ac4.png)   
 
-These changes were to ensure that the user_handle prop is passed correctly and would get included in the fetch request. So that the server can retrieve it from the request payload. 
+![finally working 1st](https://user-images.githubusercontent.com/105195327/228999370-37d24e89-f038-49df-ba11-2484e3a33861.png)   
 
+![finally working](https://user-images.githubusercontent.com/105195327/228999390-06ba45eb-2aa2-4078-88db-fdc21d4e743c.png)   
 
- 
  
 
 
