@@ -388,5 +388,19 @@ for i in range(len(lines)):
   )
 ```
 
+- I tried running my create, schema-load and seed dev scripts, and i got an error saying "null value in column "email" of relation "users"" 
 
+
+
+
+
+- I went to check my seed.sql file and i realised i hadn't updated it yet, i didn't input values for the email. 
+
+
+
+- I inputed the email values and tried again but i got an error line again
+
+
+
+- 
 
