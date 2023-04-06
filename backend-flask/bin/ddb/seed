@@ -221,6 +221,7 @@ Person 1: And Zathras was just one example of that. He was a small but important
 Person 2: Definitely. I think his character is a great example of the show's ability to balance humor and heart, and to create memorable and beloved characters that fans will cherish for years to come.
 """
 
+# It takes the conversation and strips out new lines in the beginning and any trailing new line. 
 lines = conversation.lstrip('\n').rstrip('\n').split('\n')
 for i in range(len(lines)):
   if lines[i].startswith('Person 1: '):
