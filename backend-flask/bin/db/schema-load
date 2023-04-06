@@ -2,11 +2,11 @@
 
 GREEN='\033[1;32m'
 NO_COLOR='\033[0m'
-LABEL="db-schema-load"
+LABEL="schema-load"
 printf "${GREEN}== ${LABEL}${NO_COLOR}\n"
 
 
-echo "db-schema-load"
+echo "schema-load"
 
 schema_path="$(realpath .)/db/schema.sql"
 

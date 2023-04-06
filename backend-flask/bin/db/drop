@@ -2,10 +2,10 @@
 
 RED='\033[1;31m'
 NO_COLOR='\033[0m'
-LABEL="db-schema-load"
+LABEL="schema-load"
 printf "${RED}== ${LABEL}${NO_COLOR}\n"
 
-echo "db-drop"
+echo "drop"
 
 NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
 psql $NO_DB_CONNECTION_URL -c "DROP database cruddur;"  

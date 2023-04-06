@@ -3,7 +3,7 @@
 
 BLUE='\033[1;34m'
 NO_COLOR='\033[0m'
-LABEL="rds-update-sg-rule"
+LABEL="update-sg-rule"
 printf "${BLUE}== ${LABEL}${NO_COLOR}\n"
 
 

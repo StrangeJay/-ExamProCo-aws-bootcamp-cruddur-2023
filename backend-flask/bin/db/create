@@ -2,10 +2,10 @@
 
 YELLOW='\033[1;33m'
 NO_COLOR='\033[0m'
-LABEL="db-schema-load"
+LABEL="schema-load"
 printf "${YELLOW}== ${LABEL}${NO_COLOR}\n"
 
-echo "db-create" 
+echo "create" 
 
 NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
 psql $NO_DB_CONNECTION_URL -c "CREATE database cruddur;"
