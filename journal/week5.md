@@ -401,6 +401,21 @@ for i in range(len(lines)):
 - I inputed the email values and tried again but i got an error line again
 
 
+---
 
-- 
+Took a break and came back with a clearer head and new errors, i've fixed them and i'm back to seed. 
+
+- I ran my schema-load, drop, create and seed scripts. 
+
+
+
+- I ran my ddb/seed script to test if it returns the user uuid values and it does, i got some other errors so i'll go back to my code and see what's wrong.  
+
+
+
+- I took a look at the error and realised that it said a table doesn't exist, so i ran my `./bin/ddb/schema-load` before running `./bin/ddb/seed` again, and it worked. I go back data without errors.   
+
+
+
+
 
