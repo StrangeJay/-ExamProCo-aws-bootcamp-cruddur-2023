@@ -798,3 +798,222 @@ db = Db()
 ---
 
 #### Implementing Conversations with DynamoDB
+- I decided to update my gitpod.yml file to run my pip install at startup, it has becoming tiring having to always go to the backend and run it. I inputed the command below in my gitpod.yml file  
+```
+  - name: flask
+    command: |
+      cd backend-flask
+      pip install -r requirements.txt
+```
+
+- I updated my bin/db/drop script, and added the `IF EXISTS` line, so it only tries dropping a database that exists and doesn't give an error while running the setup script, when there's no database.  
+
+
+
+
+- I created a new file in my lib directory, called **"ddb.py"** and inputed the code below in it. 
+
+```
+import boto3
+import sys
+from datetime import datetime, timedelta, timezone
+import uuid
+import os
+import botocore.exceptions
+
+class Ddb:
+  def client():
+    endpoint_url = os.getenv("AWS_ENDPOINT_URL")
+    if endpoint_url:
+      attrs = { 'endpoint_url': endpoint_url }
+    else:
+      attrs = {}
+    dynamodb = boto3.client('dynamodb',**attrs)
+    return dynamodb
+  def list_message_groups(client,my_user_uuid):
+    year = str(datetime.now().year)
+    table_name = 'cruddur-messages'
+    query_params = {
+      'TableName': table_name,
+      'KeyConditionExpression': 'pk = :pk AND begins_with(sk,:year)',
+      'ScanIndexForward': False,
+      'Limit': 20,
+      'ExpressionAttributeValues': {
+        ':year': {'S': year },
+        ':pk': {'S': f"GRP#{my_user_uuid}"}
+      }
+    }
+    print('query-params:',query_params)
+    print(query_params)
+    # query the table
+    response = client.query(**query_params)
+    items = response['Items']
+    
+
+    results = []
+    for item in items:
+      last_sent_at = item['sk']['S']
+      results.append({
+        'uuid': item['message_group_uuid']['S'],
+        'display_name': item['user_display_name']['S'],
+        'handle': item['user_handle']['S'],
+        'message': item['message']['S'],
+        'created_at': last_sent_at
+      })
+    return results
+  def list_messages(client,message_group_uuid):
+    year = str(datetime.now().year)
+    table_name = 'cruddur-messages'
+    query_params = {
+      'TableName': table_name,
+      'KeyConditionExpression': 'pk = :pk AND begins_with(sk,:year)',
+      'ScanIndexForward': False,
+      'Limit': 20,
+      'ExpressionAttributeValues': {
+        ':year': {'S': year },
+        ':pk': {'S': f"MSG#{message_group_uuid}"}
+      }
+    }
+
+    response = client.query(**query_params)
+    items = response['Items']
+    items.reverse()
+    results = []
+    for item in items:
+      created_at = item['sk']['S']
+      results.append({
+        'uuid': item['message_uuid']['S'],
+        'display_name': item['user_display_name']['S'],
+        'handle': item['user_handle']['S'],
+        'message': item['message']['S'],
+        'created_at': created_at
+      })
+    return results
+  def create_message(client,message_group_uuid, message, my_user_uuid, my_user_display_name, my_user_handle):
+    now = datetime.now(timezone.utc).astimezone().isoformat()
+    created_at = now
+    message_uuid = str(uuid.uuid4())
+
+    record = {
+      'pk':   {'S': f"MSG#{message_group_uuid}"},
+      'sk':   {'S': created_at },
+      'message': {'S': message},
+      'message_uuid': {'S': message_uuid},
+      'user_uuid': {'S': my_user_uuid},
+      'user_display_name': {'S': my_user_display_name},
+      'user_handle': {'S': my_user_handle}
+    }
+    # insert the record into the table
+    table_name = 'cruddur-messages'
+    response = client.put_item(
+      TableName=table_name,
+      Item=record
+    )
+    # print the response
+    print(response)
+    return {
+      'message_group_uuid': message_group_uuid,
+      'uuid': my_user_uuid,
+      'display_name': my_user_display_name,
+      'handle':  my_user_handle,
+      'message': message,
+      'created_at': created_at
+    }
+  def create_message_group(client, message,my_user_uuid, my_user_display_name, my_user_handle, other_user_uuid, other_user_display_name, other_user_handle):
+    print('== create_message_group.1')
+    table_name = 'cruddur-messages'
+
+    message_group_uuid = str(uuid.uuid4())
+    message_uuid = str(uuid.uuid4())
+    now = datetime.now(timezone.utc).astimezone().isoformat()
+    last_message_at = now
+    created_at = now
+    print('== create_message_group.2')
+
+    my_message_group = {
+      'pk': {'S': f"GRP#{my_user_uuid}"},
+      'sk': {'S': last_message_at},
+      'message_group_uuid': {'S': message_group_uuid},
+      'message': {'S': message},
+      'user_uuid': {'S': other_user_uuid},
+      'user_display_name': {'S': other_user_display_name},
+      'user_handle':  {'S': other_user_handle}
+    }
+
+    print('== create_message_group.3')
+    other_message_group = {
+      'pk': {'S': f"GRP#{other_user_uuid}"},
+      'sk': {'S': last_message_at},
+      'message_group_uuid': {'S': message_group_uuid},
+      'message': {'S': message},
+      'user_uuid': {'S': my_user_uuid},
+      'user_display_name': {'S': my_user_display_name},
+      'user_handle':  {'S': my_user_handle}
+    }
+
+    print('== create_message_group.4')
+    message = {
+      'pk':   {'S': f"MSG#{message_group_uuid}"},
+      'sk':   {'S': created_at },
+      'message': {'S': message},
+      'message_uuid': {'S': message_uuid},
+      'user_uuid': {'S': my_user_uuid},
+      'user_display_name': {'S': my_user_display_name},
+      'user_handle': {'S': my_user_handle}
+    }
+
+    items = {
+      table_name: [
+        {'PutRequest': {'Item': my_message_group}},
+        {'PutRequest': {'Item': other_message_group}},
+        {'PutRequest': {'Item': message}}
+      ]
+    }
+
+    try:
+      print('== create_message_group.try')
+      # Begin the transaction
+      response = client.batch_write_item(RequestItems=items)
+      return {
+        'message_group_uuid': message_group_uuid
+      }
+    except botocore.exceptions.ClientError as e:
+      print('== create_message_group.error')
+      print(e)
+```
+
+- I wanted to create a script that can help me populate the MOCK data in my seed.sql file, with the actual cognito user id. Before that i set my cognito user pool id to env var to use in my app.  
+
+###### Setting AWS_COGNITO_USER_POOL_ID to env var
+```
+export AWS_COGNITO_USER_POOL_ID="<user pool id>"
+``` 
+Then i set it to persist. 
+```
+gp env AWS_COGNITO_USER_POOL_ID="<user pool id>"
+```
+
+And while i was there, i decided to do the same for my AWS_COGNITO_USER_POOL_CLIENT_ID. 
+
+```
+export AWS_COGNITO_USER_POOL_CLIENT_ID="<cognito user pool cliend id>"
+gp env AWS_COGNITO_USER_POOL_CLIENT_ID="<cognito user pool cliend id>"
+```
+
+###### Updating my docker-compose.yml file to have access to the env var. 
+```
+AWS_COGNITO_USER_POOL_ID: "${AWS_COGNITO_USER_POOL_ID}"
+``` 
+
+```
+AWS_COGNITO_USER_POOL_CLIENT_ID: "${AWS_COGNITO_USER_POOL_CLIENT_ID}"
+```
+
+
+- 
+
+
+
+
+
+
