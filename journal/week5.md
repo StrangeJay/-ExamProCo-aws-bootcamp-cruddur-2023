@@ -1,9 +1,9 @@
 # Week 5 — DynamoDB and Serverless Caching
 
 
-#### DynamoDB modelling
-##### Andrews notes
-###### The Boundaries of DynamoDB
+## DynamoDB modelling
+### Andrews notes
+#### The Boundaries of DynamoDB
 - When you write a query you have provide a Primary Key (equality) eg. pk = 'andrew'
 - Are you allowed to "update" the Hash and Range?
 - No, whenever you change a key (simple or composite) eg. pk or sk you have to create a new item.
@@ -11,9 +11,9 @@
 - Key condition expressions for query only for RANGE, HASH is only equality
 - Don't create UUID for entity if you don't have an access pattern for it
 
-##### Access Patterns
+#### Access Patterns
 
-###### Pattern A (showing a single conversation)  
+##### Pattern A (showing a single conversation)  
 
 A user wants to see a list of messages that belong to a message group The messages must be ordered by the created_at timestamp from newest to oldest (DESC)
 
@@ -33,7 +33,7 @@ ORDER BY messages.created_at DESC
 *message_group_uuid comes from Pattern B*
 
 
-###### Pattern B (list of conversation)   
+##### Pattern B (list of conversation)   
 
 A user wants to see a list of previous conversations. These conversations are listed from newest to oldest (DESC) We want to see the other person we are talking to. We want to see the last message (from whomever) in summary.
 
@@ -54,7 +54,7 @@ ORDER BY message_groups.last_message_at DESC
 *We need a Global Secondary Index (GSI)*
 
 
-###### Pattern C (create a message)   
+##### Pattern C (create a message)   
 
 ```
 INSERT INTO messages (
@@ -72,7 +72,7 @@ VALUES (
 ```
 
 
-###### Pattern D (update a message_group for the last message)  
+##### Pattern D (update a message_group for the last message)  
 
 When a user creates a message we need to update the conversation to display the last message information for the conversation
 
@@ -90,20 +90,29 @@ WHERE
 ```
 
 ---
+---
 #### Utility Scripts
 
-###### Install boto3
+##### Install boto3
 - I added `boto3` to my requirements.txt file and i ran my "pip install -r requirements.txt"
 
-- I docker-composed up to start up my containers
+- I uncommented the DynamoDB line in my docker-compose file, to allow DynamoDB run.   
+![Dynamo DB uncomment](https://user-images.githubusercontent.com/105195327/230971939-7a5c6b2d-9ac6-4347-9662-deb03bf92c1d.png)
 
-- I arranged my bin folder and put all scripts in their respective folders. 
+- I docker-composed up to start up my containers   
+![dynamoDB running](https://user-images.githubusercontent.com/105195327/230972173-07d7c9a0-b175-4978-bf04-b6c47ce5796e.png)   
 
-- I went to my setup file to make changes that reflect the new names, and i did the same with all the scripts. 
+
+- I arranged my bin folder and put all scripts in their respective folders.   
+![change setup code](https://user-images.githubusercontent.com/105195327/230971534-5e6dc73e-c787-48e4-afdb-c7fa5a7fafba.png)   
+
+
+- I went to my setup file to make changes that reflect the new names, and i did the same with all the scripts.  
+![new setup codes](https://user-images.githubusercontent.com/105195327/230971572-8aaaf253-2cf0-4ba7-8fe5-b9bfd9a7d772.png)   
 
 - I created a new directory called **ddb** in the **bin** directory. And i created 3 files for my script named **schema-load**, **seed**, and **drop** and i put my code in the them. 
 
-###### schema-load script
+##### schema-load script
 - I added the lines of code below into my **/bin/ddb/schema-load** file 
 ```
 #!/usr/bin/env python3
@@ -178,12 +187,11 @@ response = dynamodb.create_table(
 print(response)
 ```
 
-- I uncommented my DynamoDB line of code, to enable my container run. 
+- I ran my `./bin/ddb/schema-load` command and i got back data.  
+![dynamodb schema-load feeding data](https://user-images.githubusercontent.com/105195327/230972319-4a647e90-5f57-4aa4-a033-96b8b1bdfb33.png)   
 
-- I ran my `./bin/ddb/schema-load` command and i got back data. 
 
-
-###### list-tables script
+##### list-tables script
 - I created a new file in my **/bin/ddb/** directory called **list-tables** and put the code below into it. 
 ```
 #! /usr/bin/bash
@@ -199,11 +207,11 @@ aws dynamodb list-tables  $ENDPOINT_URL \
   --output table
 ```
 
-- I ran my `./bin/ddb/list-tables` and it showed my cruddur table
+- I ran my `./bin/ddb/list-tables` and it showed my cruddur table  
+![list tables working](https://user-images.githubusercontent.com/105195327/230972362-e2c686c6-441f-4aa9-bd95-462d1171105f.png)   
 
 
-
-###### drop script
+##### drop script
 - I copied the codes below into my **/bin/ddb/drop** file 
 ```
 #!/usr/bin/bash
@@ -226,11 +234,11 @@ aws dynamodb delete-table  $ENDPOINT_URL \
   --table-name $TABLE_NAME
 ```
 
-i ran my `./bin/ddb/drop cruddur-messages` command and i got back json output. My table was dropped. 
+i ran my `./bin/ddb/drop cruddur-messages` command and i got back json output. My table was dropped.   
+![drop script output](https://user-images.githubusercontent.com/105195327/230972576-38e17267-d769-4cd7-8c47-6aed8bb00aca.png)   
 
 
-
-###### seed script
+##### seed script
 - I copied the codes below into my **/bin/ddb/drop** file 
 ```
 #!/usr/bin/env python3
@@ -481,35 +489,37 @@ for i in range(len(lines)):
 ```
 
 - I tried running my create, schema-load and seed dev scripts, and i got an error saying "null value in column "email" of relation "users"" 
+![null value when trying to seed](https://user-images.githubusercontent.com/105195327/230972761-d087284f-ae53-4e45-9efc-ca8ddd75f842.png)   
 
 
+- I went to check my seed.sql file and i realised i hadn't updated it yet, i didn't input values for the email.  
+![Old seed sql code](https://user-images.githubusercontent.com/105195327/230972895-425f512d-0082-40b0-ad44-b48fad638af2.png)   
 
-
-
-- I went to check my seed.sql file and i realised i hadn't updated it yet, i didn't input values for the email. 
-
+![New seed code](https://user-images.githubusercontent.com/105195327/230972926-203280f0-b93c-4bcf-b2f6-7d3b5a5a7dbb.png)   
 
 
 - I inputed the email values and tried again but i got an error line again
-
+![2nd seed run error](https://user-images.githubusercontent.com/105195327/230972990-0cc293a7-c66b-4f38-8f84-57bd595a4964.png)   
 
 ---
 
 Took a break and came back with a clearer head and new errors, i've fixed them and i'm back to seed. 
 
 - I ran my schema-load, drop, create and seed scripts. 
-
+![working seed data](https://user-images.githubusercontent.com/105195327/230973089-b10c545e-e037-4621-b3ec-f9385129702c.png)   
 
 
 - I ran my ddb/seed script to test if it returns the user uuid values and it does, i got some other errors so i'll go back to my code and see what's wrong.  
+![ddb seed error](https://user-images.githubusercontent.com/105195327/230974176-558744f0-5ebf-4e86-94e3-c7f1df5d9894.png)   
 
+![user uuid returns errors aside](https://user-images.githubusercontent.com/105195327/230973718-2b636b56-3998-450f-a0a6-e12107f722b2.png)   
 
 
 - I took a look at the error and realised that it said a table doesn't exist, so i ran my `./bin/ddb/schema-load` before running `./bin/ddb/seed` again, and it worked. I go back data without errors.   
+![seeds return correct](https://user-images.githubusercontent.com/105195327/230973758-4e0ca5d7-9c2f-4fe5-8cec-aaeb557093c0.png)   
 
 
-
-###### Scan script
+##### Scan script
 - I created a script called **"scan"** in my ddb directory. This will scan the database for data that was just created with the seed file as SDK 
 ```
 #!/usr/bin/env python3
@@ -531,12 +541,14 @@ for item in items:
 ```
 
 - I made the file executable and i ran `./bin/ddb/scan`  
+![working scan script](https://user-images.githubusercontent.com/105195327/230974278-0b01c06b-5e6e-473c-a910-bb28d43c2085.png)   
 
 
 - I created a directory in my ddb directory, named **"patterns"**, and in it i created 2 files. **"get-conversation"** and **"list-conversations"**. 
 
+#### Patterns
 
-###### get-conversation
+##### get-conversation
 ```
 #!/usr/bin/env python3
 
@@ -598,10 +610,12 @@ for item in items:
 ``` 
 
 - I made the file executable and i executed it.   
+![get-conversation](https://user-images.githubusercontent.com/105195327/230974379-1ce4fecb-d821-4691-9e66-932c8bf72c96.png)   
+
+![get-conversation2](https://user-images.githubusercontent.com/105195327/230974590-92fc863a-0e2f-4313-9f42-c3701fb0c625.png)   
 
 
-
-###### List-conversations
+##### List-conversations
 ```
 #!/usr/bin/env python3
 
@@ -663,8 +677,8 @@ response = dynamodb.query(**query_params)
 print(json.dumps(response, sort_keys=True, indent=2))
 ```
 
-- I made the file executable and ran `./bin/ddb/patterns/list-conversations`. I got an error message saying **"AttributeError: 'Db' object has no attribute 'query_value'"**  
-
+- I made the file executable and ran `./bin/ddb/patterns/list-conversations`. I got an error message saying **"AttributeError: 'Db' object has no attribute 'query_value'"**    
+![list conversation error](https://user-images.githubusercontent.com/105195327/230974676-86d5721d-d2d6-4fe4-8ecb-78804465f6e3.png)   
 
 
 - I went to my db.py file and i realised i was missing a query value definition. I updated my db.py code. 
@@ -791,9 +805,10 @@ class Db:
 
 db = Db()
 ```
+![added db py line](https://user-images.githubusercontent.com/105195327/230974889-aa138243-5c46-409f-8cc9-4bd26a83c837.png)   
 
 - I executed list-conversation file again and it worked.  
-
+![list-conversations value](https://user-images.githubusercontent.com/105195327/230974947-55eb6d89-6027-4886-898d-b874f3d8d622.png)   
 
 ---
 
@@ -805,10 +820,11 @@ db = Db()
       cd backend-flask
       pip install -r requirements.txt
 ```
+![gitpod yml update](https://user-images.githubusercontent.com/105195327/230976628-88a1e8ab-06d5-483d-abf3-a49ac0985255.png)   
+
 
 - I updated my bin/db/drop script, and added the `IF EXISTS` line, so it only tries dropping a database that exists and doesn't give an error while running the setup script, when there's no database.  
-
-
+![added dp line](https://user-images.githubusercontent.com/105195327/230976823-c59b9f07-bf18-4759-a34b-427718152aa7.png)   
 
 
 - I created a new file in my lib directory, called **"ddb.py"** and inputed the code below in it. 
@@ -984,11 +1000,12 @@ class Ddb:
 
 - I wanted to create a script that can help me populate the MOCK data in my seed.sql file, with the actual cognito user id. Before that i set my cognito user pool id to env var to use in my app.  
 
-###### Setting AWS_COGNITO_USER_POOL_ID to env var
+##### Setting AWS_COGNITO_USER_POOL_ID to env var   
 ```
 export AWS_COGNITO_USER_POOL_ID="<user pool id>"
 ``` 
-Then i set it to persist. 
+
+Then i set it to persist.  
 ```
 gp env AWS_COGNITO_USER_POOL_ID="<user pool id>"
 ```
@@ -1000,7 +1017,8 @@ export AWS_COGNITO_USER_POOL_CLIENT_ID="<cognito user pool cliend id>"
 gp env AWS_COGNITO_USER_POOL_CLIENT_ID="<cognito user pool cliend id>"
 ```
 
-###### Updating my docker-compose.yml file to have access to the env var. 
+
+##### Updating my docker-compose.yml file to have access to the env var. 
 ```
 AWS_COGNITO_USER_POOL_ID: "${AWS_COGNITO_USER_POOL_ID}"
 ``` 
@@ -1009,8 +1027,12 @@ AWS_COGNITO_USER_POOL_ID: "${AWS_COGNITO_USER_POOL_ID}"
 AWS_COGNITO_USER_POOL_CLIENT_ID: "${AWS_COGNITO_USER_POOL_CLIENT_ID}"
 ```
 
+![replacing hardcoded dockercompose values](https://user-images.githubusercontent.com/105195327/230977678-bcc47d43-ab7e-4ac0-9d3a-6490b11fcaec.png)   
 
-- 
+![new docker-compose edit](https://user-images.githubusercontent.com/105195327/230977780-1a121338-9552-4641-b160-6a567d127488.png)   
+
+
+
 
 
 
