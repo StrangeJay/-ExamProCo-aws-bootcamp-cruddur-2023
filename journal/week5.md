@@ -1218,7 +1218,25 @@ class MessageGroups:
 ``` 
 
 
+- I went to the sql directory, created a new directory inside it and named it **"users"**. I created a file inside the directory and named it **"uuid_from_cognito_user_id.sql"**  
+```
+SELECT
+  users.uuid
+FROM public.users
+WHERE 
+  users.cognito_user_id = %(cognito_user_id)s
+LIMIT 1
+```
 
+
+
+- I wentto see if my fixes are feeding anything to my frontend and i got a blank screen, i inspected the blank screen and got a 401 error.  
+
+
+- I checked my backend logs and got a 401 error saying "No token provided". One reason for this could be that the app might not be passing along the access token. 
+
+
+- I went to the frontend/src/components/MessageGroupsPage.js to update the file for user requests by making a get request with Bearer Token.
 
 
 
