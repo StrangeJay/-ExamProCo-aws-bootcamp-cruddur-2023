@@ -1253,5 +1253,90 @@ LIMIT 1
 
 
 
+- I inspected the page an got an error. 
+
+
+
+- I fixed the error and tried again but got another error.  
+
+
+
+
+- I created a new directory in my /frontend-react-js/src called **lib** directory, inside thw directory i created a new file called **"CheckAuth.js"**(Now it can be reused constantly, instead of having to hardcode it into every component)  
+```
+import { Auth } from 'aws-amplify';
+
+const checkAuth = async (setUser) => {
+  Auth.currentAuthenticatedUser({
+    // Optional, By default is false. 
+    // If set to true, this call will send a 
+    // request to Cognito to get the latest user data
+    bypassCache: false 
+  })
+  .then((user) => {
+    console.log('user',user);
+    return Auth.currentAuthenticatedUser()
+  }).then((cognito_user) => {
+      setUser({
+        display_name: cognito_user.attributes.name,
+        handle: cognito_user.attributes.preferred_username
+      })
+  })
+  .catch((err) => console.log(err));
+};
+
+export default checkAuth;
+```
+
+
+
+- I refreshed the frontend page and got an error saying authcheck was not defined. 
+
+
+- I went to HomeFeedPage.js and removed the authcheck line, imported authcheck and setUser to use the importation. 
+
+
+
+- I added the authcheck import to **"MessageGroupsPage.js"** and **"MessageGroupPage.js"**. I refreshed the frontend url page and the blank screen was gone and content was being fed at the home page.  
+
+
+
+- I checked the messages page and i still wasn't seeing any content. 
+
+
+##### Set AWS_ENDPOINT_URL in docker-compose file
+```
+AWS_ENDPOINT_URL: "http://dynamodb-local:8000"
+```
+
+- I composed down and back up again. I went to the url page and it was still blank.  
+
+
+##### Update app.js line
+```
+{
+    path: "/messages/new/:handle",
+    element: <MessageGroupNewPage />
+  },
+  {
+    path: "/messages/:message_group_uuid",
+    element: <MessageGroupPage />
+  },
+```
+
+
+
+##### Update MessageGroupItem.js page
+```
+const classes = () => {
+    let classes = ["message_group_item"];
+    if (params.message_group_uuid == props.message_group.uuid){
+      classes.push('active')
+    }
+    return classes.join(' ');
+  }
+```
+
+
 
 
