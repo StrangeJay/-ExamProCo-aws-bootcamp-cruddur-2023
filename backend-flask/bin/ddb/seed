@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 import boto3
+import os
 import sys
 from datetime import datetime, timedelta, timezone
 import uuid
-import os
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
@@ -18,7 +18,7 @@ attrs = {
 if len(sys.argv) == 2:
   if "prod" in sys.argv[1]:
     attrs = {}
-dynamodb = boto3.client('dynamodb',**attrs)
+ddb = boto3.client('dynamodb',**attrs)
 
 def get_user_uuids():
   sql = """
@@ -47,7 +47,6 @@ def get_user_uuids():
   print(results)
   return results
 
-
 def create_message_group(client,message_group_uuid, my_user_uuid, last_message_at=None, message=None, other_user_uuid=None, other_user_display_name=None, other_user_handle=None):
   table_name = 'cruddur-messages'
   record = {
@@ -67,7 +66,7 @@ def create_message_group(client,message_group_uuid, my_user_uuid, last_message_a
   print(response)
 
 def create_message(client,message_group_uuid, created_at, message, my_user_uuid, my_user_display_name, my_user_handle):
-  # Entity # Message Group Id
+  table_name = 'cruddur-messages'
   record = {
     'pk':   {'S': f"MSG#{message_group_uuid}"},
     'sk':   {'S': created_at },
@@ -78,7 +77,6 @@ def create_message(client,message_group_uuid, created_at, message, my_user_uuid,
     'user_handle': {'S': my_user_handle}
   }
   # insert the record into the table
-  table_name = 'cruddur-messages'
   response = client.put_item(
     TableName=table_name,
     Item=record
@@ -86,14 +84,12 @@ def create_message(client,message_group_uuid, created_at, message, my_user_uuid,
   # print the response
   print(response)
 
-
-message_group_uuid = "5ae290ed-55d1-47a0-bc6d-fe2bc2700399" #str(uuid.uuid4())
+message_group_uuid = "5ae290ed-55d1-47a0-bc6d-fe2bc2700399" 
+now = datetime.now(timezone.utc).astimezone()
 users = get_user_uuids()
 
-now = datetime.now(timezone.utc).astimezone()
-
 create_message_group(
-  client=dynamodb,
+  client=ddb,
   message_group_uuid=message_group_uuid,
   my_user_uuid=users['my_user']['uuid'],
   other_user_uuid=users['other_user']['uuid'],
@@ -104,7 +100,7 @@ create_message_group(
 )
 
 create_message_group(
-  client=dynamodb,
+  client=ddb,
   message_group_uuid=message_group_uuid,
   my_user_uuid=users['other_user']['uuid'],
   other_user_uuid=users['my_user']['uuid'],
@@ -221,7 +217,7 @@ Person 1: And Zathras was just one example of that. He was a small but important
 Person 2: Definitely. I think his character is a great example of the show's ability to balance humor and heart, and to create memorable and beloved characters that fans will cherish for years to come.
 """
 
-# It takes the conversation and strips out new lines in the beginning and any trailing new line. 
+
 lines = conversation.lstrip('\n').rstrip('\n').split('\n')
 for i in range(len(lines)):
   if lines[i].startswith('Person 1: '):
@@ -236,8 +232,8 @@ for i in range(len(lines)):
 
   created_at = (now + timedelta(minutes=i)).isoformat()
   create_message(
-    client=dynamodb,
-    message_group_uuid= message_group_uuid,
+    client=ddb,
+    message_group_uuid=message_group_uuid,
     created_at=created_at,
     message=message,
     my_user_uuid=users[key]['uuid'],

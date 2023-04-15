@@ -1,22 +1,22 @@
 import './App.css';
 
 import HomeFeedPage from './pages/HomeFeedPage';
-import NotificationsFeedPage from './pages/NotificationsFeedPage.js';
+import NotificationsFeedPage from './pages/NotificationsFeedPage';
 import UserFeedPage from './pages/UserFeedPage';
 import SignupPage from './pages/SignupPage';
 import SigninPage from './pages/SigninPage';
 import RecoverPage from './pages/RecoverPage';
 import MessageGroupsPage from './pages/MessageGroupsPage';
 import MessageGroupPage from './pages/MessageGroupPage';
+import MessageGroupNewPage from './pages/MessageGroupNewPage';
 import ConfirmationPage from './pages/ConfirmationPage';
 import React from 'react';
-import { Amplify } from 'aws-amplify';
-
-import process from 'process';
 import {
   createBrowserRouter,
   RouterProvider
 } from "react-router-dom";
+
+import { Amplify } from 'aws-amplify';
 
 Amplify.configure({
   "AWS_PROJECT_REGION": process.env.REACT_APP_AWS_PROJECT_REGION,
