@@ -1230,13 +1230,26 @@ LIMIT 1
 
 
 
-- I wentto see if my fixes are feeding anything to my frontend and i got a blank screen, i inspected the blank screen and got a 401 error.  
+- I went to see if my fixes are feeding anything to my frontend and i got a blank screen, i inspected the blank screen and got a 401 error.  
 
 
 - I checked my backend logs and got a 401 error saying "No token provided". One reason for this could be that the app might not be passing along the access token. 
 
 
 - I went to the frontend/src/components/MessageGroupsPage.js to update the file for user requests by making a get request with Bearer Token.
+```
+ headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`
+        },
+``` 
+
+
+
+- I did the same for **""MessageGroupPage.js""** and **""MessageForm.js""** 
+
+
+
+- I refreshed my frontend URL and got a blank page. 
 
 
 
