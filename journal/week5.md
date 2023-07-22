@@ -1778,17 +1778,17 @@ export default function MessageGroupFeed(props) {
 
 
 
-- Now to test the messages section. I clicked on messages and i saw the message section, but the post message button wasn't working.  
+- Now to test the messages section. I clicked on messages and I saw the message section, but the post message button wasn't working.  
 
 
 
-- I inspected the page and got an error sayin there;s a typo, i found it and fix it.  
+- I inspected the page and got an error saying there's a typo, I found it and fix it.  
 
 
 
 - I reloaded the messages page again and it still wasn't working.  
 
-
+- I hardcoded my details into seed.sql and tried it again and it worked this time
 
 
 
