@@ -1036,6 +1036,7 @@ AWS_COGNITO_USER_POOL_CLIENT_ID: "${AWS_COGNITO_USER_POOL_CLIENT_ID}"
 ##### list-users
 - I tested out the AWS CLI **"list-users"** command, and next i'm going create a script that performs that same function.  
 
+![aws cli list user test](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/27096e5e-4018-4571-97ff-16a62ea6ff46)
 
 
 - I created a new directory in my bin directory called **"cognito"** and in it i created a script **"list-users"** 
@@ -1069,11 +1070,13 @@ for user in users:
 
 print(dict_users)
 ```
+![list-users script](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/50bac4f7-b6f9-4f2a-bd93-ed39f1eb226c)
 
 
 
 
 - I made the file executable and i executed it.  
+![working list-users script](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/6fcda746-51f7-4e30-8a6d-cd5994cc42aa)
 
 
 
@@ -1140,15 +1143,18 @@ for handle, sub in users.items():
 ```
 source "$bin_path/db/update_cognito_user_ids"
 ```
+![db-setup new line](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/78e40fd6-a703-44d3-a038-d6a69ccea599)
 
 - I ran my `./bin/db/setup` script, and i got an error.   
 
+![setup script error](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/68cb1685-0ade-4537-abb5-f33013ccf8d5)
 
 
 - I tested the update_cognito_user_ids script to ensure it wasn't the one with the problem, and i got back data. 
 ```
 ./bin/db/update_cognito_user_ids
 ```
+![cognito user id update script](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/08ce2fdf-b805-4be0-a49e-b19d61a684c1)
 
 
 
@@ -1158,6 +1164,7 @@ source "$bin_path/db/update_cognito_user_ids"
 ```
 CONNECTION_URL: "postgresql://postgres:password@db:5432/cruddur"
 ```
+![connection url docker-compose](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/6ed14c1c-11da-47e8-aa70-89c2777b659f)
 
 
 ##### Use cognito to figure out who's logged in
@@ -1183,7 +1190,9 @@ def data_message_groups():
     app.logger.debug(e)
     return {}, 401
 ```
+![old app@route line](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/1ee467fa-ba79-4bed-ac7e-5de11dc1c780)
 
+![new app@route line](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/da236a66-43ed-46b9-8741-e4ff8c95cca2)
 
 
 
@@ -1216,6 +1225,7 @@ class MessageGroups:
     model['data'] = data
     return model
 ``` 
+![message groups update](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/3f6e25ea-85a7-4e5c-bfff-789849269a68)
 
 
 - I went to the sql directory, created a new directory inside it and named it **"users"**. I created a file inside the directory and named it **"uuid_from_cognito_user_id.sql"**  
@@ -1227,13 +1237,16 @@ WHERE
   users.cognito_user_id = %(cognito_user_id)s
 LIMIT 1
 ```
+![uuid cognito sql script](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/3c00a8f7-c46b-4958-8fba-80eb9336b841)
 
 
 
 - I went to see if my fixes are feeding anything to my frontend and i got a blank screen, i inspected the blank screen and got a 401 error.  
+![401 error](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/950263df-afaa-4ed0-b50a-5f63a8291e08)
 
 
 - I checked my backend logs and got a 401 error saying "No token provided". One reason for this could be that the app might not be passing along the access token. 
+![401 error logs](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/bfd0ee95-9d58-464b-bacd-f02b4e0876fa)
 
 
 - I went to the frontend/src/components/MessageGroupsPage.js to update the file for user requests by making a get request with Bearer Token.
@@ -1243,23 +1256,27 @@ LIMIT 1
         },
 ``` 
 
+![new message groups page](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/79bb17e8-9295-4133-9513-6ce7ea87a953)
 
 
 - I did the same for **""MessageGroupPage.js""** and **""MessageForm.js""** 
 
+![message group page](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/c1d8d766-d8da-4ca4-b81c-c1b11abae6a6)
+
+![messageformjs](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/e0e4100e-8792-41d3-b664-feb0ca5633e6)
 
 
 - I refreshed my frontend URL and got a blank page. 
-
-
+![blank blue line](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/d9b37cc3-443c-4430-8143-247939872977)
 
 - I inspected the page an got an error. 
 
-
+![checkauth error](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/2b84f107-781e-4558-8651-38dbc83fc01c)
 
 - I fixed the error and tried again but got another error.  
+![blank page fix](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/62fff99f-e6bb-4113-b0e4-8b61ba662616)
 
-
+![2nd error from test after message ish](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/141e030d-c3a0-4efe-9ccf-9a0b4688538b)
 
 
 - I created a new directory in my /frontend-react-js/src called **lib** directory, inside thw directory i created a new file called **"CheckAuth.js"**(Now it can be reused constantly, instead of having to hardcode it into every component)  
@@ -1287,21 +1304,28 @@ const checkAuth = async (setUser) => {
 
 export default checkAuth;
 ```
+![checkauth page](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/75930a7a-3de0-4219-a136-d888d4fd7943)
 
 
 
 - I refreshed the frontend page and got an error saying authcheck was not defined. 
 
+![checkauth error2](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/2c9f59bc-6689-44e6-b09f-ee7e83bff00f)
+
+![undefined check auth](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/83c2693c-7ff1-43dd-865a-53cf6e2286cb)
+
 
 - I went to HomeFeedPage.js and removed the authcheck line, imported authcheck and setUser to use the importation. 
-
-
+![remove checkauth line in homefeed page](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/2cafcc2b-8f22-41d9-9dba-af02dec7e864)
 
 - I added the authcheck import to **"MessageGroupsPage.js"** and **"MessageGroupPage.js"**. I refreshed the frontend url page and the blank screen was gone and content was being fed at the home page.  
+![import check auth in HomeFeedPage](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/aff01664-eeea-4b17-a752-f37d4e3e4060)
 
+![home page feeding content](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/e3c320b2-5e92-4641-9672-7da39597080f)
 
 
 - I checked the messages page and i still wasn't seeing any content. 
+![empty message place](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/abba6857-56ff-45b0-a4a5-c2f848ecdc97)
 
 
 ##### Set AWS_ENDPOINT_URL in docker-compose file
@@ -1323,7 +1347,7 @@ AWS_ENDPOINT_URL: "http://dynamodb-local:8000"
     element: <MessageGroupPage />
   },
 ```
-
+![update appJs](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/c5a544a9-7a8e-4e9e-a435-d5459827af61)
 
 
 ##### Update MessageGroupItem.js page
@@ -1336,6 +1360,7 @@ const classes = () => {
     return classes.join(' ');
   }
 ```
+![message group item line](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/6ccf6c88-a02f-4ec5-992e-697d494cc652)
 
 
 ##### Update App.py
@@ -1362,7 +1387,7 @@ def data_messages(message_group_uuid):
     app.logger.debug(e)
     return {}, 401
 ```
-
+![new appJs](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/cf6f46b3-f4bd-4b86-8acd-807beb644204)
 
 
 ```
@@ -1406,6 +1431,7 @@ def data_create_message():
 
 ```
 
+![2nd app py changes](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/117af2ad-4983-46a1-bd16-872f2bb4772c)
 
 
 ##### Update messages.py
@@ -1703,6 +1729,7 @@ export default function MessageGroupNewItem(props) {
 
 - I updated my seed.sql file.  
 
+![seedSQL file update](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/5191f41e-b492-4a1b-a6c9-59696d7aba19)
 
 
 - Updated the database by running the seed file. 
@@ -1738,6 +1765,7 @@ FROM public.users
 WHERE 
   users.handle = %(handle)s
 ```
+![shortSQL](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/64e3fafb-2cd7-4ffc-9348-8e19336ae851)
 
 
 ##### Update MessageGroupFeed.js
@@ -1766,29 +1794,33 @@ export default function MessageGroupFeed(props) {
   );
 }
 ```
+![message group feed update](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/98474679-e1c3-40ad-92d8-2bd55376d63b)
 
 
 - I refreshed the frontend page and got a blank screen, i inspected the page and got an error telling me MessageGroupNewPage was not defined. 
-
-
-
+![frontend error](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/427c5b9a-70f3-4d1a-ba8c-8edb58d82bfb)
 
 - I realised my MessageGroupNewPage was in the wrong place so i moved it to pages. I imported the file to app.js. and reloaded the frontpage once again, and this time i got data.  
+![app js update](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/2299511f-79dd-41d2-aaa2-843e02a4cfa5)
 
-
-
+![working frontend](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/f026fcf2-1e62-46ea-ba67-d1554a8bcfa3)
 
 - Now to test the messages section. I clicked on messages and I saw the message section, but the post message button wasn't working.  
+![jay bells message](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/1d0410f1-edb3-4397-acb5-faf168bdf323)
 
+- I inspected the page and got an error saying there was a typo, I found it and fix it.  
 
+![message group error](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/83f14843-cd96-4327-8e14-138f16341ea4)
 
-- I inspected the page and got an error saying there's a typo, I found it and fix it.  
+![message group fix](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/e442a1be-3ce5-40c8-8f08-6d78c299d677)
 
+- I reloaded the messages page again and it still wasn't working.
+![props error](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/494af488-ddbb-48c1-beee-074c05878bda)
 
-
-- I reloaded the messages page again and it still wasn't working.  
+![error 3s](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/a4d929f5-d8b2-4240-ae79-01898181ae0f)
 
 - I hardcoded my details into seed.sql and tried it again and it worked this time
 
+![working frontend message  FINALLY!!!](https://github.com/StrangeJay/aws-bootcamp-cruddur-2023/assets/105195327/00e6156a-f577-48d4-89af-30c5ae4b4f7c)
 
 
